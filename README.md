@@ -1,5 +1,5 @@
 # UroTasks
-![image](https://prnt.sc/3vWqqs7bwdsk "Screenshot do projeto").
+![download](https://github.com/elc1090/project3-urotasks/assets/78169543/f61faf00-f329-4a28-8a26-9e4fbd3f823f)
 
 #### Descrição
 Task manager inspirado no Trello só que mais focado e mais organizado
