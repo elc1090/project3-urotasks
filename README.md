@@ -22,8 +22,8 @@ Ana Clara Boniatti Bordin
 - MongoDBAtlas
 
 #### Créditos
-- ![FontAwesome](https://fontawesome.com/start "fontawesome")
-- ![React Color](https://casesandberg.github.io/react-color/ "react-color")
+- ![FontAwesome](https://fontawesome.com/start)
+- ![React Color](https://casesandberg.github.io/react-color/)
 
 #### Bastidores
 Foi um projeto muito bom pra aprender a usar react hooks e saber como manejar state num geral, usar algumas coisas como react color foram bem mais complicadas do que esperado, mesmo sendo relativamente simples de usar. MongoDB/Banco não relacional foi a melhor criação do ser humano, incluseive o MongoDBCompass e o MongoDBAtlas, duas ferramentas sensacionais e fáceis de usar. Num geral, foi muito legal desenvolver este projeto.
