@@ -1,5 +1,5 @@
 # UroTasks
-![Screenshot do projeto](https://prnt.sc/3vWqqs7bwdsk "Screenshot do projeto").
+![image](https://prnt.sc/3vWqqs7bwdsk "Screenshot do projeto").
 
 #### Descrição
 Task manager inspirado no Trello só que mais focado e mais organizado
