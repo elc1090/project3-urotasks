@@ -1,6 +1,7 @@
 {
   "name": "mern_task_manager",
   "version": "0.1.0",
+  "proxy": "http://localhost:9000",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",

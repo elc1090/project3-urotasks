@@ -24,10 +24,10 @@ export default function ColumnContainer({ taskType })
     default: break;
   }
 
-  function handleTextChange(newText) 
+  function handleTextChange(newContent) 
   { 
     const activeProjectCopy = { ...activeProject }
-    activeProjectCopy[taskType].push({ id: v4(), text: newText });
+    activeProjectCopy[taskType].push({ id: v4(), content: newContent });
     setActiveProject(activeProjectCopy);
   }
 

@@ -1,11 +1,11 @@
 /** dependencies **/
-import React, { useState, useReducer } from 'react';
+import React, { useState, useReducer, useEffect } from 'react';
+import axios from 'axios';
 import './css/common.css';
 
 /** components **/
 import Menu from './components/menu';
 import Dashboard from './components/dashboard';
-import ProjectSeeds from './components/utility/project-seeds';
 
 /** font-awesome **/
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,11 +16,18 @@ export const ReducerContext = React.createContext();
 export const ProjectsContext = React.createContext();
 export const ActiveProjectContext = React.createContext();
 
-
 export default function App() 
 {
-  const [projects, setProjects] = useState(ProjectSeeds);
+  const [projects, setProjects] = useState([]);
   const [activeProject, setActiveProject] = useState(projects[0]);
+
+  useEffect(() => 
+  {
+    axios.get("/app")
+    .then(res => {setProjects(res.data); setActiveProject(res.data[0])})
+    .catch(err => {console.log(err)});
+  }, []);
+
 
   function reducer(state, action)
   {
