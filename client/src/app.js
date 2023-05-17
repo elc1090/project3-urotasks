@@ -23,9 +23,9 @@ export default function App()
 
   useEffect(() => 
   {
-    axios.get("/app")
-    .then(res => {setProjects(res.data); setActiveProject(res.data[0])})
-    .catch(err => {console.log(err)});
+    axios.get("/project-read")
+      .then(res => {setProjects(res.data); setActiveProject(res.data[0])})
+      .catch(err => {console.log(err)});
   }, []);
 
 

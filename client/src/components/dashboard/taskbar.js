@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { ProjectsContext, ActiveProjectContext } from "../../app";
+import axios from 'axios';
 
 import TaskbarTitle from './taskbar-title';
 import TaskbarProjectColor from './taskbar-color';
@@ -26,6 +27,10 @@ export default function UpperSection()
 
     else
       setProjects([]);
+
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-delete`, { id: activeProject.id })
+      .then(function(response) {console.log(response)})
+      .catch(function(error) {console.log(error)});
   }
 
   return (

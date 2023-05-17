@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { ProjectsContext, ActiveProjectContext } from '../../app';
+import axios from 'axios';
 
 import { ChromePicker } from 'react-color';
 
@@ -30,6 +31,11 @@ export default function TaskbarProjectColor()
     }
 
     setPickerActive(!pickerActive);
+
+    // make it call only when closing color picker
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-update`, [{ id: activeProject.id, color: color }, 'color'])
+    .then(function(response) {console.log(response)})
+    .catch(function(error) {console.log(error)});
   }
 
   function ColorPicker()

@@ -49,9 +49,24 @@ const projectSchema = new mongoose.Schema(
     maxlength: 7
   },
 
-  todo: [taskSchema],
-  doing: [taskSchema],
-  done: [taskSchema]
+  todo: 
+  {
+    type: [taskSchema],
+    default: [{ id: uuid(), content: "" }]
+  },
+
+  doing: 
+  {
+    type: [taskSchema],
+    default: [{ id: uuid(), content: "" }]
+  },
+
+  done: 
+  {
+    type: [taskSchema],
+    default: [{ id: uuid(), content: "" }]
+  }
 });
+
 
 export default mongoose.model("Project", projectSchema);

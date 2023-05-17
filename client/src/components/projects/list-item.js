@@ -24,8 +24,10 @@ export default function ProjectsItem({ projectsItem })
     setProjects(placeholderProjects);  
   }
 
-  useEffect(() => {setActiveProject(projects.filter(project => project.active === true)[0])}
-  , [projects, setActiveProject])
+  useEffect(
+    () => { setActiveProject(projects.filter(project => project.active === true)[0]) }, 
+    [projects, setActiveProject]
+  )
 
   return (
     <li className='menu-projects-list-item' onClick={ activateProject }>

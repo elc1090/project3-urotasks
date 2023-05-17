@@ -1,6 +1,7 @@
 import React, { useState, useContext, useRef } from "react";
 import { ActiveProjectContext } from "../../app";
-import { v4 } from 'uuid';
+import { v4 as uuid } from 'uuid';
+import axios from 'axios';
 
 import TasksList from './list';
 
@@ -27,7 +28,13 @@ export default function ColumnContainer({ taskType })
   function handleTextChange(newContent) 
   { 
     const activeProjectCopy = { ...activeProject }
-    activeProjectCopy[taskType].push({ id: v4(), content: newContent });
+    const newTask = { id: uuid(), content: newContent }
+
+    axios.post('http://localhost:9000/task', [activeProjectCopy.id, taskType, newTask])
+      .then(function(response) {console.log(response)})
+      .catch(function(error) {console.log(error)})
+
+    activeProjectCopy[taskType].push(newTask);
     setActiveProject(activeProjectCopy);
   }
 
@@ -62,6 +69,7 @@ export default function ColumnContainer({ taskType })
       <h2 className="tasks-item-header">{taskTypeName}</h2>
       <div className="tasks-item-options"><FontAwesomeIcon icon={ faEllipsisVertical }/></div>
       <TasksList tasks={ activeProject[taskType] }/>
+      
       <div className="add-task-container">
         {
           editing ? (<input autoFocus type="text" ref={taskTextRef} value={inputValue} onChange={handleInputChange} onBlur={handleSave} onKeyDown={handleKeyDown} />)

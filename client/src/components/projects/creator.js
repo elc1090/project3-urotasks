@@ -1,7 +1,8 @@
 import { useContext, useRef, useState } from 'react';
 import { ProjectsContext, ReducerContext } from "../../app";
+import axios from 'axios';
 
-import { v4 } from 'uuid';
+import { v4 as uuid } from 'uuid';
 import { ChromePicker } from 'react-color';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,7 +23,20 @@ export default function ProjCreator()
     let name = projectNameRef.current.value;
     if (name === '') return;
 
-    const newProject = { id: v4(), active: false, name: name, color: color, todo: [], doing: [], done: []};
+    const newProject = 
+    { 
+      id: uuid(), 
+      active: false, 
+      name: name, 
+      color: color, 
+      todo : [{ id: uuid(), content: "" }], 
+      doing: [{ id: uuid(), content: "" }], 
+      done : [{ id: uuid(), content: "" }]
+    };
+    
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-create`, newProject)
+      .then(function(response) {console.log(response)})
+      .catch(function(error) {console.log(error)});
 
     if (projects.length === 0)
       newProject.active = true;
