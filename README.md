@@ -8,8 +8,8 @@ Task manager inspirado no Trello só que mais focado e mais organizado
 Preencha aqui a URL para acesso ao site publicado
 
 #### Desenvolvedor(es)
-Marcos Eduardo Mori Kaminski
-Ana Clara Boniatti Bordin
+- Marcos Eduardo Mori Kaminski
+- Ana Clara Boniatti Bordin
 
 #### Tecnologias
 - Node.js
