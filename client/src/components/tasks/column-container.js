@@ -22,7 +22,6 @@ export default function ColumnContainer({ taskType })
     case "todo":  taskTypeName = "TO-DO"; break;
     case "doing": taskTypeName = "DOING"; break;
     case "done":  taskTypeName = "DONE";  break;
-    default: break;
   }
 
   function handleTextChange(newContent) 
@@ -30,7 +29,7 @@ export default function ColumnContainer({ taskType })
     const activeProjectCopy = { ...activeProject }
     const newTask = { id: uuid(), content: newContent }
 
-    axios.post('http://localhost:9000/task', [activeProjectCopy.id, taskType, newTask])
+    axios.post('http://localhost:9000/task-create', [activeProjectCopy.id, taskType, newTask])
       .then(function(response) {console.log(response)})
       .catch(function(error) {console.log(error)})
 

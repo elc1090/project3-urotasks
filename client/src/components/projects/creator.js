@@ -18,6 +18,21 @@ export default function ProjCreator()
   const [color, setColor] = useState('#0FE19E');
   const [pickerActive, setPickerActive] = useState(false);
 
+  function removeFirst(projects)
+  {
+    projects.forEach(project => 
+    {
+      if (project.todo.length > 0 && project.todo[0].content === "")
+      {
+        project.todo.shift();
+        project.doing.shift();
+        project.done.shift();
+      }
+    })
+
+    return projects;
+  }
+
   function createProject()
   {
     let name = projectNameRef.current.value;
@@ -33,16 +48,16 @@ export default function ProjCreator()
       doing: [{ id: uuid(), content: "" }], 
       done : [{ id: uuid(), content: "" }]
     };
-    
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-create`, newProject)
-      .then(function(response) {console.log(response)})
-      .catch(function(error) {console.log(error)});
 
     if (projects.length === 0)
       newProject.active = true;
+
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-create`, newProject)
+      .then(function(response) {console.log(response); })
+      .catch(function(error) {console.log(error)});
       
     const newProjects = [...projects, newProject];
-    setProjects(newProjects);
+    setProjects(removeFirst(newProjects));
     
     dispatch({ type: 'projCreatorShown' });
     projectNameRef.current.value = '';
