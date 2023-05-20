@@ -7,11 +7,14 @@ const taskSchema = new mongoose.Schema(
 {
   id: idSchema,
 
+  created_at: Date,
+  updated_at: Date,
+
   content:
   {
     type: String,
     maxlength: 512
   }
-}, { timestamps: true });
+});
 
 export default taskSchema;

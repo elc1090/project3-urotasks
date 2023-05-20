@@ -1,4 +1,4 @@
-import TasksColumnContainer from '../tasks/column-container';
+import TasksColumnContainer from '../tasks/lists-container';
 
 export default function Tasks()
 {

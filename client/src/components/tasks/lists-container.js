@@ -8,6 +8,8 @@ import TasksList from './list';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical, faPlus } from '@fortawesome/free-solid-svg-icons';
 
+export const TaskTypeContext = React.createContext();
+
 export default function ColumnContainer({ taskType })
 {
   const { activeProject, setActiveProject } = useContext(ActiveProjectContext);
@@ -27,7 +29,7 @@ export default function ColumnContainer({ taskType })
   function handleTextChange(newContent) 
   { 
     const activeProjectCopy = { ...activeProject }
-    const newTask = { id: uuid(), content: newContent }
+    const newTask = { id: uuid(), content: newContent, created_at: new Date(), updated_at: new Date() }
 
     axios.post('http://localhost:9000/task-create', [activeProjectCopy.id, taskType, newTask])
       .then(function(response) {console.log(response)})
@@ -67,7 +69,9 @@ export default function ColumnContainer({ taskType })
     <div className="dashboard-tasks-item">
       <h2 className="tasks-item-header">{taskTypeName}</h2>
       <div className="tasks-item-options"><FontAwesomeIcon icon={ faEllipsisVertical }/></div>
-      <TasksList tasks={ activeProject[taskType] }/>
+      <TaskTypeContext.Provider value={taskType}>
+        <TasksList tasks={ activeProject[taskType] }/>
+      </TaskTypeContext.Provider>
       
       <div className="add-task-container">
         {

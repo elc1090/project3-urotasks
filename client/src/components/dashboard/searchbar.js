@@ -12,7 +12,7 @@ export default function Searchbar()
     <>
       <div className={`dashboard-searchbar ${state.isSearchbarSpaced ? '' : 'searchbar-when-menu-shown'}`} id="dashboard-searchbar"> 
         <FontAwesomeIcon icon={ faMagnifyingGlass }/> 
-        <input type="text" placeholder="Seach tasks, tags or projects"/>
+        <input type="text" placeholder="Seach for tasks or tags"/>
       </div> 
     </>
   )

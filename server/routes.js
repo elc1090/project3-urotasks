@@ -46,7 +46,11 @@ router.post('/task-create', async (req, res) =>
 
 router.post('/task-update', async (req, res) => 
 {
+  const data = req.body;
+  const [projectID, taskType, taskID, newContent] = [data[0], data[1], data[2], data[3]];
 
+  await taskController.update(projectID, taskType, taskID, newContent);
+  res.send("data received!");
 })
 
 router.post('/task-delete', async (req, res) => 
