@@ -10,7 +10,7 @@ export default function ItemText({ value, taskID })
 
   const { activeProject, setActiveProject } = useContext(ActiveProjectContext);
   const taskType = useContext(TaskTypeContext);
-  const { state, dispatch } = useContext(ReducerContext);
+  const { dispatch } = useContext(ReducerContext);
 
   const taskTextRef = useRef();
 

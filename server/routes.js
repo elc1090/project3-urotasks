@@ -53,6 +53,15 @@ router.post('/task-update', async (req, res) =>
   res.send("data received!");
 })
 
+router.post('/task-move', async (req, res) => 
+{
+  const data = req.body;
+  const [projectID, taskID, currTaskType, moveLocation] = [data[0], data[1], data[2], data[3]]
+
+  await taskController.move(projectID, taskID, currTaskType, moveLocation);
+  res.send("data received!");
+});
+
 router.post('/task-delete', async (req, res) => 
 {
   

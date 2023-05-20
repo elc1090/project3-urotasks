@@ -1,5 +1,5 @@
 import { useEffect, useContext } from "react";
-import { ProjectsContext, ActiveProjectContext } from "../../app";
+import { ProjectsContext, ActiveProjectContext, ReducerContext } from "../../app";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare } from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +8,7 @@ export default function ProjectsItem({ projectsItem })
 {
   const { projects, setProjects } = useContext(ProjectsContext);
   const { setActiveProject } = useContext(ActiveProjectContext);
+  const { dispatch } = useContext(ReducerContext);
 
   function activateProject()
   {
@@ -21,7 +22,14 @@ export default function ProjectsItem({ projectsItem })
       return project;
     })
 
-    setProjects(placeholderProjects);  
+    setProjects(placeholderProjects);
+
+    if (window.innerWidth < 1337)
+    {
+      dispatch({ type: 'menuHidden'      });
+      dispatch({ type: 'dashboardMoved'  });
+      dispatch({ type: 'searchbarSpaced' });  
+    }  
   }
 
   useEffect(

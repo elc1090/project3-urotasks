@@ -31,4 +31,26 @@ taskController.update = async (projectID, taskType, taskID, newContent) =>
   console.log(`********** ${new Date()}: successfuly updated task |${taskID}|`);
 }
 
+taskController.move = async (projectID, taskID, currTaskType, moveLocation) => 
+{
+  const project = await Project.findOne({ id: projectID });
+  const taskList = project[currTaskType];
+  
+  const taskIndex = taskList.findIndex(task => task.id === taskID);
+  const task = taskList[taskIndex];
+
+  project[moveLocation].push(task);
+
+  if (taskList.length > 1)
+    taskList.splice(taskIndex, 1);
+
+  else
+    taskList[0].content = "";
+
+  project[currTaskType] = taskList;
+
+  await project.save();
+  console.log(`********** ${new Date()}: successfuly moved task |${taskID}| from |${currTaskType}| to |${moveLocation}|`);
+}
+
 export default taskController;

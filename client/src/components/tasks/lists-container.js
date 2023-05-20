@@ -24,6 +24,7 @@ export default function ColumnContainer({ taskType })
     case "todo":  taskTypeName = "TO-DO"; break;
     case "doing": taskTypeName = "DOING"; break;
     case "done":  taskTypeName = "DONE";  break;
+    default: break;
   }
 
   function handleTextChange(newContent) 

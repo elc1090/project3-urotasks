@@ -1,5 +1,5 @@
 import { useContext, useRef, useState } from 'react';
-import { ProjectsContext, ReducerContext } from "../../app";
+import { ProjectsContext, ActiveProjectContext, ReducerContext } from "../../app";
 import axios from 'axios';
 
 import { v4 as uuid } from 'uuid';
@@ -12,22 +12,25 @@ export default function ProjCreator()
 {
   const projectNameRef = useRef();
   
+  const { setActiveProject } = useContext(ActiveProjectContext);
   const { projects, setProjects } = useContext(ProjectsContext);
   const { state, dispatch } = useContext(ReducerContext);
 
   const [color, setColor] = useState('#0FE19E');
   const [pickerActive, setPickerActive] = useState(false);
 
-  function removeFirst(projects)
+  function removeFirstTask(projects)
   {
     projects.forEach(project => 
     {
-      if (project.todo.length > 0 && project.todo[0].content === "")
-      {
+      if (project.todo[0].content === "")
         project.todo.shift();
+
+      if (project.doing[0].content === "")
         project.doing.shift();
+
+      if (project.done[0].content === "")
         project.done.shift();
-      }
     })
 
     return projects;
@@ -55,12 +58,22 @@ export default function ProjCreator()
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-create`, newProject)
       .then(function(response) {console.log(response); })
       .catch(function(error) {console.log(error)});
-      
-    const newProjects = [...projects, newProject];
-    setProjects(removeFirst(newProjects));
+
     
-    dispatch({ type: 'projCreatorShown' });
-    projectNameRef.current.value = '';
+    // quick fix, see why the state is not updated by the time all components rerender
+    // forcing to refresh the page to get new project data, instead of using state directly
+    if (newProject.active === true)
+      window.location.reload(false);
+
+    else
+    {
+      const newProjects = [...projects, newProject];
+      setProjects(removeFirstTask(newProjects));
+      setActiveProject(projects[0]);
+      
+      dispatch({ type: 'projCreatorShown' });
+      projectNameRef.current.value = '';
+    }
   }
 
   function toggleColorPicker()

@@ -21,16 +21,18 @@ export default function App()
   const [projects, setProjects] = useState([]);
   const [activeProject, setActiveProject] = useState(projects[0]);
 
-  function removeFirst(projects)
+  function removeFirstTask(projects)
   {
     projects.forEach(project => 
     {
-      if (project.todo.length > 0 || project.todo[0].content === "")
-      {
+      if (project.todo[0].content === "")
         project.todo.shift();
+
+      if (project.doing[0].content === "")
         project.doing.shift();
+
+      if (project.done[0].content === "")
         project.done.shift();
-      }
     })
 
     return projects;
@@ -39,7 +41,7 @@ export default function App()
   useEffect(() => 
   {
     axios.get("/project-read")
-      .then(res => {setProjects(removeFirst(res.data)); setActiveProject(res.data[0])})
+      .then(res => {setProjects(removeFirstTask(res.data)); setActiveProject(res.data[0])})
       .catch(err => {console.log(err)});
   }, []);
 

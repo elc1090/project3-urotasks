@@ -6,8 +6,17 @@ const taskSchema = new mongoose.Schema(
 {
   id: idSchema,
 
-  created_at: Date,
-  updated_at: Date,
+  created_at:
+  {
+    type: Date,
+    default: new Date()
+  }, 
+
+  updated_at:
+  {
+    type: Date,
+    default: new Date()
+  }, 
 
   content:
   {

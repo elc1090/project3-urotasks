@@ -534,6 +534,9 @@ ul {list-style: none;}
 
 .list-item-options
 {
+  position: absolute;
+  right: 0;
+  
   opacity: 0;
   text-align: center;
 }
@@ -546,8 +549,7 @@ ul {list-style: none;}
 .list-item-text, .list-item-options
 {
   padding: 12px;
-  border-top-right-radius: var(--container-sub-border-rad);
-  border-bottom-right-radius: var(--container-sub-border-rad);
+  border-radius: var(--container-sub-border-rad);
 }
 
 .add-task-container
