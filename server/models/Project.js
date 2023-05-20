@@ -32,21 +32,21 @@ const projectSchema = new mongoose.Schema(
   {
     type: [Task],
     required: false,
-    default: [/*{ id: uuid(), content: "" }*/]
+    default: [{ id: uuid(), content: "" }]
   },
 
   doing: 
   {
     type: [Task],
     required: false,
-    default: [/*{ id: uuid(), content: "" }*/]
+    default: [{ id: uuid(), content: "" }]
   },
 
   done: 
   {
     type: [Task],
     required: false,
-    default: [/*{ id: uuid(), content: "" }*/]
+    default: [{ id: uuid(), content: "" }]
   }
 });
 
