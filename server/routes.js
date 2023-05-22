@@ -56,15 +56,19 @@ router.post('/task-update', async (req, res) =>
 router.post('/task-move', async (req, res) => 
 {
   const data = req.body;
-  const [projectID, taskID, currTaskType, moveLocation] = [data[0], data[1], data[2], data[3]]
+  const [projectID, taskID, taskType, moveLocation] = [data[0], data[1], data[2], data[3]]
 
-  await taskController.move(projectID, taskID, currTaskType, moveLocation);
+  await taskController.move(projectID, taskID, taskType, moveLocation);
   res.send("data received!");
 });
 
 router.post('/task-delete', async (req, res) => 
 {
-  
+  const data = req.body;
+  const [projectID, taskID, taskType] = [data[0], data[1], data[2]]
+
+  await taskController.delete(projectID, taskID, taskType);
+  res.send("data received!");
 })
 
 export default router;

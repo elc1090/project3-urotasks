@@ -2,7 +2,7 @@ import Project from '../models/Project.js';
 
 const projectController = {};
 
-/****************************************************************************************/
+/*****************************************************************************************************************/
 projectController.create = async (projectData) =>
 {
   const project = new Project(projectData);
@@ -11,7 +11,7 @@ projectController.create = async (projectData) =>
   console.log(`********** ${new Date()}: successfully created project: ${projectData.name}`);
 }
 
-/****************************************************************************************/
+/*****************************************************************************************************************/
 projectController.read = async (req, res) =>
 {
   try
@@ -29,7 +29,7 @@ projectController.read = async (req, res) =>
   }
 }
 
-/****************************************************************************************/
+/*****************************************************************************************************************/
 projectController.update = async (projectData, updateType) =>
 {
   if (updateType === 'name')
@@ -45,7 +45,7 @@ projectController.update = async (projectData, updateType) =>
   }
 }
 
-/****************************************************************************************/
+/*****************************************************************************************************************/
 projectController.delete = async (projectData) =>
 {
   await Project.deleteOne({ id: projectData.id });
