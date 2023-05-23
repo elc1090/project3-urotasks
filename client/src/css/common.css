@@ -17,6 +17,10 @@ html, input, button, select {font-family: 'Montserrat', 'Oxygen', 'Ubuntu', sans
 body {overflow-x: hidden; background-color: var(--bg-blue-dark);}
 a {text-decoration: none;}
 ul {list-style: none;}
+textarea {resize: none;}
+
+::-webkit-scrollbar
+{ width: 0px; }
 
 :root
 {
@@ -32,6 +36,9 @@ ul {list-style: none;}
 
   --hl-green-dark: #25df91;
   --hl-green-light: #26ffa5;
+
+  --hl-orange-dark: #c97a02;
+  --hl-orange-light: #e98c00;
 
   --menu-width: 400px;
   --menu-width-translate: -400px;
@@ -302,7 +309,7 @@ ul {list-style: none;}
   left: 0;
 }
 
-.dashboard-searchbar
+.dashboard__searchbar
 {
   position: relative;
 
@@ -315,7 +322,7 @@ ul {list-style: none;}
   background-color: var(--bg-blue-light);
 }
 
-.dashboard-searchbar .fa-magnifying-glass
+.dashboard__searchbar .fa-magnifying-glass
 {
   position: absolute;
   top: 25%;
@@ -325,7 +332,7 @@ ul {list-style: none;}
   margin-right: 12px;
 }
 
-.dashboard-searchbar input
+.dashboard__searchbar input
 {
   width: 96%;
 
@@ -336,10 +343,10 @@ ul {list-style: none;}
   background-color: inherit;
 }
 
-.dashboard-searchbar input::placeholder
+.dashboard__searchbar input::placeholder
 {color: #afaeae;}
 
-.dashboard-upper
+.taskbar
 {
   display: grid;
   grid-template-columns: minmax(0px, 100%) auto auto;
@@ -357,7 +364,7 @@ ul {list-style: none;}
   font-weight: 500;
 }
 
-.dashboard-upper-title
+.taskbar__title
 {
   display: flex;
 }
@@ -371,12 +378,12 @@ ul {list-style: none;}
   overflow: hidden;
 }
 
-.dashboard-upper-title .title-color
+.taskbar__title .title-color
 {
   cursor: pointer;
 }
 
-.dashboard-upper-title .chrome-picker
+.taskbar__title .chrome-picker
 {  
   position: absolute;
   top: 64px;
@@ -385,7 +392,7 @@ ul {list-style: none;}
   z-index: 1;
 }
 
-.dashboard-upper-title .color-picker-background
+.taskbar__title .picker__bg
 {
   position: absolute;
   width: 100dvw;
@@ -394,7 +401,7 @@ ul {list-style: none;}
   z-index: 1;
 }
 
-.dashboard-upper-title input
+.taskbar__title input
 {
   color: inherit;
   background-color: inherit;
@@ -403,7 +410,7 @@ ul {list-style: none;}
   font-weight: inherit;
 }
 
-.upper-controls-sort
+.taskbar__sort
 {
   padding: 12px;
   border: 2px solid #fff;
@@ -413,13 +420,13 @@ ul {list-style: none;}
   user-select: none;
 }
 
-.upper-controls-sort:hover
+.taskbar__sort:hover
 {
   color: var(--bg-blue-light);
   background-color: #fff;
 }
 
-.upper-controls-sort .fa-arrow-down-wide-short
+.taskbar__sort .fa-arrow-down-wide-short
 {transition: all 0s ease-in-out;}
 
 .upper-controls-add_task
@@ -443,7 +450,7 @@ ul {list-style: none;}
 .upper-controls-add_task .fa-plus
 {transition: all 0s ease-in-out;}
 
-.upper-controls-delete_project
+.taskbar__delete
 {
   padding: 12px;
   border: 2px solid var(--hl-red-light);
@@ -455,13 +462,13 @@ ul {list-style: none;}
   user-select: none;
 }
 
-.upper-controls-delete_project:hover
+.taskbar__delete:hover
 {
   color: var(--bg-blue-light);
   background-color: var(--hl-red-light);
 }
 
-.upper-controls-delete_project .fa-trash-can
+.taskbar__delete .fa-trash-can
 {transition: all 0s ease-in-out;}
 
 .dashboard-tasks
@@ -504,6 +511,9 @@ ul {list-style: none;}
   flex-direction: column;
   gap: 24px;
 
+  /*max-height: 580px;
+  overflow-y: scroll;*/
+
   border-radius: var(--container-sub-border-rad);
 }
 
@@ -526,6 +536,7 @@ ul {list-style: none;}
   background-color: var(--bg-blue-light);
 }
 
+/* fix */
 .tasks-list-item:hover > .list-item-options
 {
   opacity: 1;
@@ -538,71 +549,152 @@ ul {list-style: none;}
   right: -12px;
   top: -4px;
 
-  opacity: 0;
+  opacity: 1;
   text-align: center;
 }
 
 .option
 {
-  display: grid;
-  place-items: center;
-
   position: relative;
   width: 42px;
   height: 42px;
 
-  padding-top: 8px;
-  margin-top: -8px;
   border-radius: var(--container-sub-border-rad);
 
   font-size: 1.2rem;
 }
 
-.options__move--shown
+.option__icon
 { 
-  transform: translateY(0px) !important; 
-  opacity: 1 !important;
+  display: grid;
+  place-items: center;
+
+  width: 42px; 
+  height: 42px;
 }
 
+.options__ellipsis--shown,
+.options__tags--shown,
+.options__move--shown,
 .options__remove--shown
 { 
   transform: translateY(0px) !important; 
+  pointer-events: initial !important;
   opacity: 1 !important;
 }
 
-.move__child
+.options__ellipsis--shown
+{ 
+  z-index: 5; 
+  background-color: var(--hl-blue-dark);
+}
+
+.options__select--shown
 {
-  display: none;
+  opacity: 1 !important;
+  pointer-events: initial !important;
+  cursor: pointer !important;
+}
+
+.options__select
+{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  
   position: absolute;
+  left: -120px;
+  top: 1px;
+  
+  padding: 8px;
+  border: 2px solid var(--hl-blue-light);
+  border-radius: var(--container-border-rad);
+
+  background-color: var(--bg-blue-mid);
+
+  font-size: 1.1rem;
+
+  pointer-events: none;
+  cursor: default;
+  opacity: 0;
 }
 
-.options__move
-{ 
-  transform: translateY(-34px); 
-  opacity: 0; 
+.options__select > *
+
+{
+  width: 96px;
+  height: 40px;
 }
 
-.options__remove
+.options__location
 { 
-  transform: translateY(-68px); 
-  opacity: 0; 
+  display: grid;
+  place-items: center;
+
+  border-radius: var(--container-sub-border-rad);
+
+  color: #000;
+  background-color: rgb(255, 255, 255);
 }
+
+.options__location:hover
+{ 
+  color: #fff;
+  background-color: var(--bg-blue-dark);
+}
+
+.options__location--selected
+{
+  color: #fff;
+  background-color: var(--bg-blue-dark);
+}
+
+.options__submit
+{
+  left: 0px;
+  margin-top: 8px;
+  border-radius: var(--container-sub-border-rad);
+
+  color: #fff;
+  background-color: var(--hl-blue-dark);
+
+  font-size: inherit;
+
+  cursor: pointer;
+}
+
+.options__submit:hover
+{ background-color: var(--hl-blue-light); }
 
 .options__ellipsis
 { 
-  z-index: 3; 
-  padding-top: 0px;
+  padding: 0;
+  margin-top: -8px;
 }
 
 .options__ellipsis:hover 
 { background-color: var(--hl-blue-light); }
 
-.list-item-options:hover > .options__ellipsis 
-{ background-color: var(--hl-blue-light); }
+.options__tags
+{ 
+  transform: translateY(-34px); 
+  pointer-events: none;
+  z-index: 4;
+  opacity: 0; 
+
+  background-color: var(--hl-orange-dark); 
+}
+
+.options__tags:hover 
+{ background-color: var(--hl-orange-light); }
 
 .options__move
 { 
-  z-index: 2;
+  transform: translateY(-68px); 
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0; 
+
   background-color: var(--hl-green-dark); 
 }
 
@@ -611,7 +703,11 @@ ul {list-style: none;}
 
 .options__remove
 { 
-  z-index: 1;
+  transform: translateY(-96px); 
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0; 
+
   background-color: var(--hl-red-dark); 
 }
 
@@ -624,21 +720,30 @@ ul {list-style: none;}
   border-radius: var(--container-sub-border-rad);
 }
 
+.list-item-text textarea
+{
+  color: inherit;
+  background-color: inherit;
+
+  font-family: inherit;
+  font-size: inherit;
+}
+
 .add-task-container
 {
   grid-column: 1 / 3;
 }
 
-.add-task-container input
+.add-task-container textarea
 {
-  width: 100%;
-  height: 100%;
-
   padding: 12px;
   border-radius: var(--container-sub-border-rad);
 
   color: inherit;
   background-color: var(--bg-blue-light);
+
+  font-family: inherit;
+  font-size: inherit;
 }
 
 .btn-add-task
@@ -767,7 +872,7 @@ option
   z-index: 2;
 }
 
-.projects-creator .color-picker-background
+.projects-creator .picker__bg
 {
   position: absolute;
   top: -400px;
@@ -795,7 +900,7 @@ option
 .creator-btn:hover
 {background-color: var(--hl-green-light);}
 
-.dashboard-burguer-btn
+.dashboard__burger
 {
   position: absolute;
   left: 24px;
@@ -808,7 +913,7 @@ option
   cursor: pointer;
 }
 
-.dashboard-burguer-btn:hover > svg
+.dashboard__burger:hover > svg
 {filter: drop-shadow(0px 0px 1px #fff);}
 
 /***************************************************************/
@@ -822,7 +927,7 @@ option
   .dashboard
   {padding-top: 96px;} 
   
-  .dashboard-searchbar
+  .dashboard__searchbar
   {
     position: absolute;
     left: 72px;
@@ -831,7 +936,7 @@ option
     width: calc(100% - 96px);  
   }
 
-  .searchbar-when-menu-shown
+  .searchbar--menu-shown
   {
     left: 24px;
     width: calc(100% - 49px);
@@ -872,7 +977,7 @@ option
 
 @media screen and (max-width: 600px)
 {
-  .dashboard-upper-title .color-picker
+  .taskbar__title .color-picker
   {
     top: 120px;
   }

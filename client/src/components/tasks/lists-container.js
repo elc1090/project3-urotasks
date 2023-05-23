@@ -33,8 +33,6 @@ export default function ColumnContainer({ taskType })
     const newTask = { id: uuid(), content: newContent, created_at: new Date(), updated_at: new Date() }
 
     axios.post('http://localhost:9000/task-create', [activeProjectCopy.id, taskType, newTask])
-      .then(function(response) {console.log(response)})
-      .catch(function(error) {console.log(error)})
 
     activeProjectCopy[taskType].push(newTask);
     setActiveProject(activeProjectCopy);
@@ -66,6 +64,17 @@ export default function ColumnContainer({ taskType })
 
   }
 
+  function handleInputGrowth()
+  {
+    const textArea = document.getElementById('text-area');
+
+    textArea.addEventListener('input', () => 
+    {
+      textArea.style.height = 'auto';
+      textArea.style.height = `${textArea.scrollHeight}px`;
+    });
+  }
+
   return (
     <div className="dashboard-tasks-item">
       <h2 className="tasks-item-header">{taskTypeName}</h2>
@@ -75,10 +84,24 @@ export default function ColumnContainer({ taskType })
       </TaskTypeContext.Provider>
       
       <div className="add-task-container">
-        {
-          editing ? (<input autoFocus type="text" ref={taskTextRef} value={inputValue} onChange={handleInputChange} onBlur={handleSave} onKeyDown={handleKeyDown} />)
-                  : (<button onClick={ () => {setEditing(true)} } className="btn-add-task"><FontAwesomeIcon icon={faPlus}/><span> Add task</span></button>)
-        }
+      {
+        editing ? 
+        (
+          <textarea 
+            style={{width: '100%', overflow: 'hidden'}} 
+            id='text-area' 
+            ref={taskTextRef} 
+            value={inputValue} 
+            onChange={handleInputChange} 
+            onBlur={handleSave} 
+            onKeyDown={handleKeyDown}
+            onInput={handleInputGrowth}
+            autoFocus
+          />
+        ) 
+                
+        : (<button onClick={ () => {setEditing(true)} } className="btn-add-task"><FontAwesomeIcon icon={faPlus}/><span> Add task</span></button>)
+      }
       </div>
     </div>
   )

@@ -3,32 +3,32 @@
     "name": "WORK",
     "color": "#7b4b94",
     "active": true,
-    "todo": [{"content": "something to do"}, {"content": "something else to do"}],
-    "doing": [{"content": "doing something"}, {"content": "doing something else"}],
-    "done": [{"content": "something done"}, {"content": "something else done"}]
+    "todo": [{"content": ""}, {"content": "something to do"}, {"content": "something else to do"}],
+    "doing": [{"content": ""}, {"content": "doing something"}, {"content": "doing something else"}],
+    "done": [{"content": ""}, {"content": "something done"}, {"content": "something else done"}]
   },
   {
     "name": "COLLEGE",
     "color": "#7d82b8",
     "active": false,
-    "todo": [{"content": "something to do"}, {"content": "something else to do"}],
-    "doing": [{"content": "doing something"}, {"content": "doing something else"}],
-    "done": [{"content": "something done"}, {"content": "something else done"}]
+    "todo": [{"content": ""}, {"content": "something to do"}, {"content": "something else to do"}],
+    "doing": [{"content": ""}, {"content": "doing something"}, {"content": "doing something else"}],
+    "done": [{"content": ""}, {"content": "something done"}, {"content": "something else done"}]
   },
   {
     "name": "MUSIC PRODUCTION",
     "color": "#b7e3cc",
     "active": false,
-    "todo": [{"content": "something to do"}, {"content": "something else to do"}],
-    "doing": [{"content": "doing something"}, {"content": "doing something else"}],
-    "done": [{"content": "something done"}, {"content": "something else done"}]
+    "todo": [{"content": ""}, {"content": "something to do"}, {"content": "something else to do"}],
+    "doing": [{"content": ""}, {"content": "doing something"}, {"content": "doing something else"}],
+    "done": [{"content": ""}, {"content": "something done"}, {"content": "something else done"}]
   },
   {
     "name": "ONLINE SIGMA SIDE HUSTLE",
     "color": "#c4ffb2",
     "active": false,
-    "todo": [{"content": "something to do"}, {"content": "something else to do"}],
-    "doing": [{"content": "doing something"}, {"content": "doing something else"}],
-    "done": [{"content": "something done"}, {"content": "something else done"}]
+    "todo": [{"content": ""}, {"content": "something to do"}, {"content": "something else to do"}],
+    "doing": [{"content": ""}, {"content": "doing something"}, {"content": "doing something else"}],
+    "done": [{"content": ""}, {"content": "something done"}, {"content": "something else done"}]
   }
 ]

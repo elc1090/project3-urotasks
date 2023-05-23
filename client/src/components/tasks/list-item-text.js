@@ -23,16 +23,18 @@ export default function ItemText({ value, taskID })
     const taskList = placeholderActiveProject[taskType];
 
     for (let i = 0; i < taskList.length; i++)
-      if (taskList[i].id === taskID)
+      if (taskList[i].id === taskID && taskList[i].content !== newContent)
+      {
         taskList[i].content = newContent;
+
+        axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update`, [activeProject.id, taskType, taskID, newContent])
+          .then(function(response) {console.log(response)})
+          .catch(function(error) {console.log(error)});
+      }
 
     placeholderActiveProject[taskType] = taskList;
     setActiveProject(placeholderActiveProject);
     dispatch({ type: 'taskUpdated' });
-
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update`, [activeProject.id, taskType, taskID, newContent])
-      .then(function(response) {console.log(response)})
-      .catch(function(error) {console.log(error)});
   }
 
   function handleInputChange(e) 
@@ -40,9 +42,18 @@ export default function ItemText({ value, taskID })
     setInputValue(e.target.value);
   }
 
-  function handleEdit() 
+  async function handleEdit() 
   {
-    setEditing(true);
+    await setEditing(true);
+
+    const textArea = document.getElementById('text-area');
+    const end = textArea.value.length;
+    
+    textArea.style.height = 'auto';
+    textArea.style.height = `${textArea.scrollHeight}px`;
+    
+    textArea.setSelectionRange(end, end);
+    textArea.focus();
   }
 
   function handleSave() 
@@ -59,11 +70,35 @@ export default function ItemText({ value, taskID })
       handleSave();
   }
 
+  function handleInputGrowth()
+  {
+    const textArea = document.getElementById('text-area');
+
+    textArea.addEventListener('input', () => 
+    {
+      textArea.style.height = 'auto';
+      textArea.style.height = `${textArea.scrollHeight}px`;
+    });
+  }
+
   return (
     <div className='list-item-text'>
       {
-        editing ? (<input style={{width: '100%'}} autoFocus type="text" ref={taskTextRef} value={inputValue} onChange={handleInputChange} onBlur={handleSave} onKeyDown={handleKeyDown}/>) 
-                : (<div style={{width: '100%'}} onClick={handleEdit}>{value}</div>)
+        editing ? 
+        (
+          <textarea 
+            style={{width: '100%', overflow: 'hidden'}} 
+            id='text-area' 
+            ref={taskTextRef} 
+            value={inputValue} 
+            onChange={handleInputChange} 
+            onBlur={handleSave} 
+            onKeyDown={handleKeyDown}
+            onInput={handleInputGrowth}
+          />
+        ) 
+                
+        : (<div style={{width: '100%'}} onClick={handleEdit}>{value}</div>)
       }
     </div>
   );

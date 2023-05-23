@@ -32,17 +32,15 @@ export default function TaskbarProjectColor()
 
     setPickerActive(!pickerActive);
 
-    // make it call only when closing color picker
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-update`, [{ id: activeProject.id, color: color }, 'color'])
-    .then(function(response) {console.log(response)})
-    .catch(function(error) {console.log(error)});
+    if (color !== activeProject.color)
+      axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-update`, [{ id: activeProject.id, color: color }, 'color'])
   }
 
   function ColorPicker()
   {
     return (
       <div>
-        <div onClick={ toggleColorPicker } className='color-picker-background'/>
+        <div onClick={ toggleColorPicker } className='picker__bg'/>
         <ChromePicker color={ color } onChangeComplete={ (color) => {setColor(color.hex)} }/> 
       </div>
     )

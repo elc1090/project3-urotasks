@@ -36,7 +36,7 @@ export default function ProjCreator()
     return projects;
   }
 
-  function createProject()
+  async function createProject()
   {
     let name = projectNameRef.current.value;
     if (name === '') return;
@@ -52,28 +52,26 @@ export default function ProjCreator()
       done : [{ id: uuid(), content: "" }]
     };
 
+    projectNameRef.current.value = '';
+
     if (projects.length === 0)
       newProject.active = true;
 
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-create`, newProject)
-      .then(function(response) {console.log(response); })
-      .catch(function(error) {console.log(error)});
-
     
     // quick fix, see why the state is not updated by the time all components rerender
     // forcing to refresh the page to get new project data, instead of using state directly
-    if (newProject.active === true)
+    //if (newProject.active === true)
       window.location.reload(false);
 
-    else
+    /*else
     {
       const newProjects = [...projects, newProject];
-      setProjects(removeFirstTask(newProjects));
+      await setProjects(removeFirstTask(newProjects));
       setActiveProject(projects[0]);
       
       dispatch({ type: 'projCreatorShown' });
-      projectNameRef.current.value = '';
-    }
+    }*/
   }
 
   function toggleColorPicker()
@@ -85,7 +83,7 @@ export default function ProjCreator()
   {
     return (
       <div>
-        <div onClick={ toggleColorPicker } className='color-picker-background'/>
+        <div onClick={ toggleColorPicker } className='picker__bg'/>
         <ChromePicker color={ color } onChangeComplete={ (color) => {setColor(color.hex)} }/> 
       </div>
     )

@@ -41,6 +41,7 @@ taskController.move = async (projectID, taskID, taskType, moveLocation) =>
   
   const taskIndex = taskList.findIndex(task => task.id === taskID);
   const task = taskList[taskIndex];
+  task.updated_at = new Date();
 
   project[moveLocation].push(task);
 

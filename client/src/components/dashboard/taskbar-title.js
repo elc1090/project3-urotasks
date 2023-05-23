@@ -24,8 +24,6 @@ export default function ItemText({ value })
     setProjects(placeholderProjects);
 
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-update`, [{ id: activeProject.id, name: newName }, 'name'])
-      .then(function(response) {console.log(response)})
-      .catch(function(error) {console.log(error)});
   }
 
   function handleInputChange(e) 

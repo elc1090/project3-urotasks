@@ -1,6 +1,5 @@
 /** dependencies **/
-import React, { useState, useEffect } from 'react';
-import { state, dispatch } from './reducer';
+import React, { useState, useEffect, useReducer } from 'react';
 import axios from 'axios';
 import './css/common.css';
 
@@ -21,6 +20,31 @@ export default function App()
 {
   const [projects, setProjects] = useState([]);
   const [activeProject, setActiveProject] = useState(projects[0]);
+
+  const [state, dispatch] = useReducer(reducer, 
+  {
+    isMenuHidden: false,
+    isDashboardMoved: false,
+    isSearchbarSpaced: false,
+    isProjCreatorShown: false,
+    isOptionOnFocus: false,
+    isTaskUpdated: false
+  });
+      
+  function reducer(state, action)
+  {
+    switch (action.type)
+    {
+      // ui
+      case 'menuHidden': return { ...state, isMenuHidden: !state.isMenuHidden };
+      case 'dashboardMoved': return { ...state, isDashboardMoved: !state.isDashboardMoved };
+      case 'searchbarSpaced': return { ...state, isSearchbarSpaced: !state.isSearchbarSpaced };
+      case 'projCreatorShown': return { ...state, isProjCreatorShown: !state.isProjCreatorShown };
+      case 'optionOnFocus': return { ...state,  isOptionOnFocus: !state.isOptionOnFocus };
+      case 'taskUpdated': return { ...state, isTaskUpdated: !state.isTaskUpdated };
+      default: return state;
+    }
+  }
 
   // quick fix
   function removeFirstTask(projects)
@@ -56,7 +80,7 @@ export default function App()
 
   return (
     <div className="app" id='app'>
-      <div className='dashboard-burguer-btn' id="dashboard-burguer-btn" onClick={toggleMenu}><FontAwesomeIcon icon={faBars}/></div>
+      <div className='dashboard__burger' id="dashboard__burger" onClick={toggleMenu}><FontAwesomeIcon icon={faBars}/></div>
       
       <ActiveProjectContext.Provider value={{ activeProject, setActiveProject }}>
         <ProjectsContext.Provider value={{ projects, setProjects }}>

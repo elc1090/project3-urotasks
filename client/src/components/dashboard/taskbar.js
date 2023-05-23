@@ -29,24 +29,22 @@ export default function UpperSection()
       setProjects([]);
 
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-delete`, { id: activeProject.id })
-      .then(function(response) {console.log(response)})
-      .catch(function(error) {console.log(error)});
   }
 
   return (
-    <div className="dashboard-upper">
-      <h1 className="dashboard-upper-title" id="dashboard-project-title">
+    <div className="taskbar">
+      <h1 className="taskbar__title" id="task__title">
         <TaskbarProjectColor/>
         <TaskbarTitle value={ activeProject.name }/>
       </h1>
       
-      <div className="upper-controls-sort">
+      <div className="taskbar__sort">
         <FontAwesomeIcon icon={ faArrowDownWideShort }/>
         <span className='controls-big'> Sort</span>
         <span className='controls-small'></span>
       </div>
 
-      <div className="upper-controls-delete_project" onClick={ deleteProject }>
+      <div className="taskbar__delete" onClick={ deleteProject }>
         <FontAwesomeIcon icon={ faTrashCan }/> 
         <span className='controls-big'> Delete</span>
         <span className='controls-small'></span>
