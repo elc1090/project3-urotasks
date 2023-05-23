@@ -12,9 +12,9 @@ Preencha aqui a URL para acesso ao site publicado
 - Ana Clara Boniatti Bordin
 
 #### Tecnologias
-- Node.js
-- React
-- MongoDB
+- Node.js (v16.19.1)
+- React (v18.2.0)
+- MongoDB (v6.0.5)
 
 #### Ambiente de desenvolvimento
 - VSCode
