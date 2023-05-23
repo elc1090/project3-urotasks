@@ -84,12 +84,15 @@ export default function ListItemControls({ task })
     const moveSelectElement = document.getElementById(moveSelect);
     moveSelectElement.classList.remove('options__select--shown');
 
-    if (toggle === 'show')
+    if (toggle === 'toggle')
     {
       optionEllipsisElement.classList.toggle('options__ellipsis--shown');
       optionTagsElement.classList.toggle('options__tags--shown');
       optionMoveElement.classList.toggle('options__move--shown');
       optionRemoveElement.classList.toggle('options__remove--shown');
+
+      if (optionFocus === true)
+        setOptionFocus(false);
     }
 
     else
@@ -131,7 +134,7 @@ export default function ListItemControls({ task })
 
   return (
     <div className='list-item-options' onMouseLeave={optionFocus ? () => {} : () => {toggleOptions('hide')}}>
-      <div className=' option options__ellipsis' id={ optionEllipsis } onClick={ () => {toggleOptions('show')} }>
+      <div className=' option options__ellipsis' id={ optionEllipsis } onClick={ () => {toggleOptions('toggle')} }>
         <div className='option__icon'><FontAwesomeIcon icon={ faEllipsisVertical }/></div>
       </div>
       

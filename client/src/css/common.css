@@ -37,14 +37,11 @@ textarea {resize: none;}
   --hl-green-dark: #25df91;
   --hl-green-light: #26ffa5;
 
-  --hl-orange-dark: #c97a02;
-  --hl-orange-light: #e98c00;
-
   --menu-width: 400px;
   --menu-width-translate: -400px;
 
-  --container-border-rad: 5px;
-  --container-sub-border-rad: 4px;
+  --border-rad-big: 5px;
+  --border-rad-small: 4px;
 }
 
 .highlight
@@ -197,7 +194,7 @@ textarea {resize: none;}
   grid-template-columns: minmax(0px, 296px) auto;
 
   padding: 12px 0px 12px 16px;
-  border-radius: var(--container-border-rad);
+  border-radius: var(--border-rad-big);
 
   cursor: pointer;
 }
@@ -224,7 +221,7 @@ textarea {resize: none;}
 .menu-projects-list-item .total-tasks
 {
   padding: 1px 8px;
-  border-radius: var(--container-sub-border-rad);
+  border-radius: var(--border-rad-small);
 
   background: var(--bg-blue-dark);
 
@@ -246,7 +243,7 @@ textarea {resize: none;}
   padding-top: 16px;
 
   border-top: 3px solid #334150;
-  border-radius: var(--container-sub-border-rad);
+  border-radius: var(--border-rad-small);
 }
 
 .menu-user-data
@@ -259,7 +256,7 @@ textarea {resize: none;}
 .menu-user-pic img
 {
   width: 48px;
-  border-radius: var(--container-border-rad);
+  border-radius: var(--border-rad-big);
 }
 
 .menu-user-name
@@ -317,7 +314,7 @@ textarea {resize: none;}
   max-width: 100%;
 
   margin-bottom: 48px;
-  border-radius: var(--container-border-rad);
+  border-radius: var(--border-rad-big);
 
   background-color: var(--bg-blue-light);
 }
@@ -337,7 +334,7 @@ textarea {resize: none;}
   width: 96%;
 
   padding: 12px 12px 12px 48px;
-  border-radius: var(--container-border-rad);
+  border-radius: var(--border-rad-big);
 
   color: #fff;
   background-color: inherit;
@@ -414,7 +411,7 @@ textarea {resize: none;}
 {
   padding: 12px;
   border: 2px solid #fff;
-  border-radius: var(--container-sub-border-rad);
+  border-radius: var(--border-rad-small);
 
   cursor: pointer;
   user-select: none;
@@ -433,7 +430,7 @@ textarea {resize: none;}
 {
   padding: 12px;
   border: 2px solid var(--hl-green-light);
-  border-radius: var(--container-sub-border-rad);
+  border-radius: var(--border-rad-small);
 
   color: #fff;
 
@@ -454,7 +451,7 @@ textarea {resize: none;}
 {
   padding: 12px;
   border: 2px solid var(--hl-red-light);
-  border-radius: var(--container-sub-border-rad);
+  border-radius: var(--border-rad-small);
 
   color: #fff;
 
@@ -497,7 +494,7 @@ textarea {resize: none;}
   height: fit-content;
 
   padding: 16px;
-  border-radius: var(--container-border-rad);
+  border-radius: var(--border-rad-big);
 
   background-color: var(--bg-blue-mid);
 }
@@ -514,7 +511,7 @@ textarea {resize: none;}
   /*max-height: 580px;
   overflow-y: scroll;*/
 
-  border-radius: var(--container-sub-border-rad);
+  border-radius: var(--border-rad-small);
 }
 
 .tasks-item-options
@@ -531,7 +528,7 @@ textarea {resize: none;}
   position: relative;
   width: 100%;
   
-  border-radius: var(--container-sub-border-rad);
+  border-radius: var(--border-rad-small);
 
   background-color: var(--bg-blue-light);
 }
@@ -559,7 +556,7 @@ textarea {resize: none;}
   width: 42px;
   height: 42px;
 
-  border-radius: var(--container-sub-border-rad);
+  border-radius: var(--border-rad-small);
 
   font-size: 1.2rem;
 }
@@ -576,7 +573,8 @@ textarea {resize: none;}
 .options__ellipsis--shown,
 .options__tags--shown,
 .options__move--shown,
-.options__remove--shown
+.options__remove--shown,
+.option--shown
 { 
   transform: translateY(0px) !important; 
   pointer-events: initial !important;
@@ -586,7 +584,9 @@ textarea {resize: none;}
 .options__ellipsis--shown
 { 
   z-index: 5; 
-  background-color: var(--hl-blue-dark);
+
+  color: var(--bg-blue-mid);
+  background-color: #fff;
 }
 
 .options__select--shown
@@ -608,7 +608,7 @@ textarea {resize: none;}
   
   padding: 8px;
   border: 2px solid var(--hl-blue-light);
-  border-radius: var(--container-border-rad);
+  border-radius: var(--border-rad-big);
 
   background-color: var(--bg-blue-mid);
 
@@ -631,7 +631,7 @@ textarea {resize: none;}
   display: grid;
   place-items: center;
 
-  border-radius: var(--container-sub-border-rad);
+  border-radius: var(--border-rad-small);
 
   color: #000;
   background-color: rgb(255, 255, 255);
@@ -653,7 +653,7 @@ textarea {resize: none;}
 {
   left: 0px;
   margin-top: 8px;
-  border-radius: var(--container-sub-border-rad);
+  border-radius: var(--border-rad-small);
 
   color: #fff;
   background-color: var(--hl-blue-dark);
@@ -672,8 +672,16 @@ textarea {resize: none;}
   margin-top: -8px;
 }
 
+.options__ellipsis > *
+{
+  transition: all 0s ease-in-out;
+}
+
 .options__ellipsis:hover 
-{ background-color: var(--hl-blue-light); }
+{ 
+  color: var(--bg-blue-mid);
+  background-color: #fff;
+}
 
 .options__tags
 { 
@@ -682,11 +690,11 @@ textarea {resize: none;}
   z-index: 4;
   opacity: 0; 
 
-  background-color: var(--hl-orange-dark); 
+  background-color: var(--hl-green-dark); 
 }
 
 .options__tags:hover 
-{ background-color: var(--hl-orange-light); }
+{ background-color: var(--hl-green-light); }
 
 .options__move
 { 
@@ -695,11 +703,11 @@ textarea {resize: none;}
   z-index: 3;
   opacity: 0; 
 
-  background-color: var(--hl-green-dark); 
+  background-color: var(--hl-blue-dark); 
 }
 
 .options__move:hover 
-{ background-color: var(--hl-green-light); }
+{ background-color: var(--hl-blue-light); }
 
 .options__remove
 { 
@@ -717,7 +725,7 @@ textarea {resize: none;}
 .list-item-text, .list-item-options
 {
   padding: 12px;
-  border-radius: var(--container-sub-border-rad);
+  border-radius: var(--border-rad-small);
 }
 
 .list-item-text textarea
@@ -737,7 +745,7 @@ textarea {resize: none;}
 .add-task-container textarea
 {
   padding: 12px;
-  border-radius: var(--container-sub-border-rad);
+  border-radius: var(--border-rad-small);
 
   color: inherit;
   background-color: var(--bg-blue-light);
@@ -752,7 +760,7 @@ textarea {resize: none;}
 
   padding: 10px;
   border: 2px solid #00000000;
-  border-radius: var(--container-sub-border-rad);
+  border-radius: var(--border-rad-small);
 
   color: #c0c0c0;
   background-color: inherit;
@@ -805,7 +813,7 @@ textarea {resize: none;}
   gap: 8px;
 
   padding: 16px;
-  border-radius: var(--container-border-rad);
+  border-radius: var(--border-rad-big);
 
   color: white;
   background-color: var(--bg-blue-light);
@@ -840,7 +848,7 @@ textarea {resize: none;}
 .creator-input
 {
   padding: 8px 12px;
-  border-radius: var(--container-sub-border-rad);
+  border-radius: var(--border-rad-small);
 }
 
 select
@@ -888,7 +896,7 @@ option
   grid-column: 1 / 4;
 
   padding: 8px;
-  border-radius: var(--container-sub-border-rad);
+  border-radius: var(--border-rad-small);
 
   background-color: var(--hl-green-dark);
 

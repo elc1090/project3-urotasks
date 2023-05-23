@@ -21,15 +21,16 @@ export default function ProjCreator()
 
   function removeFirstTask(projects)
   {
+    console.log(projects)
     projects.forEach(project => 
     {
-      if (project.todo[0].content === "")
-        project.todo.shift();
+      if (project.todo[0]?.content === "")
+       project.todo.shift();
 
-      if (project.doing[0].content === "")
+      if (project.doing[0]?.content === "")
         project.doing.shift();
 
-      if (project.done[0].content === "")
+      if (project.done[0]?.content === "")
         project.done.shift();
     })
 
@@ -61,17 +62,21 @@ export default function ProjCreator()
     
     // quick fix, see why the state is not updated by the time all components rerender
     // forcing to refresh the page to get new project data, instead of using state directly
-    //if (newProject.active === true)
+    if (newProject.active === true)
       window.location.reload(false);
 
-    /*else
+    else
     {
       const newProjects = [...projects, newProject];
-      await setProjects(removeFirstTask(newProjects));
-      setActiveProject(projects[0]);
+      console.log(newProjects)
+      
+      if (newProjects.includes(newProject))
+        await setProjects(removeFirstTask(newProjects));
+
+      await setActiveProject(projects[0]);
       
       dispatch({ type: 'projCreatorShown' });
-    }*/
+    }
   }
 
   function toggleColorPicker()
