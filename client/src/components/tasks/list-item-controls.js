@@ -12,7 +12,7 @@ export default function ListItemControls({ task })
   const [newLocation, setNewLocation] = useState('done');
   const moveLocationRef = useRef();
 
-  const { state, dispatch } = useContext(ReducerContext);
+  const { dispatch } = useContext(ReducerContext);
   const { activeProject, setActiveProject } = useContext(ActiveProjectContext);
   const taskType0 = useContext(TaskTypeContext);
   let taskType1, taskType2;
@@ -41,6 +41,9 @@ export default function ListItemControls({ task })
 
     const taskIndex = taskList.findIndex(taskItem => taskItem.id === task.id);
     const taskToMove = taskList.splice(taskIndex, 1)[0];
+
+    if (!Array.isArray(placeholderActiveProject[moveLocation]))
+      placeholderActiveProject[moveLocation] = [];
 
     placeholderActiveProject[moveLocation].push(taskToMove);
     placeholderActiveProject[taskType0] = taskList;

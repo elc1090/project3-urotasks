@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { ReducerContext } from '../app';
+import { ReducerContext, UserContext } from '../app';
 
 import ProjectsList from './projects/list';
 
@@ -8,6 +8,7 @@ import { faXmark, faChevronUp, faPlus, faRightFromBracket } from '@fortawesome/f
 
 export default function Menu()
 {
+  const { user } = useContext(UserContext);
   const { state, dispatch } = useContext(ReducerContext);
 
   function toggleMenu()
@@ -43,7 +44,7 @@ export default function Menu()
       <div className='menu-user'>
         <a className='menu-user-data' href='/'>
           <div className='menu-user-pic'><img src='img/capybara.jpg' alt='user_pic'></img></div>
-          <div className='menu-user-name'>Capybara</div>
+          <div className='menu-user-name'>{ user?.name }</div>
         </a>
         <div className='menu-user-signout'><FontAwesomeIcon icon={ faRightFromBracket }/></div>
       </div>

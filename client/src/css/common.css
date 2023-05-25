@@ -62,7 +62,7 @@ textarea {resize: none;}
 
   background-color: var(--bg-blue-dark);
   
-  opacity: 0;
+  opacity: 1;
   animation: ease-in-out 1s forwards fade-in;
 }
 

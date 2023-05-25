@@ -16,7 +16,9 @@ router.get('/data-read', async (req, res) =>
     const projects = await Project.find();
     const user = await User.findOne({ id: "1d33e9a5-697b-4d80-b2fb-d854fb2f7fa2" });
     const data = [user, projects];
+
     res.send(data);
+    console.log(`${new Date()} successfully sent data to client`)
   }
 
   catch (err)

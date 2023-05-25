@@ -39,6 +39,10 @@ taskController.move = async (projectID, taskID, taskType, moveLocation) =>
 {
   const project = await Project.findOne({ id: projectID });
   const taskList = project[taskType];
+
+  if (!Array.isArray(project[moveLocation]))
+    project[moveLocation] = [];
+
   const moveLocationList = project[moveLocation];
   
   const taskIndex = taskList.findIndex(task => task.id === taskID);
@@ -48,8 +52,13 @@ taskController.move = async (projectID, taskID, taskType, moveLocation) =>
   moveLocationList.push(task);
   taskList.splice(taskIndex, 1);
 
-  await Project.updateOne({ id: projectID }, { [taskType]: taskList, [moveLocation]: moveLocationList })
-  console.log(`${new Date()}: successfuly moved task |${taskID}| from |${taskType}| to |${moveLocation}|`);
+  if (taskList.length <= 0)
+    await Project.updateOne({ id: projectID }, { $unset: { [taskType]: 1 }, [moveLocation]: moveLocationList });
+
+  else
+    await Project.updateOne({ id: projectID }, { [taskType]: taskList, [moveLocation]: moveLocationList })
+  
+    console.log(`${new Date()}: successfuly moved task |${taskID}| from |${taskType}| to |${moveLocation}|`);
 }
 
 /*****************************************************************************************************************/
@@ -61,7 +70,12 @@ taskController.delete = async (projectID, taskID, taskType) =>
   const taskIndex = taskList.findIndex(task => task.id === taskID);
   taskList.splice(taskIndex, 1);
 
-  await Project.updateOne({ id: projectID }, { [taskType]: taskList })
+  if (taskList.length <= 0)
+    await Project.updateOne({ id: projectID }, { $unset: { [taskType]: 1 } });
+
+  else
+    await Project.updateOne({ id: projectID }, { [taskType]: taskList });
+
   console.log(`${new Date()}: successfully deleted task |${taskID}|`);
 }
 
