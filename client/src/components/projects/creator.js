@@ -1,5 +1,5 @@
 import { useContext, useRef, useState } from 'react';
-import { ProjectsContext, ActiveProjectContext, ReducerContext } from "../../app";
+import { ProjectsContext, ActiveProjectContext, ReducerContext, UserContext } from "../../app";
 import axios from 'axios';
 
 import { v4 as uuid } from 'uuid';
@@ -12,6 +12,7 @@ export default function ProjCreator()
 {
   const projectNameRef = useRef();
   
+  const { user, setUser } = useContext(UserContext);
   const { setActiveProject } = useContext(ActiveProjectContext);
   const { projects, setProjects } = useContext(ProjectsContext);
   const { state, dispatch } = useContext(ReducerContext);
@@ -31,30 +32,28 @@ export default function ProjCreator()
       color: color
     };
 
-    projectNameRef.current.value = '';
-
-    if (projects.length === 0)
-      newProject.active = true;
+    const userCopy = { ...user };
+    userCopy.activeProject = newProject.id;
+    setUser(userCopy);
 
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-create`, newProject)
+      .then(res => {console.log(res)})
+      .catch(err => {console.log(err)})
+
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update`, [user.id, newProject.id, 'activeProject'])
+      .then(res => {console.log(res)})
+      .catch(err => {console.log(err)})
     
-    // quick fix, see why the state is not updated by the time all components rerender
-    // forcing to refresh the page to get new project data, instead of using state directly
-    if (newProject.active === true)
-      window.location.reload(false);
 
-    else
-    {
-      const newProjects = [...projects, newProject];
-      console.log(newProjects)
-      
-      if (newProjects.includes(newProject))
-        await setProjects(newProjects);
+    const newProjects = [...projects, newProject];
+    setProjects(newProjects);
+    
+    dispatch({ type: 'menuHidden'       });
+    dispatch({ type: 'dashboardMoved'   });
+    dispatch({ type: 'searchbarSpaced'  }); 
+    dispatch({ type: 'projCreatorShown' }); 
 
-      await setActiveProject(projects[0]);
-      
-      dispatch({ type: 'projCreatorShown' });
-    }
+    projectNameRef.current.value = '';
   }
 
   function toggleColorPicker()
@@ -84,7 +83,7 @@ export default function ProjCreator()
         <h2 className="creator-title">CREATE PROJECT <FontAwesomeIcon icon={ faBarsProgress }/> </h2>
         <div className='btn-close' onClick={ () => {dispatch({ type: 'projCreatorShown' })} }> <FontAwesomeIcon icon={ faXmark }/> </div>
 
-        <input className="creator-input" id="input-1" ref={ projectNameRef } type="text" placeholder="Name of the project"/>
+        <input className="creator-input" id="input-1" ref={ projectNameRef } type="text" placeholder="Name of the project" autoFocus/>
         <button className="creator-input" id="input-2" onClick={toggleColorPicker}><ColorInput/></button>
         {pickerActive ? <ColorPicker/> : null}
         

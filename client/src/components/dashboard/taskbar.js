@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { ProjectsContext, ActiveProjectContext } from "../../app";
+import { ProjectsContext, ActiveProjectContext, UserContext } from "../../app";
 import axios from 'axios';
 
 import TaskbarTitle from './taskbar-title';
@@ -10,6 +10,7 @@ import { faArrowDownWideShort, faTrashCan } from '@fortawesome/free-solid-svg-ic
 
 export default function UpperSection()
 {
+  const { user, setUser } = useContext(UserContext);
   const { activeProject } = useContext(ActiveProjectContext);
   const { projects, setProjects } = useContext(ProjectsContext);
 
@@ -18,17 +19,27 @@ export default function UpperSection()
     let placeholderProjects;
 
     if (projects.length > 1)
-    {
+    { 
       placeholderProjects = projects.filter(project => project.id !== activeProject.id);
       placeholderProjects[0].active = true;
       
       setProjects(placeholderProjects);
+
+      const userCopy = { ...user };
+      userCopy.activeProject = projects[0].id;
+      setUser(userCopy);
+
+      axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update`, [user.id, projects[0].id, 'activeProject'])
+        .then(res => {console.log(res)})
+        .catch(err => {console.log(err)})
     }
 
     else
       setProjects([]);
 
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-delete`, { id: activeProject.id })
+      .then(res => {console.log(res)})
+      .catch(err => console.log(err))
   }
 
   return (

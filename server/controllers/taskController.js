@@ -74,7 +74,7 @@ taskController.delete = async (projectID, taskID, taskType) =>
     await Project.updateOne({ id: projectID }, { $unset: { [taskType]: 1 } });
 
   else
-    await Project.updateOne({ id: projectID }, { [taskType]: taskList });
+    await Project.updateOne({ id: projectID }, { $set: { [taskType]: taskList } });
 
   console.log(`${new Date()}: successfully deleted task |${taskID}|`);
 }

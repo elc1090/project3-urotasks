@@ -41,9 +41,9 @@ export default function App()
 
   const [state, dispatch] = useReducer(reducer, 
   {
-    isMenuHidden: false,
-    isDashboardMoved: false,
-    isSearchbarSpaced: false,
+    isMenuHidden: true,
+    isDashboardMoved: true,
+    isSearchbarSpaced: true,
     isProjCreatorShown: false,
     isOptionOnFocus: false,
     isTaskUpdated: false

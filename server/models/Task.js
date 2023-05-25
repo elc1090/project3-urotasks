@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-import _id from './_id.js';
+import idSchema from './_id.js';
 
 const taskSchema = new mongoose.Schema(
 {
-  id: _id,
+  id: idSchema,
 
   created_at:
   {

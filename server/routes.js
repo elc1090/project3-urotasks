@@ -110,7 +110,7 @@ router.post('/user-create', async (req, res) =>
 })*/
 
 
-router.post('/user-update-active-project', async (req, res) => 
+router.post('/user-update', async (req, res) => 
 {
   const data = req.body;
   const [userID, projectID, updateType] = [data[0], data[1], data[2]];

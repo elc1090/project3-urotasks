@@ -26,7 +26,7 @@ export default function ProjectsItem({ projectsItem })
       dispatch({ type: 'searchbarSpaced' });  
     }  
 
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update-active-project`, [user.id, projectsItem.id, 'activeProject']);
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update`, [user.id, projectsItem.id, 'activeProject']);
   }
 
   return (

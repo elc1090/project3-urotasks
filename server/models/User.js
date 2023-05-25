@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
-import _id from './_id.js';
+import idSchema from './_id.js';
 
 const userSchema = new mongoose.Schema(
 {
-  id: _id,
-  activeProject: _id,
+  id: idSchema,
+  activeProject: idSchema,
 
   name: 
   { 

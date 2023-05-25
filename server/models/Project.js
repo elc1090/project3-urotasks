@@ -1,16 +1,10 @@
 import mongoose from "mongoose";
-import _id from './_id.js';
+import idSchema from './_id.js';
 
 const projectSchema = new mongoose.Schema(
 {
-  id: _id,
+  id: idSchema,
   
-  active:
-  {
-    type: Boolean,
-    default: true
-  },
-
   name: 
   { 
     type: String, 
@@ -24,7 +18,7 @@ const projectSchema = new mongoose.Schema(
     require: true,
     maxlength: 7
   }
-}, { strict: false });
+});
 
 
 export default mongoose.model("Project", projectSchema);
