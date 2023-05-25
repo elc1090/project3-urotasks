@@ -22,6 +22,7 @@ const taskSchema = new mongoose.Schema(
     type: String,
     maxlength: 512
   }
-});
+}, { _id: false });
 
-export default mongoose.model("Task", taskSchema);
+const taskModel = mongoose.model("Task", taskSchema);
+export { taskSchema, taskModel as Task }

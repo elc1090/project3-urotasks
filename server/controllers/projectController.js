@@ -17,7 +17,7 @@ projectController.read = async (req, res) =>
   try
   {
     const projects = await Project.find();
-    res.send(projects);
+    res.status(200).send(projects);
 
     console.log(`${new Date()}: successfully sent projects data to client`)
   }

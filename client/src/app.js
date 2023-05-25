@@ -29,7 +29,7 @@ export default function App()
       for (let i = 0; i < projects.length; i++)
         if (projects[i].id === user.activeProject)
           setActiveProject(projects[i]);
-    
+
   }, [user, projects]);
 
   useEffect(() => 
@@ -71,23 +71,21 @@ export default function App()
     dispatch({ type: 'searchbarSpaced' });  
   }
 
-  if (activeProject !== null)
-  {
-    return (
-      <div className="app" id='app'>
-        <div className='dashboard__burger' id="dashboard__burger" onClick={toggleMenu}><FontAwesomeIcon icon={faBars}/></div>
-        
-        <ActiveProjectContext.Provider value={{ activeProject, setActiveProject }}>
-          <ProjectsContext.Provider value={{ projects, setProjects }}>
-            <ReducerContext.Provider value={{ state, dispatch }}>
-              <UserContext.Provider value={{ user, setUser }}>
-                <Menu/>
-                <Dashboard/>
-              </UserContext.Provider>
-            </ReducerContext.Provider>
-          </ProjectsContext.Provider>
-        </ActiveProjectContext.Provider>
-      </div>
-    );
-  }
+
+  return (
+    <div className="app" id='app'>
+      <div className='dashboard__burger' id="dashboard__burger" onClick={toggleMenu}><FontAwesomeIcon icon={faBars}/></div>
+      
+      <ActiveProjectContext.Provider value={{ activeProject, setActiveProject }}>
+        <ProjectsContext.Provider value={{ projects, setProjects }}>
+          <ReducerContext.Provider value={{ state, dispatch }}>
+            <UserContext.Provider value={{ user, setUser }}>
+              <Menu/>
+              {activeProject !== null ? <Dashboard/> : <div className='dashboard'>no active project</div>}
+            </UserContext.Provider>
+          </ReducerContext.Provider>
+        </ProjectsContext.Provider>
+      </ActiveProjectContext.Provider>
+    </div>
+  );
 }

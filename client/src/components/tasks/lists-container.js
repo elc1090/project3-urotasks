@@ -33,6 +33,8 @@ export default function ColumnContainer({ taskType })
     const newTask = { id: uuid(), content: newContent, created_at: new Date(), updated_at: new Date() }
 
     axios.post('http://localhost:9000/task-create', [activeProjectCopy.id, taskType, newTask])
+      .then(res => {console.log(res)})
+      .catch(err => {console.log(err)})
 
     if (!Array.isArray(activeProjectCopy[taskType]))
       activeProjectCopy[taskType] = [];

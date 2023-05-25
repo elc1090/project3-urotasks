@@ -19,9 +19,9 @@ export default function ListItemControls({ task })
 
   switch (taskType0)
   {
-    case 'todo': taskType1 = "doing"; taskType2 = "done"; break;
-    case 'doing': taskType1 = "todo"; taskType2 = "done"; break;
-    case 'done': taskType1 = "todo";  taskType2 = "doing"; break;
+    case 'todo' : taskType1 = "doing"; taskType2 = "done" ; break;
+    case 'doing': taskType1 = "todo" ; taskType2 = "done" ; break;
+    case 'done' : taskType1 = "todo" ; taskType2 = "doing"; break;
     default: break;
   }
 
@@ -42,14 +42,14 @@ export default function ListItemControls({ task })
     const taskIndex = taskList.findIndex(taskItem => taskItem.id === task.id);
     const taskToMove = taskList.splice(taskIndex, 1)[0];
 
-    if (!Array.isArray(placeholderActiveProject[moveLocation]))
-      placeholderActiveProject[moveLocation] = [];
-
     placeholderActiveProject[moveLocation].push(taskToMove);
     placeholderActiveProject[taskType0] = taskList;
     setActiveProject(placeholderActiveProject);
 
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-move`, [activeProject.id, task.id, taskType0, moveLocation ])
+      .then(res => {console.log(res)})
+      .catch(err => {console.log(err)})
+
     dispatch({ type: "taskUpdated" });
   }
 
@@ -65,6 +65,9 @@ export default function ListItemControls({ task })
     setActiveProject(placeholderActiveProject);
     
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-delete`, [activeProject.id, task.id, taskType0])
+      .then(res => {console.log(res)})
+      .catch(err => {console.log(err)})
+
     dispatch({ type: "taskUpdated" });
   }
 
