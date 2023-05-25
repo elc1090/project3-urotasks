@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
-
-import idSchema from './_id.js';
+import _id from './_id.js';
 
 const taskSchema = new mongoose.Schema(
 {
-  id: idSchema,
+  id: _id,
 
   created_at:
   {
@@ -25,4 +24,4 @@ const taskSchema = new mongoose.Schema(
   }
 });
 
-export default taskSchema;
+export default mongoose.model("Task", taskSchema);

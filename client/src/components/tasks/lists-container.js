@@ -34,6 +34,9 @@ export default function ColumnContainer({ taskType })
 
     axios.post('http://localhost:9000/task-create', [activeProjectCopy.id, taskType, newTask])
 
+    if (!Array.isArray(activeProjectCopy[taskType]))
+      activeProjectCopy[taskType] = [];
+
     activeProjectCopy[taskType].push(newTask);
     setActiveProject(activeProjectCopy);
   }
@@ -80,7 +83,7 @@ export default function ColumnContainer({ taskType })
       <h2 className="tasks-item-header">{taskTypeName}</h2>
       <div className="tasks-item-options"><FontAwesomeIcon icon={ faEllipsisVertical }/></div>
       <TaskTypeContext.Provider value={taskType}>
-        <TasksList tasks={ activeProject[taskType] }/>
+        {activeProject?.[taskType] ? <TasksList tasks={ activeProject[taskType] }/> : null}
       </TaskTypeContext.Provider>
       
       <div className="add-task-container">

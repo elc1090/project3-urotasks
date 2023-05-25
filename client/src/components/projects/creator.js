@@ -19,24 +19,6 @@ export default function ProjCreator()
   const [color, setColor] = useState('#0FE19E');
   const [pickerActive, setPickerActive] = useState(false);
 
-  function removeFirstTask(projects)
-  {
-    console.log(projects)
-    projects.forEach(project => 
-    {
-      if (project.todo[0]?.content === "")
-       project.todo.shift();
-
-      if (project.doing[0]?.content === "")
-        project.doing.shift();
-
-      if (project.done[0]?.content === "")
-        project.done.shift();
-    })
-
-    return projects;
-  }
-
   async function createProject()
   {
     let name = projectNameRef.current.value;
@@ -45,12 +27,8 @@ export default function ProjCreator()
     const newProject = 
     { 
       id: uuid(), 
-      active: false, 
-      name: name, 
-      color: color, 
-      todo : [{ id: uuid(), content: "" }], 
-      doing: [{ id: uuid(), content: "" }], 
-      done : [{ id: uuid(), content: "" }]
+      name: name,
+      color: color
     };
 
     projectNameRef.current.value = '';
@@ -71,7 +49,7 @@ export default function ProjCreator()
       console.log(newProjects)
       
       if (newProjects.includes(newProject))
-        await setProjects(removeFirstTask(newProjects));
+        await setProjects(newProjects);
 
       await setActiveProject(projects[0]);
       

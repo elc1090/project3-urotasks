@@ -2,33 +2,22 @@
   {
     "name": "WORK",
     "color": "#7b4b94",
-    "active": true,
-    "todo": [{"content": ""}, {"content": "something to do"}, {"content": "something else to do"}],
-    "doing": [{"content": ""}, {"content": "doing something"}, {"content": "doing something else"}],
-    "done": [{"content": ""}, {"content": "something done"}, {"content": "something else done"}]
+    "todo": [{ "id": "e7fca16b-240d-40b9-bce0-7f92cf72f634", "content": "something to do"}, { "id": "f8dcc7c5-c004-42e4-b911-5cf97dd405ac", "content": "something else to do"}],
+    "doing": [{ "id": "6758c400-1491-49c9-a091-c7c9fff18440", "content": "doing something"}, { "id": "da2a53ff-b99e-4205-a5f5-2ebbe5819098", "content": "doing something else"}],
+    "done": [{ "id": "005a4b8f-8452-4be4-8388-f076f553c0d7", "content": "something done"}, { "id": "0a35cfb3-a58f-4acf-9cc2-f657a3662a42", "content": "something else done"}]
   },
   {
     "name": "COLLEGE",
     "color": "#7d82b8",
-    "active": false,
-    "todo": [{"content": ""}, {"content": "something to do"}, {"content": "something else to do"}],
-    "doing": [{"content": ""}, {"content": "doing something"}, {"content": "doing something else"}],
-    "done": [{"content": ""}, {"content": "something done"}, {"content": "something else done"}]
+    "todo": [{ "id": "e3fefc97-6baf-4b94-92b9-50ef6110ed33", "content": "something to do"}, { "id": "b82e9b7a-892c-45ba-8643-0af5422e361a", "content": "something else to do"}],
+    "doing": [{ "id": "c35dda49-dec1-48b7-aed4-491d60d493fe", "content": "doing something"}, { "id": "08a25759-d66e-4327-ac77-1f2dda8ccdcc", "content": "doing something else"}],
+    "done": [{ "id": "5573ecc6-7ff7-4562-91c3-1bc7c7333c53", "content": "something done"}, { "id": "23a14e17-90fc-49c8-9f89-2cffe4e72fd0", "content": "something else done"}]
   },
   {
     "name": "MUSIC PRODUCTION",
     "color": "#b7e3cc",
-    "active": false,
-    "todo": [{"content": ""}, {"content": "something to do"}, {"content": "something else to do"}],
-    "doing": [{"content": ""}, {"content": "doing something"}, {"content": "doing something else"}],
-    "done": [{"content": ""}, {"content": "something done"}, {"content": "something else done"}]
-  },
-  {
-    "name": "ONLINE SIGMA SIDE HUSTLE",
-    "color": "#c4ffb2",
-    "active": false,
-    "todo": [{"content": ""}, {"content": "something to do"}, {"content": "something else to do"}],
-    "doing": [{"content": ""}, {"content": "doing something"}, {"content": "doing something else"}],
-    "done": [{"content": ""}, {"content": "something done"}, {"content": "something else done"}]
+    "todo": [{ "id": "1cf3ca64-587e-4590-80db-740eba495536", "content": "something to do"}, { "id": "63449257-30ec-4cf9-8062-58ba1a3f9f26", "content": "something else to do"}],
+    "doing": [{ "id": "a2dfc0d1-cba6-494c-ab48-d6ce66286ba4", "content": "doing something"}, { "id": "e0f9abf7-bfec-4c6c-9826-2927ce7a73ce", "content": "doing something else"}],
+    "done": [{ "id": "f6d2d112-8be3-4f7e-8d24-c957295f7409", "content": "something done"}, { "id": "d4b6a0c3-b1c6-4501-b3ba-efd2e5343fa2", "content": "something else done"}]
   }
 ]

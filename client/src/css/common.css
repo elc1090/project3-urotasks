@@ -47,6 +47,12 @@ textarea {resize: none;}
 .highlight
 {color: var(--hl-blue-light);}
 
+@keyframes fade-in 
+{
+  from { opacity: 0; }
+  to   { opacity: 1; }  
+}
+
 .app
 {
   position: relative;
@@ -55,6 +61,9 @@ textarea {resize: none;}
   width: 100dvw;
 
   background-color: var(--bg-blue-dark);
+  
+  opacity: 0;
+  animation: ease-in-out 1s forwards fade-in;
 }
 
 .app a 
@@ -508,9 +517,6 @@ textarea {resize: none;}
   flex-direction: column;
   gap: 24px;
 
-  /*max-height: 580px;
-  overflow-y: scroll;*/
-
   border-radius: var(--border-rad-small);
 }
 
@@ -570,23 +576,15 @@ textarea {resize: none;}
   height: 42px;
 }
 
-.options__ellipsis--shown,
-.options__tags--shown,
-.options__move--shown,
-.options__remove--shown,
 .option--shown
 { 
   transform: translateY(0px) !important; 
-  pointer-events: initial !important;
   opacity: 1 !important;
-}
+  z-index: 5 !important;
+  pointer-events: initial !important;
+  user-select: none !important;
 
-.options__ellipsis--shown
-{ 
-  z-index: 5; 
 
-  color: var(--bg-blue-mid);
-  background-color: #fff;
 }
 
 .options__select--shown
@@ -595,6 +593,7 @@ textarea {resize: none;}
   pointer-events: initial !important;
   cursor: pointer !important;
 }
+
 
 .options__select
 {
@@ -673,13 +672,17 @@ textarea {resize: none;}
 }
 
 .options__ellipsis > *
-{
-  transition: all 0s ease-in-out;
-}
+{ transition: all 0s ease-in-out; }
 
 .options__ellipsis:hover 
 { 
-  color: var(--bg-blue-mid);
+  color: var(--bg-blue-light);
+  background-color: #fff;
+}
+
+.options__ellipsis--shown
+{ 
+  color: var(--bg-blue-light);
   background-color: #fff;
 }
 

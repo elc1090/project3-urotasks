@@ -47,7 +47,6 @@ export default function ListItemControls({ task })
     setActiveProject(placeholderActiveProject);
 
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-move`, [activeProject.id, task.id, taskType0, moveLocation ])
-    console.log(`moved task ${task.id} from ${taskType0} to ${moveLocation}`);
     dispatch({ type: "taskUpdated" });
   }
 
@@ -76,20 +75,23 @@ export default function ListItemControls({ task })
 
   function toggleOptions(toggle)
   {
-    const optionEllipsisElement = document.getElementById(optionEllipsis);
-    const optionTagsElement = document.getElementById(optionTags);
-    const optionMoveElement = document.getElementById(optionMove);
-    const optionRemoveElement = document.getElementById(optionRemove);
-   
-    const moveSelectElement = document.getElementById(moveSelect);
-    moveSelectElement.classList.remove('options__select--shown');
+    const options =  
+    {
+      ellipsis: document.getElementById(optionEllipsis),
+      tags: document.getElementById(optionTags),
+      move: document.getElementById(optionMove),
+      remove: document.getElementById(optionRemove),
+      moveSelect: document.getElementById(moveSelect)
+    }
+
+    options.moveSelect.classList.remove('options__select--shown');
 
     if (toggle === 'toggle')
     {
-      optionEllipsisElement.classList.toggle('options__ellipsis--shown');
-      optionTagsElement.classList.toggle('options__tags--shown');
-      optionMoveElement.classList.toggle('options__move--shown');
-      optionRemoveElement.classList.toggle('options__remove--shown');
+      options.ellipsis.classList.toggle('options__ellipsis--shown');
+      options.tags.classList.toggle('option--shown');
+      options.move.classList.toggle('option--shown');
+      options.remove.classList.toggle('option--shown');
 
       if (optionFocus === true)
         setOptionFocus(false);
@@ -97,10 +99,10 @@ export default function ListItemControls({ task })
 
     else
     {
-      optionEllipsisElement.classList.remove('options__ellipsis--shown');
-      optionTagsElement.classList.remove('options__tags--shown');
-      optionMoveElement.classList.remove('options__move--shown');
-      optionRemoveElement.classList.remove('options__remove--shown');
+      options.ellipsis.classList.remove('options__ellipsis--shown');
+      options.tags.classList.remove('option--shown');
+      options.move.classList.remove('option--shown');
+      options.remove.classList.remove('option--shown');
     }
   }
 

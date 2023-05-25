@@ -35,7 +35,7 @@ export default function UpperSection()
     <div className="taskbar">
       <h1 className="taskbar__title" id="task__title">
         <TaskbarProjectColor/>
-        <TaskbarTitle value={ activeProject.name }/>
+        <TaskbarTitle value={ activeProject?.name }/>
       </h1>
       
       <div className="taskbar__sort">

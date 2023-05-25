@@ -12,14 +12,32 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 /** contexts **/
+export const UserContext = React.createContext();
 export const ReducerContext = React.createContext();
 export const ProjectsContext = React.createContext();
 export const ActiveProjectContext = React.createContext();
 
 export default function App() 
 {
+  const [user, setUser] = useState(null);
   const [projects, setProjects] = useState([]);
-  const [activeProject, setActiveProject] = useState(projects[0]);
+  const [activeProject, setActiveProject] = useState(null);
+
+  useEffect(() => 
+  {
+    if (user !== null && projects.length > 0)
+      for (let i = 0; i < projects.length; i++)
+        if (projects[i].id === user.activeProject)
+          setActiveProject(projects[i]);
+    
+  }, [user, projects]);
+
+  useEffect(() => 
+  {
+    axios.get('/data-read')
+      .then(res => {setUser(res.data[0]); setProjects(res.data[1])})
+      .catch(err => {console.log(err)})
+  }, [])
 
   const [state, dispatch] = useReducer(reducer, 
   {
@@ -46,31 +64,6 @@ export default function App()
     }
   }
 
-  // quick fix
-  function removeFirstTask(projects)
-  {
-    projects.forEach(project => 
-    {
-      if (project.todo[0].content === "")
-        project.todo.shift();
-
-      if (project.doing[0].content === "")
-        project.doing.shift();
-
-      if (project.done[0].content === "")
-        project.done.shift();
-    })
-
-    return projects;
-  }
-
-  useEffect(() => 
-  {
-    axios.get("/project-read")
-      .then(res => {setProjects(removeFirstTask(res.data)); setActiveProject(res.data[0])})
-      .catch(err => {console.log(err)});
-  }, []);
-
   function toggleMenu()
   { 
     dispatch({ type: 'menuHidden'      });
@@ -78,18 +71,23 @@ export default function App()
     dispatch({ type: 'searchbarSpaced' });  
   }
 
-  return (
-    <div className="app" id='app'>
-      <div className='dashboard__burger' id="dashboard__burger" onClick={toggleMenu}><FontAwesomeIcon icon={faBars}/></div>
-      
-      <ActiveProjectContext.Provider value={{ activeProject, setActiveProject }}>
-        <ProjectsContext.Provider value={{ projects, setProjects }}>
-          <ReducerContext.Provider value={{ state, dispatch }}>
-            <Menu/>
-            <Dashboard/>
-          </ReducerContext.Provider>
-        </ProjectsContext.Provider>
-      </ActiveProjectContext.Provider>
-    </div>
-  );
+  if (activeProject !== null)
+  {
+    return (
+      <div className="app" id='app'>
+        <div className='dashboard__burger' id="dashboard__burger" onClick={toggleMenu}><FontAwesomeIcon icon={faBars}/></div>
+        
+        <ActiveProjectContext.Provider value={{ activeProject, setActiveProject }}>
+          <ProjectsContext.Provider value={{ projects, setProjects }}>
+            <ReducerContext.Provider value={{ state, dispatch }}>
+              <UserContext.Provider value={{ user, setUser }}>
+                <Menu/>
+                <Dashboard/>
+              </UserContext.Provider>
+            </ReducerContext.Provider>
+          </ProjectsContext.Provider>
+        </ActiveProjectContext.Provider>
+      </div>
+    );
+  }
 }

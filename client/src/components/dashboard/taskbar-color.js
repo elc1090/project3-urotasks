@@ -12,7 +12,7 @@ export default function TaskbarProjectColor()
   const { projects, setProjects } = useContext(ProjectsContext); 
   const { activeProject } = useContext(ActiveProjectContext);
 
-  const [color, setColor] = useState(activeProject.color);
+  const [color, setColor] = useState(activeProject?.color);
   const [pickerActive, setPickerActive] = useState(false);
 
   function toggleColorPicker()

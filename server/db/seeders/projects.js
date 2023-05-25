@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { v4 as uuid } from 'uuid';
 
 import Project from '../../models/Project.js';
 import projectSeeds from './projects.json' assert { type: "json" };
