@@ -1,5 +1,5 @@
 import React, { useState, useContext, useRef } from "react";
-import { ActiveProjectContext } from "../../app";
+import { ProjectsContext } from "../../app";
 import { v4 as uuid } from 'uuid';
 import axios from 'axios';
 
@@ -12,7 +12,7 @@ export const TaskTypeContext = React.createContext();
 
 export default function ColumnContainer({ taskType })
 {
-  const { activeProject, setActiveProject } = useContext(ActiveProjectContext);
+  const { activeProject, setActiveProject } = useContext(ProjectsContext);
   const [editing, setEditing] = useState(false);
   const [inputValue, setInputValue] = useState("");
 

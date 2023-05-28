@@ -15,7 +15,6 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 export const UserContext = React.createContext();
 export const ReducerContext = React.createContext();
 export const ProjectsContext = React.createContext();
-export const ActiveProjectContext = React.createContext();
 
 export default function App() 
 {
@@ -71,21 +70,18 @@ export default function App()
     dispatch({ type: 'searchbarSpaced' });  
   }
 
-
   return (
     <div className="app" id='app'>
       <div className='dashboard__burger' id="dashboard__burger" onClick={toggleMenu}><FontAwesomeIcon icon={faBars}/></div>
       
-      <ActiveProjectContext.Provider value={{ activeProject, setActiveProject }}>
-        <ProjectsContext.Provider value={{ projects, setProjects }}>
-          <ReducerContext.Provider value={{ state, dispatch }}>
-            <UserContext.Provider value={{ user, setUser }}>
-              <Menu/>
-              {activeProject !== null ? <Dashboard/> : <div className='dashboard'>no active project</div>}
-            </UserContext.Provider>
-          </ReducerContext.Provider>
-        </ProjectsContext.Provider>
-      </ActiveProjectContext.Provider>
+      <ProjectsContext.Provider value={{ projects, setProjects, activeProject, setActiveProject }}>
+        <ReducerContext.Provider value={{ state, dispatch }}>
+          <UserContext.Provider value={{ user, setUser }}>
+            <Menu/>
+            {activeProject !== null ? <Dashboard/> : <div className='dashboard'>no active project</div>}
+          </UserContext.Provider>
+        </ReducerContext.Provider>
+      </ProjectsContext.Provider>
     </div>
   );
 }

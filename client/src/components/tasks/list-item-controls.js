@@ -1,5 +1,5 @@
 import React, { useState, useContext, useRef } from 'react';
-import { ActiveProjectContext, ReducerContext } from '../../app';
+import { ProjectsContext, ReducerContext } from '../../app';
 import { TaskTypeContext } from './lists-container';
 import axios from 'axios';
 
@@ -13,7 +13,8 @@ export default function ListItemControls({ task })
   const moveLocationRef = useRef();
 
   const { dispatch } = useContext(ReducerContext);
-  const { activeProject, setActiveProject } = useContext(ActiveProjectContext);
+  const { activeProject, setActiveProject } = useContext(ProjectsContext);
+  
   const taskType0 = useContext(TaskTypeContext);
   let taskType1, taskType2;
 

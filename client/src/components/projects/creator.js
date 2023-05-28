@@ -1,5 +1,5 @@
 import { useContext, useRef, useState } from 'react';
-import { ProjectsContext, ActiveProjectContext, ReducerContext, UserContext } from "../../app";
+import { ProjectsContext, ReducerContext, UserContext } from "../../app";
 import axios from 'axios';
 
 import { v4 as uuid } from 'uuid';
@@ -13,9 +13,8 @@ export default function ProjCreator()
   const projectNameRef = useRef();
   
   const { user, setUser } = useContext(UserContext);
-  const { setActiveProject } = useContext(ActiveProjectContext);
-  const { projects, setProjects } = useContext(ProjectsContext);
   const { state, dispatch } = useContext(ReducerContext);
+  const { projects, setProjects, setActiveProject } = useContext(ProjectsContext);
 
   const [color, setColor] = useState('#0FE19E');
   const [pickerActive, setPickerActive] = useState(false);

@@ -1,5 +1,5 @@
 import { useState, useContext, useRef } from 'react';
-import { ActiveProjectContext, ReducerContext } from '../../app';
+import { ProjectsContext, ReducerContext } from '../../app';
 import { TaskTypeContext } from './lists-container';
 import axios from 'axios';
 
@@ -8,9 +8,9 @@ export default function ItemText({ value, taskID })
   const [editing, setEditing] = useState(false);
   const [inputValue, setInputValue] = useState(value);
 
-  const { activeProject, setActiveProject } = useContext(ActiveProjectContext);
   const taskType = useContext(TaskTypeContext);
   const { dispatch } = useContext(ReducerContext);
+  const { activeProject, setActiveProject } = useContext(ProjectsContext);
 
   const taskTextRef = useRef();
 
@@ -44,7 +44,7 @@ export default function ItemText({ value, taskID })
 
   async function handleEdit() 
   {
-    await setEditing(true);
+    setEditing(true);
 
     const textArea = document.getElementById('text-area');
     const end = textArea.value.length;

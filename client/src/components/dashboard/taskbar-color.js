@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { ProjectsContext, ActiveProjectContext } from '../../app';
+import { ProjectsContext } from '../../app';
 import axios from 'axios';
 
 import { ChromePicker } from 'react-color';
@@ -9,8 +9,7 @@ import { faSquare } from '@fortawesome/free-solid-svg-icons';
 
 export default function TaskbarProjectColor()
 {
-  const { projects, setProjects } = useContext(ProjectsContext); 
-  const { activeProject } = useContext(ActiveProjectContext);
+  const { projects, setProjects, activeProject } = useContext(ProjectsContext); 
 
   const [color, setColor] = useState(activeProject?.color);
   const [pickerActive, setPickerActive] = useState(false);

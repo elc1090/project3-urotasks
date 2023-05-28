@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { ProjectsContext, ActiveProjectContext, UserContext } from "../../app";
+import { ProjectsContext, UserContext } from "../../app";
 import axios from 'axios';
 
 import TaskbarTitle from './taskbar-title';
@@ -11,8 +11,7 @@ import { faArrowDownWideShort, faTrashCan } from '@fortawesome/free-solid-svg-ic
 export default function UpperSection()
 {
   const { user, setUser } = useContext(UserContext);
-  const { activeProject } = useContext(ActiveProjectContext);
-  const { projects, setProjects } = useContext(ProjectsContext);
+  const { projects, setProjects, activeProject } = useContext(ProjectsContext);
 
   function deleteProject()
   {

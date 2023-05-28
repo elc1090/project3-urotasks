@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { ProjectsContext, ActiveProjectContext } from '../../app';
+import { ProjectsContext } from '../../app';
 import axios from 'axios';
 
 export default function ItemText({ value }) 
@@ -7,9 +7,7 @@ export default function ItemText({ value })
   const [editing, setEditing] = useState(false);
   const [inputValue, setInputValue] = useState(value);
   
-  const { projects, setProjects } = useContext(ProjectsContext);
-  const { activeProject } = useContext(ActiveProjectContext);
-
+  const { projects, setProjects, activeProject } = useContext(ProjectsContext);
 
   function handleNameChange(newName) 
   { 
