@@ -14,7 +14,7 @@ export default function ProjCreator()
   
   const { user, setUser } = useContext(UserContext);
   const { state, dispatch } = useContext(ReducerContext);
-  const { projects, setProjects, setActiveProject } = useContext(ProjectsContext);
+  const { projects, setProjects } = useContext(ProjectsContext);
 
   const [color, setColor] = useState('#0FE19E');
   const [pickerActive, setPickerActive] = useState(false);

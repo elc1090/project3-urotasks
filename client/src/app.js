@@ -1,15 +1,14 @@
 /** dependencies **/
 import React, { useState, useEffect, useReducer } from 'react';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import './css/common.css';
 
-/** components **/
-import Menu from './components/menu';
-import Dashboard from './components/dashboard';
-
-/** font-awesome **/
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+/** pages **/
+import HomePage from './pages/home'
+import LoginPage from './pages/login'
+import RegisterPage from './pages/register'
+import SettingsPage from './pages/settings'
 
 /** contexts **/
 export const UserContext = React.createContext();
@@ -70,22 +69,17 @@ export default function App()
     }
   }
 
-  function toggleMenu()
-  { 
-    dispatch({ type: 'menuHidden'      });
-    dispatch({ type: 'dashboardMoved'  });
-    dispatch({ type: 'searchbarSpaced' });  
-  }
-
   return (
     <div className="app" id='app'>
-      <div className='dashboard__burger' id="dashboard__burger" onClick={toggleMenu}><FontAwesomeIcon icon={faBars}/></div>
-      
       <ProjectsContext.Provider value={{ projects, setProjects, activeProject, setActiveProject }}>
         <ReducerContext.Provider value={{ state, dispatch }}>
           <UserContext.Provider value={{ user, setUser }}>
-            <Menu/>
-            {activeProject !== null ? <Dashboard/> : <div className='dashboard'>no active project</div>}
+            <Routes>
+              <Route path='/' element={ <HomePage/> }/>
+              <Route path='/login' element={ <LoginPage/> }/>
+              <Route path='/register' element={ <RegisterPage/> }/>
+              <Route path='/settings' element={ <SettingsPage/> }/>
+            </Routes>
           </UserContext.Provider>
         </ReducerContext.Provider>
       </ProjectsContext.Provider>
