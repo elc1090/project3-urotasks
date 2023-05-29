@@ -80,6 +80,30 @@ export default function ListItemControls({ task })
   const location1      = 'location--1:'      + task.id;
   const location2      = 'location--2:'      + task.id;
 
+  function clearOtherOptions()
+  {
+    const options = Array.from(document.getElementsByClassName('option'));
+    
+    options.forEach(option => 
+    {
+      if (!option.id.includes(task.id))
+      {
+        if (option.id.includes('option--ellipsis:'))
+          option.classList.remove('options__ellipsis--shown');
+
+        else if (option.id.includes('option--move:'))
+        {
+          option.classList.remove('option--shown');
+          option.children[1].classList.remove('options__select--shown');
+        }
+
+        else
+          option.classList.remove('option--shown');
+      }
+    })
+
+  }
+
   function toggleOptions(toggle)
   {
     const options =  
@@ -95,6 +119,7 @@ export default function ListItemControls({ task })
 
     if (toggle === 'toggle')
     {
+      clearOtherOptions();
       options.ellipsis.classList.toggle('options__ellipsis--shown');
       options.tags.classList.toggle('option--shown');
       options.move.classList.toggle('option--shown');
@@ -143,7 +168,7 @@ export default function ListItemControls({ task })
 
   return (
     <div className='list-item-options' onMouseLeave={optionFocus ? () => {} : () => {toggleOptions('hide')}}>
-      <div className=' option options__ellipsis' id={ optionEllipsis } onClick={ () => {toggleOptions('toggle')} }>
+      <div className='option options__ellipsis' id={ optionEllipsis } onClick={ () => {toggleOptions('toggle')} }>
         <div className='option__icon'><FontAwesomeIcon icon={ faEllipsisVertical }/></div>
       </div>
       

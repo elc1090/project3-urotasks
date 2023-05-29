@@ -25,10 +25,17 @@ export default function App()
   useEffect(() => 
   {
     if (user !== null && projects.length > 0)
+    {
+      let activeProjectIndex = -1;
+
       for (let i = 0; i < projects.length; i++)
         if (projects[i].id === user.activeProject)
-          setActiveProject(projects[i]);
+          activeProjectIndex = i;
 
+      activeProjectIndex === -1 
+        ? setActiveProject(projects[0]) 
+        : setActiveProject(projects[activeProjectIndex]);
+    }
   }, [user, projects]);
 
   useEffect(() => 

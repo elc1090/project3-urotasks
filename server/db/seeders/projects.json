@@ -1,5 +1,6 @@
 [
   {
+    "id": "18e72874-8ab7-403c-8530-0b11bc7fe818",
     "name": "WORK",
     "color": "#7b4b94",
     "todo": [{ "id": "e7fca16b-240d-40b9-bce0-7f92cf72f634", "content": "something to do"}, { "id": "f8dcc7c5-c004-42e4-b911-5cf97dd405ac", "content": "something else to do"}],
