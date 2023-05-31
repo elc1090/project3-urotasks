@@ -17,7 +17,7 @@ app.use('/', routes);
 
 // ***************************************************************************************
 // mongodb connection
-mongoose.connect('mongodb://127.0.0.1:27017/urotasks');
+mongoose.connect('mongodb+srv://marcola88:egdb1122@urotasks.wwkpbcj.mongodb.net/');
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "could not establish connection with mongdb"))
 db.once("open", () => {console.log("connected to mongodb\n")});

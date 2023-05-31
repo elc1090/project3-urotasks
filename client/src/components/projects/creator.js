@@ -43,7 +43,6 @@ export default function ProjCreator()
       .then(res => {console.log(res)})
       .catch(err => {console.log(err)})
     
-
     const newProjects = [...projects, newProject];
     setProjects(newProjects);
     

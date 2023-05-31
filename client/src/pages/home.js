@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { ProjectsContext, ReducerContext } from '../app';
+import { ReducerContext } from '../app';
 
 import Menu from '../components/menu';
 import Dashboard from '../components/dashboard';
@@ -9,7 +9,6 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 export default function HomePage()
 {
-  const { activeProject } = useContext(ProjectsContext);
   const { dispatch } = useContext(ReducerContext);
 
   function toggleMenu()
@@ -21,10 +20,12 @@ export default function HomePage()
 
   return (
     <>
-      <div className='dashboard__burger' id="dashboard__burger" onClick={toggleMenu}><FontAwesomeIcon icon={faBars}/></div>
+      <div className='dashboard__burger' id="dashboard__burger" onClick={toggleMenu}>
+        <FontAwesomeIcon icon={faBars}/>
+      </div>
 
       <Menu/>
-      {activeProject !== null ? <Dashboard/> : <div className='dashboard'>no active project</div>}
+      <Dashboard/>
     </>
   )
 }
