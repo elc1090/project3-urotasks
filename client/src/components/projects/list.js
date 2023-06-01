@@ -13,7 +13,7 @@ export default function ProjectsList()
   const { projects } = useContext(ProjectsContext);
 
   return (
-    <ul className='menu-projects-list' id='menu-projects-list'>
+    <ul className='menu__projects__list' id='projects__list'>
       <ProjectsItemsList projects={ projects }/>
     </ul>
   )

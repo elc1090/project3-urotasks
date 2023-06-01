@@ -23,20 +23,20 @@ export default function Menu()
     const chevronElement = document.querySelectorAll('.fa-chevron-up')[0];
     chevronElement.classList.toggle('chevron-rotate');
 
-    const projectsListElement = document.getElementById('menu-projects-list');
-    projectsListElement.classList.toggle('menu-projects-list-hidden')
+    const projectsListElement = document.getElementById('projects__list');
+    projectsListElement.classList.toggle('projects__list--hidden')
   }
 
   return (
     <div className={`menu ${state.isMenuHidden ? 'menu-hidden' : ''}`} id='menu'>
-      <div className='menu-header'>
-        <a className='app-logo' href='/'><img src='img/logo--dark_theme.svg'/></a>  
+      <div className='menu__header'>
+        <a className='menu__logo' href='/'><img src='img/logo--dark_theme.svg'/></a>  
         <div className='btn-close' onClick={ toggleMenu }><FontAwesomeIcon icon={ faXmark }/></div>
       </div>
 
-      <div className='menu-projects'>
-        <h2 className='menu-projects-header' onClick={ toggleProjects }>Projects <FontAwesomeIcon icon={ faChevronUp }/></h2>
-        <div className='menu-projects-add' onClick={ () => {dispatch({ type: 'projCreatorShown' })} }><FontAwesomeIcon icon={ faPlus }/></div>
+      <div className='menu__projects'>
+        <h2 className='menu__projects__header' onClick={ toggleProjects }>Projects <FontAwesomeIcon icon={ faChevronUp }/></h2>
+        <div className='menu__projects__add' onClick={ () => {dispatch({ type: 'projCreatorShown' })} }><FontAwesomeIcon icon={ faPlus }/></div>
         
         <ProjectsList />
       </div>
