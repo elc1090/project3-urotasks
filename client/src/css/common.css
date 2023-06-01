@@ -118,6 +118,12 @@ textarea {resize: none;}
   margin-bottom: 32px;
 }
 
+.app-logo img
+{
+  max-width: 192px;
+  margin-bottom: -12px;
+}
+
 .menu-header .app-logo:hover
 {filter: drop-shadow(0px 0px 1px var(--hl-blue-light))}
 

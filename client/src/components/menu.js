@@ -30,7 +30,7 @@ export default function Menu()
   return (
     <div className={`menu ${state.isMenuHidden ? 'menu-hidden' : ''}`} id='menu'>
       <div className='menu-header'>
-        <h1 className='app-logo'><a href='/'><span className='highlight'>uro</span><span className="normal">Tasks</span></a></h1>
+        <a className='app-logo' href='/'><img src='img/logo--dark_theme.svg'/></a>  
         <div className='btn-close' onClick={ toggleMenu }><FontAwesomeIcon icon={ faXmark }/></div>
       </div>
 
