@@ -33,7 +33,7 @@ userController.update = async (userID, projectID, updateType) =>
   {
     case 'activeProject':
       await User.updateOne({ id: userID }, { activeProject: projectID }); 
-      console.log(`${new Date()}: successfully updated user's |${userID}| active project to |${projectID}|`)
+      console.log(`${new Date()}: successfully updated user's active project to |${projectID}|`)
       break;
       
   }

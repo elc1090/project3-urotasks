@@ -124,7 +124,6 @@ router.post('/user-update', async (req, res) =>
   const [userID, projectID, updateType] = [data[0], data[1], data[2]];
   
   await userController.update(userID, projectID, updateType);
-  console.log(`${new Date()}: successfully updated user |${userID}|`);
 });
 
 export default router;

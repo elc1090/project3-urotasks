@@ -4,13 +4,12 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import './css/common.css';
 
-/** pages **/
+import NotFoundPage from './pages/404'
 import HomePage from './pages/home'
 import LoginPage from './pages/login'
 import RegisterPage from './pages/register'
 import SettingsPage from './pages/settings'
 
-/** contexts **/
 export const UserContext = React.createContext();
 export const ReducerContext = React.createContext();
 export const ProjectsContext = React.createContext();
@@ -75,10 +74,13 @@ export default function App()
         <ReducerContext.Provider value={{ state, dispatch }}>
           <UserContext.Provider value={{ user, setUser }}>
             <Routes>
-              <Route path='/' element={ <HomePage/> }/>
+              <Route exact path='/' element={ <HomePage/> }/>
               <Route path='/login' element={ <LoginPage/> }/>
               <Route path='/register' element={ <RegisterPage/> }/>
               <Route path='/settings' element={ <SettingsPage/> }/>
+
+              <Route path='/404' element={ <NotFoundPage/> }/>
+              <Route path='*' element={ <Navigate to='/404'/> }/>
             </Routes>
           </UserContext.Provider>
         </ReducerContext.Provider>
