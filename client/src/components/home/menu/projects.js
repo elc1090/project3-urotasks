@@ -1,14 +1,16 @@
 import { useContext } from 'react';
-import { ReducerContext } from '../../app';
-import { ToggleMenuContext } from '../../pages/home';
+import { ProjectsContext, ReducerContext } from '../../../app';
+import { ToggleMenuContext } from '../../../pages/home';
 
-import ProjectsList from "./projects/list"
+import List from '../../utils/list';
+import Project from './projects/project';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronUp, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default function MenuProjects()
 {
+  const { projects } = useContext(ProjectsContext);
   const { dispatch } = useContext(ReducerContext);
   const { toggleMenu } = useContext(ToggleMenuContext);
 
@@ -33,7 +35,7 @@ export default function MenuProjects()
     <div className='projects'>
       <h2 className='projects__header' onClick={ toggleProjectList }>Projects <FontAwesomeIcon icon={ faChevronUp }/></h2>
       <div className='projects__add' onClick={ toggleProjCreator }><FontAwesomeIcon icon={ faPlus }/></div>
-      <ProjectsList />
+      <List elements={ projects } ListItem={ Project } classes="projects__list" ids="projects__list"/>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { ProjectsContext } from '../../../app';
+import { ProjectsContext } from '../../../../app';
 import axios from 'axios';
 
 export default function ItemText({ value }) 

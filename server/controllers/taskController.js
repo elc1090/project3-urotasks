@@ -26,7 +26,7 @@ taskController.update = async (projectID, taskType, taskID, newContent) =>
   }
 
   await Project.updateOne({ id: projectID }, { [taskType]: taskList });
-  console.log(`${new Date()}: successfuly updated task |${taskID}|`);
+  console.log(`${new Date()}: successfully updated task |${taskID}|`);
 }
 
 /*****************************************************************************************************************/
@@ -49,7 +49,7 @@ taskController.move = async (projectID, taskID, taskType, moveLocation) =>
     taskList.splice(taskIndex, 1);
 
   await Project.updateOne({ id: projectID }, { [taskType]: taskList, [moveLocation]: moveLocationList })
-  console.log(`${new Date()}: successfuly moved task from |${taskType}| to |${moveLocation}|`);
+  console.log(`${new Date()}: successfully moved task from |${taskType}| to |${moveLocation}|`);
 }
 
 /*****************************************************************************************************************/

@@ -1,22 +1,22 @@
 import { useContext } from "react";
-import { ReducerContext, UserContext } from "../../../app";
+import { ReducerContext, UserContext } from "../../../../app";
 import axios from 'axios';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare } from '@fortawesome/free-solid-svg-icons';
 
-export default function Project({ projectData })
+export default function Project({ itemData })
 {
   const { user, setUser } = useContext(UserContext);
   const { state, dispatch } = useContext(ReducerContext);
 
-  let todoLength = projectData.todo ? projectData.todo.length : 0;
-  let doingLength = projectData.doing ? projectData.doing.length : 0;
+  let todoLength = itemData.todo ? itemData.todo.length : 0;
+  let doingLength = itemData.doing ? itemData.doing.length : 0;
 
   function activateProject()
   {
     const userCopy = { ...user };
-    userCopy.activeProject = projectData.id;
+    userCopy.activeProject = itemData.id;
     setUser(userCopy);
 
     if (window.innerWidth < 1337 && state.isMenuHidden === false)
@@ -26,14 +26,14 @@ export default function Project({ projectData })
       dispatch({ type: 'searchbarSpaced' });  
     }  
 
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update`, [user.id, projectData.id, 'activeProject']);
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update`, [user.id, itemData.id, 'activeProject']);
   }
 
   return (
     <li className='projects__item' onClick={ activateProject }>
       <div className='item__data'>
-        <span style={{ color: projectData?.color }}><FontAwesomeIcon icon={ faSquare }/></span> 
-        <div className='item__name'>{ projectData?.name }</div>
+        <span style={{ color: itemData?.color }}><FontAwesomeIcon icon={ faSquare }/></span> 
+        <div className='item__name'>{ itemData?.name }</div>
       </div> 
   
       <div className='item__total-tasks'>{ todoLength + doingLength }</div>

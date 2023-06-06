@@ -1,6 +1,6 @@
 import { useState, useContext, useRef } from 'react';
-import { ProjectsContext, ReducerContext } from '../../app';
-import { TaskTypeContext } from './tasks-container';
+import { ProjectsContext, ReducerContext } from '../../../../app';
+import { TaskTypeContext } from '../tasks';
 import axios from 'axios';
 
 export default function ItemText({ value, taskID }) 
@@ -35,11 +35,6 @@ export default function ItemText({ value, taskID })
     activeProjectCopy[taskType] = taskList;
     setActiveProject(activeProjectCopy);
     dispatch({ type: 'taskUpdated' });
-  }
-
-  function handleInputChange(e) 
-  {
-    setInputValue(e.target.value);
   }
 
   async function handleEdit() 
@@ -87,14 +82,14 @@ export default function ItemText({ value, taskID })
         editing ? 
         (
           <textarea 
-            style={{width: '100%', overflow: 'hidden'}} 
+            style={{ width: '100%', overflow: 'hidden' }} 
             id='text-area' 
-            ref={taskTextRef} 
-            value={inputValue} 
-            onChange={handleInputChange} 
-            onBlur={handleSave} 
-            onKeyDown={handleKeyDown}
-            onInput={handleInputGrowth}
+            ref={ taskTextRef } 
+            value={ inputValue } 
+            onChange={ e => {setInputValue(e.target.value);} } 
+            onBlur={ handleSave } 
+            onKeyDown={ handleKeyDown }
+            onInput={ handleInputGrowth }
           />
         ) 
                 

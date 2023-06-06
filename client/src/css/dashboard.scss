@@ -234,7 +234,7 @@
     
     .taskbar__delete
     {
-      padding: 12px;
+      padding: 8px 12px;
       border: 2px solid $hl-red-light;
       border-radius: $border-rad-small;
 
@@ -250,11 +250,13 @@
       }
 
       .fa-trash-can
-      { transition: all 0s ease-in-out; }
+      {
+        font-size: 1.2rem; 
+        transition: all 0s ease-in-out; 
+      }
     }
   }
 
-  
   .tasks
   {
     display: grid;
@@ -283,27 +285,28 @@
       border-radius: $border-rad-big;
 
       background-color: $bg-blue-mid;
+
+      .tasks__container__options
+      {
+        font-size: 1.5rem;
+        text-align: right;
+      }
+
+      .tasks__list
+      {
+        grid-row: 2;
+        grid-column: 1 / 3;
+        
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+
+        border-radius: $border-rad-small;
+      }
     }
   }
 }
 
-.tasks__list
-{
-  grid-row: 2;
-  grid-column: 1 / 3;
-  
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-
-  border-radius: $border-rad-small;
-}
-
-.tasks-item-options
-{
-  font-size: 1.5rem;
-  text-align: right;
-}
 
 .tasks-list-item
 {
@@ -523,7 +526,7 @@
 
 .add-task-container
 {
-  grid-column: 1 / 3;
+  grid-column: span 2;
 }
 
 .add-task-container textarea
@@ -561,18 +564,6 @@
 
 .btn-add-task .fa-plus
 {transition: all 0s ease-in-out;}
-
-
-select
-{
-  width: 100%;
-  appearance: none;
-}
-
-option
-{
-  padding: 8px;
-}
 
 .dashboard__burger
 {

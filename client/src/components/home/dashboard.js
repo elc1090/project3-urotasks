@@ -3,10 +3,10 @@ import { ProjectsContext, ReducerContext } from "../../app";
 
 import '../../css/dashboard.css';
 
-import ProjectCreator from '../dashboard/project-creator';
-import Searchbar from '../dashboard/searchbar';
-import Taskbar from '../dashboard/taskbar';
-import Tasks from '../dashboard/tasks';
+import ProjectCreator from './dashboard/project-creator';
+import Searchbar from './dashboard/searchbar';
+import Taskbar from './dashboard/taskbar';
+import Tasks from './dashboard/tasks';
 
 export default function Dashboard()
 {
@@ -21,7 +21,11 @@ export default function Dashboard()
         <>
           <Searchbar/>
           <Taskbar/>
-          <Tasks/>
+          <div className="tasks" id="tasks">
+            <Tasks taskType="todo"/>
+            <Tasks taskType="doing"/>
+            <Tasks taskType="done"/>
+          </div>
         </>
       )
     }

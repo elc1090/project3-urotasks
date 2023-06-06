@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { ProjectsContext } from '../../../app';
+import { ProjectsContext } from '../../../../app';
 import axios from 'axios';
 
 import { ChromePicker } from 'react-color';

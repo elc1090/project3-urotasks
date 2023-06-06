@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { ProjectsContext, UserContext } from "../../app";
+import { ProjectsContext, UserContext } from "../../../app";
 import axios from 'axios';
 
 import TaskbarTitle from './taskbar/taskbar-title';
@@ -50,7 +50,6 @@ export default function UpperSection()
       
       <div className="taskbar__delete" onClick={ deleteProject }>
         <FontAwesomeIcon icon={ faTrashCan }/> 
-        <span className='controls'></span>
       </div>
     </div>
   )

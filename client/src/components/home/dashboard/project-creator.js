@@ -1,12 +1,13 @@
 import { useContext, useRef, useState } from 'react';
-import { ProjectsContext, ReducerContext, UserContext } from "../../app";
+import { ProjectsContext, ReducerContext, UserContext } from "../../../app";
+import { v4 as uuid } from 'uuid';
 import axios from 'axios';
 
-import { v4 as uuid } from 'uuid';
+import ButtonClose from '../../utils/btn--close';
 import { ChromePicker } from 'react-color';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark, faBarsProgress } from "@fortawesome/free-solid-svg-icons";
+import { faBarsProgress } from "@fortawesome/free-solid-svg-icons";
 
 export default function ProjCreator()
 {
@@ -66,16 +67,11 @@ export default function ProjCreator()
     projectNameRef.current.value = '';
   }
 
-  function toggleColorPicker()
-  {
-    setPickerActive(!pickerActive);
-  }
-
   function ColorPicker()
   {
     return (
       <div>
-        <div onClick={ toggleColorPicker } className='chrome-picker__bg'/>
+        <div onClick={ () => {setPickerActive(!pickerActive)} } className='chrome-picker__bg'/>
         <ChromePicker color={ color } onChangeComplete={ (color) => {setColor(color.hex)} }/> 
       </div>
     )
@@ -91,10 +87,10 @@ export default function ProjCreator()
     <div className={`proj-creator__bg ${state.isProjCreatorShown ? 'proj-creator__bg--shown' : 'proj-creator__bg--hidden'}`}>
       <div className={`proj-creator ${state.isProjCreatorShown ? 'proj-creator--shown' : 'proj-creator--hidden'}`}>
         <h2 className="proj-creator__title">CREATE PROJECT <FontAwesomeIcon icon={ faBarsProgress }/> </h2>
-        <div className='btn-close' onClick={ () => {dispatch({ type: 'projCreatorShown' })} }> <FontAwesomeIcon icon={ faXmark }/> </div>
-
+        <ButtonClose onClick={ () => {dispatch({ type: 'projCreatorShown' })} }/>
+        
         <input className="proj-creator__input" id="input-1" ref={ projectNameRef } type="text" placeholder="Name of the project" autoFocus/>
-        <button className="proj-creator__input" id="input-2" onClick={toggleColorPicker}><ColorInput/></button>
+        <button className="proj-creator__input" id="input-2" onClick={ () => {setPickerActive(!pickerActive)} }><ColorInput/></button>
         {pickerActive ? <ColorPicker/> : null}
         
         <button className="creator__submit" onClick={ createProject }>CONFIRM</button>
