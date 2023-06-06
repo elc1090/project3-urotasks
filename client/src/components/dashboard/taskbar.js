@@ -6,7 +6,7 @@ import TaskbarTitle from './taskbar/taskbar-title';
 import TaskbarProjectColor from './taskbar/taskbar-color';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowDownWideShort, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 export default function UpperSection()
 {
@@ -43,15 +43,14 @@ export default function UpperSection()
 
   return (
     <div className="taskbar">
-      <h1 className="taskbar__title" id="task__title">
+      <h1 className="taskbar__header" id="task__header">
         <TaskbarProjectColor/>
         <TaskbarTitle value={ activeProject?.name }/>
       </h1>
       
       <div className="taskbar__delete" onClick={ deleteProject }>
         <FontAwesomeIcon icon={ faTrashCan }/> 
-        <span className='controls-big'> Delete</span>
-        <span className='controls-small'></span>
+        <span className='controls'></span>
       </div>
     </div>
   )

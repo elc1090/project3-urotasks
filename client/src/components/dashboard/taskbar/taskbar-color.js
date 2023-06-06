@@ -39,7 +39,7 @@ export default function TaskbarProjectColor()
   {
     return (
       <div>
-        <div onClick={ toggleColorPicker } className='picker__bg'/>
+        <div onClick={ toggleColorPicker } className='chrome-picker__bg'/>
         <ChromePicker color={ color } onChangeComplete={ (color) => {setColor(color.hex)} }/> 
       </div>
     )
@@ -47,7 +47,7 @@ export default function TaskbarProjectColor()
 
   return (
     <>
-      <div className='title-color' onClick={ toggleColorPicker } style={{ color: color }}><FontAwesomeIcon icon={ faSquare }/></div>
+      <div className='header__color' onClick={ toggleColorPicker } style={{ color: color }}><FontAwesomeIcon icon={ faSquare }/></div>
       {pickerActive ? <ColorPicker/> : null}
     </>
   )

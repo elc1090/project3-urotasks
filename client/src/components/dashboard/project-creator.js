@@ -75,7 +75,7 @@ export default function ProjCreator()
   {
     return (
       <div>
-        <div onClick={ toggleColorPicker } className='picker__bg'/>
+        <div onClick={ toggleColorPicker } className='chrome-picker__bg'/>
         <ChromePicker color={ color } onChangeComplete={ (color) => {setColor(color.hex)} }/> 
       </div>
     )
@@ -88,16 +88,16 @@ export default function ProjCreator()
   }
 
   return (
-    <div className={`projects-creator-background ${state.isProjCreatorShown ? 'bg-shown' : 'bg-hidden'}`}>
-      <div className={`projects-creator ${state.isProjCreatorShown ? 'shown' : 'hidden'}`}>
-        <h2 className="creator-title">CREATE PROJECT <FontAwesomeIcon icon={ faBarsProgress }/> </h2>
+    <div className={`proj-creator__bg ${state.isProjCreatorShown ? 'proj-creator__bg--shown' : 'proj-creator__bg--hidden'}`}>
+      <div className={`proj-creator ${state.isProjCreatorShown ? 'proj-creator--shown' : 'proj-creator--hidden'}`}>
+        <h2 className="proj-creator__title">CREATE PROJECT <FontAwesomeIcon icon={ faBarsProgress }/> </h2>
         <div className='btn-close' onClick={ () => {dispatch({ type: 'projCreatorShown' })} }> <FontAwesomeIcon icon={ faXmark }/> </div>
 
-        <input className="creator-input" id="input-1" ref={ projectNameRef } type="text" placeholder="Name of the project" autoFocus/>
-        <button className="creator-input" id="input-2" onClick={toggleColorPicker}><ColorInput/></button>
+        <input className="proj-creator__input" id="input-1" ref={ projectNameRef } type="text" placeholder="Name of the project" autoFocus/>
+        <button className="proj-creator__input" id="input-2" onClick={toggleColorPicker}><ColorInput/></button>
         {pickerActive ? <ColorPicker/> : null}
         
-        <button className="creator-btn" onClick={ createProject }>CONFIRM</button>
+        <button className="creator__submit" onClick={ createProject }>CONFIRM</button>
       </div>
     </div>
   )

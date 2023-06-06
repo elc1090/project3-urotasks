@@ -8,7 +8,7 @@ function TasksItemsList({ tasks })
 export default function TasksList({ tasks })
 {
   return (
-    <ul className='dashboard-tasks-list'>
+    <ul className='tasks__list'>
       {(tasks.length > 0) ? <TasksItemsList tasks={ tasks }/>  : <li className='tasks-list-item'></li>}
     </ul>
   )

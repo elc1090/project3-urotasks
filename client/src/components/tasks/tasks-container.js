@@ -72,7 +72,7 @@ export default function ColumnContainer({ taskType })
   }
 
   return (
-    <div className="dashboard-tasks-item">
+    <div className="tasks__container">
       <h2 className="tasks-item-header">{taskTypeName}</h2>
       <div className="tasks-item-options"><FontAwesomeIcon icon={ faEllipsisVertical }/></div>
       <TaskTypeContext.Provider value={taskType}>

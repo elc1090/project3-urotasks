@@ -31,7 +31,7 @@ export default function Dashboard()
   }
 
   return (
-    <div className={`dashboard ${state.isDashboardMoved ? 'move-dashboard' : ''}`} id="dashboard">
+    <div className={`dashboard ${state.isDashboardMoved ? 'dashboard--moved' : ''}`} id="dashboard">
       <ProjectCreator/>
       <DashboardContent/>
     </div>

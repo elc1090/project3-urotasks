@@ -3,7 +3,7 @@
 export default function Tasks()
 {
   return (
-    <div className="dashboard-tasks" id="dashboard-tasks">
+    <div className="tasks" id="tasks">
       <TasksContainer taskType="todo"/>
       <TasksContainer taskType="doing"/>
       <TasksContainer taskType="done"/>
