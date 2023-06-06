@@ -97,93 +97,6 @@
 .dashboard .proj-creator .creator__submit:hover {
   background-color: #26ffa5;
 }
-.dashboard .searchbar {
-  position: relative;
-  width: 1400px;
-  max-width: 100%;
-  margin-bottom: 48px;
-  border-radius: 5px;
-  background-color: #2d3b4e;
-}
-.dashboard .searchbar .fa-magnifying-glass {
-  position: absolute;
-  top: 25%;
-  left: 16px;
-  font-size: 1.3rem;
-  margin-right: 12px;
-}
-.dashboard .searchbar input {
-  width: 96%;
-  padding: 12px 12px 12px 48px;
-  border-radius: 5px;
-  color: #fff;
-  background-color: inherit;
-}
-.dashboard .searchbar input::-moz-placeholder {
-  color: #afaeae;
-}
-.dashboard .searchbar input::placeholder {
-  color: #afaeae;
-}
-.dashboard .taskbar {
-  display: grid;
-  grid-template-columns: minmax(0px, 100%) auto;
-  align-items: end;
-  gap: 8px;
-  position: relative;
-  width: 1400px;
-  max-width: 100%;
-  margin-bottom: 16px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid #55ade8;
-  font-weight: 500;
-}
-.dashboard .taskbar .taskbar__header {
-  display: flex;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-.dashboard .taskbar .taskbar__header .header__color {
-  margin-right: 8px;
-  cursor: pointer;
-}
-.dashboard .taskbar .taskbar__header .chrome-picker__bg {
-  position: absolute;
-  width: 100dvw;
-  height: 86dvh;
-  z-index: 1;
-}
-.dashboard .taskbar .taskbar__header .chrome-picker {
-  position: absolute;
-  top: 64px;
-  left: 0;
-  z-index: 1;
-}
-.dashboard .taskbar .taskbar__header input {
-  color: inherit;
-  background-color: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-}
-.dashboard .taskbar .taskbar__delete {
-  padding: 8px 12px;
-  border: 2px solid #ff4e4e;
-  border-radius: 4px;
-  color: #fff;
-  cursor: pointer;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
-}
-.dashboard .taskbar .taskbar__delete:hover {
-  color: #2d3b4e;
-  background-color: #ff4e4e;
-}
-.dashboard .taskbar .taskbar__delete .fa-trash-can {
-  font-size: 1.2rem;
-  transition: all 0s ease-in-out;
-}
 .dashboard .tasks {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -358,12 +271,10 @@
 .dashboard .tasks .tasks__container .tasks__list .task .options__submit:hover {
   background-color: #55ade8;
 }
-
-.tasks__add {
+.dashboard .tasks__add {
   grid-column: span 2;
 }
-
-.tasks__add textarea {
+.dashboard .tasks__add textarea {
   padding: 12px;
   border-radius: 4px;
   color: inherit;
@@ -382,12 +293,10 @@
   text-align: left;
   cursor: pointer;
 }
-
 .btn--add-task:hover {
   border: 2px solid #26ffa5;
   color: #26ffa5;
 }
-
 .btn--add-task .fa-plus {
   transition: all 0s ease-in-out;
 }
@@ -401,7 +310,6 @@
   font-size: 2rem;
   cursor: pointer;
 }
-
 .dashboard__burger:hover > svg {
   filter: drop-shadow(0px 0px 1px #fff);
 }/*# sourceMappingURL=dashboard.css.map */

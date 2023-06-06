@@ -136,127 +136,6 @@
     }
   }
 
-  .searchbar
-  {
-    position: relative;
-  
-    width: 1400px;
-    max-width: 100%;
-  
-    margin-bottom: 48px;
-    border-radius: $border-rad-big;
-  
-    background-color: $bg-blue-light;
-
-    .fa-magnifying-glass
-    {
-      position: absolute;
-      top: 25%;
-      left: 16px;
-
-      font-size: 1.3rem;
-      margin-right: 12px;
-    }
-
-    input
-    {
-      width: 96%;
-
-      padding: 12px 12px 12px 48px;
-      border-radius: $border-rad-big;
-
-      color: #fff;
-      background-color: inherit;
-
-      &::placeholder
-      { color: #afaeae; }
-    }
-  }
-
-  .taskbar
-  {
-    display: grid;
-    grid-template-columns: minmax(0px, 100%) auto;
-    align-items: end;
-    gap: 8px;
-
-    position: relative;
-    width: 1400px;
-    max-width: 100%;
-
-    margin-bottom: 16px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid $hl-blue-light;
-
-    font-weight: 500;
-
-    .taskbar__header
-    { 
-      display: flex; 
-
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-
-      .header__color
-      {
-        margin-right: 8px;
-        cursor: pointer;
-      }
-
-      .chrome-picker__bg
-      {
-        position: absolute;
-        width: 100dvw;
-        height: 86dvh;
-          
-        z-index: 1;
-      }
-
-      .chrome-picker
-      {  
-        position: absolute;
-        top: 64px;
-        left: 0;
-
-        z-index: 1;
-      }
-
-      input
-      {
-        color: inherit;
-        background-color: inherit;
-      
-        font-size: inherit;
-        font-weight: inherit;
-      }
-    }
-    
-    .taskbar__delete
-    {
-      padding: 8px 12px;
-      border: 2px solid $hl-red-light;
-      border-radius: $border-rad-small;
-
-      color: #fff;
-
-      cursor: pointer;
-      user-select: none;
-
-      &:hover
-      {
-        color: $bg-blue-light;
-        background-color: $hl-red-light;
-      }
-
-      .fa-trash-can
-      {
-        font-size: 1.2rem; 
-        transition: all 0s ease-in-out; 
-      }
-    }
-  }
-
   .tasks
   {
     display: grid;
@@ -498,24 +377,24 @@
         }
       }
     }
+
+    &__add
+    {
+      grid-column: span 2;
+
+      textarea
+      {
+        padding: 12px;
+        border-radius: $border-rad-small;
+      
+        color: inherit;
+        background-color: $bg-blue-light;
+      
+        font-family: inherit;
+        font-size: inherit;
+      }
+    }
   }
-}
-
-.tasks__add
-{
-  grid-column: span 2;
-}
-
-.tasks__add textarea
-{
-  padding: 12px;
-  border-radius: $border-rad-small;
-
-  color: inherit;
-  background-color: $bg-blue-light;
-
-  font-family: inherit;
-  font-size: inherit;
 }
 
 .btn--add-task
@@ -531,16 +410,16 @@
 
   text-align: left;
   cursor: pointer;
-}
 
-.btn--add-task:hover
-{
-  border: 2px solid $hl-green-light;
-  color: $hl-green-light;
-}
+  &:hover
+  {
+    border: 2px solid $hl-green-light;
+    color: $hl-green-light;
+  }
 
-.btn--add-task .fa-plus
-{transition: all 0s ease-in-out;}
+  .fa-plus
+  { transition: all 0s ease-in-out; }
+}
 
 .dashboard__burger
 {
@@ -553,7 +432,7 @@
 
   font-size: 2rem;
   cursor: pointer;
-}
 
-.dashboard__burger:hover > svg
-{filter: drop-shadow(0px 0px 1px #fff);}
+  &:hover > svg
+  { filter: drop-shadow(0px 0px 1px #fff); }
+}

@@ -4,8 +4,8 @@ import { ProjectsContext, ReducerContext } from "../../app";
 import '../../css/dashboard.css';
 
 import ProjectCreator from './dashboard/project-creator';
-import Searchbar from './dashboard/searchbar';
-import Taskbar from './dashboard/taskbar';
+import Searchbar from './dashboard/searchbar/searchbar';
+import Taskbar from './dashboard/taskbar/taskbar';
 import Tasks from './dashboard/tasks';
 
 export default function Dashboard()

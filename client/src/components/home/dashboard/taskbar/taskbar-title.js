@@ -47,10 +47,11 @@ export default function ItemText({ value })
   }
 
   return (
-    <div className='taskbar-title-text'>
+    <div className='taskbar__header__text'>
       {
-        editing ? (<input style={{width: '100%'}} autoFocus type="text" value={inputValue} onChange={handleInputChange} onBlur={handleSave} onKeyDown={handleKeyDown}/>) 
-                : (<div style={{width: '100%'}} onClick={handleEdit}>{value}</div>)
+        editing 
+          ? (<input style={{width: '100%'}} autoFocus type="text" value={inputValue} onChange={handleInputChange} onBlur={handleSave} onKeyDown={handleKeyDown}/>) 
+          : (<div style={{width: '100%'}} onClick={handleEdit}>{value}</div>)
       }
     </div>
   );

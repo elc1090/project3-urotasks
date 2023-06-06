@@ -1,0 +1,28 @@
+.searchbar {
+  position: relative;
+  width: 1400px;
+  max-width: 100%;
+  margin-bottom: 48px;
+  border-radius: 5px;
+  background-color: #2d3b4e;
+}
+.searchbar .fa-magnifying-glass {
+  position: absolute;
+  top: 25%;
+  left: 16px;
+  font-size: 1.3rem;
+  margin-right: 12px;
+}
+.searchbar input {
+  width: 96%;
+  padding: 12px 12px 12px 48px;
+  border-radius: 5px;
+  color: #fff;
+  background-color: inherit;
+}
+.searchbar input::-moz-placeholder {
+  color: #afaeae;
+}
+.searchbar input::placeholder {
+  color: #afaeae;
+}/*# sourceMappingURL=searchbar.css.map */
