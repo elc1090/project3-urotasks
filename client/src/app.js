@@ -4,7 +4,6 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import axios from 'axios';
 
 import './css/app.css';
-import './css/global.css';
 
 import NotFoundPage from './pages/404'
 import HomePage from './pages/home'
