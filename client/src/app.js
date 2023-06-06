@@ -2,7 +2,9 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import axios from 'axios';
-import './css/common.css';
+
+import './css/app.css';
+import './css/global.css';
 
 import NotFoundPage from './pages/404'
 import HomePage from './pages/home'
@@ -45,9 +47,9 @@ export default function App()
 
   const [state, dispatch] = useReducer(reducer, 
   {
-    isMenuHidden: false,
-    isDashboardMoved: false,
-    isSearchbarSpaced: false,
+    isMenuHidden: true,
+    isDashboardMoved: true,
+    isSearchbarSpaced: true,
     isProjCreatorShown: false,
     isOptionOnFocus: false,
     isTaskUpdated: false

@@ -1,12 +1,12 @@
-import TasksColumnContainer from '../tasks/lists-container';
+ import TasksContainer from '../tasks/tasks-container';
 
 export default function Tasks()
 {
   return (
     <div className="dashboard-tasks" id="dashboard-tasks">
-      <TasksColumnContainer taskType="todo"/>
-      <TasksColumnContainer taskType="doing"/>
-      <TasksColumnContainer taskType="done"/>
+      <TasksContainer taskType="todo"/>
+      <TasksContainer taskType="doing"/>
+      <TasksContainer taskType="done"/>
     </div>
   )
 }

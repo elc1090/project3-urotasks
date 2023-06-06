@@ -42,7 +42,7 @@ router.post('/project-create', async (req, res) =>
 {
   const project = req.body;
   await projectController.create(project);
-  res.status(201).send("project received!");
+  res.sendStatus(201);
 });
 
 router.get('/project-read', async (req, res) => 
@@ -55,14 +55,14 @@ router.post('/project-update', async (req, res) =>
 {
   const [project, updateType] = [req.body[0], req.body[1]]
   await projectController.update(project, updateType);
-  res.status(201).send("project received!");
+  res.sendStatus(201);
 })
 
 router.post('/project-delete', async (req, res) => 
 {
   const project = req.body;
   await projectController.delete(project);
-  res.status(204).send("project received!");
+  res.sendStatus(200);
 });
 
 /********************************************************************************************/
@@ -73,7 +73,7 @@ router.post('/task-create', async (req, res) =>
   const [projectID, taskType, taskData] = [data[0], data[1], data[2]];
 
   await taskController.create(projectID, taskType, taskData);
-  res.status(201).send("task received!");
+  res.sendStatus(201);
 });
 
 router.post('/task-update', async (req, res) => 
@@ -82,7 +82,7 @@ router.post('/task-update', async (req, res) =>
   const [projectID, taskType, taskID, newContent] = [data[0], data[1], data[2], data[3]];
 
   await taskController.update(projectID, taskType, taskID, newContent);
-  res.status(204).send("data received!");
+  res.sendStatus(200);
 })
 
 router.post('/task-move', async (req, res) => 
@@ -91,7 +91,7 @@ router.post('/task-move', async (req, res) =>
   const [projectID, taskID, taskType, moveLocation] = [data[0], data[1], data[2], data[3]]
 
   await taskController.move(projectID, taskID, taskType, moveLocation);
-  res.status(204).send("data received!");
+  res.sendStatus(200);
 });
 
 router.post('/task-delete', async (req, res) => 
@@ -100,7 +100,7 @@ router.post('/task-delete', async (req, res) =>
   const [projectID, taskID, taskType] = [data[0], data[1], data[2]]
 
   await taskController.delete(projectID, taskID, taskType);
-  res.status(204).send("data received!");
+  res.sendStatus(200);
 })
 
 /********************************************************************************************/
@@ -109,6 +109,7 @@ router.post('/user-create', async (req, res) =>
 {
   await userController.create();
   console.log(`${new Date()}: successfully created user`)
+  res.sendStatus(201);
 });
 
 /*router.get('/user-read', async (req, res) =>
@@ -124,6 +125,7 @@ router.post('/user-update', async (req, res) =>
   const [userID, projectID, updateType] = [data[0], data[1], data[2]];
   
   await userController.update(userID, projectID, updateType);
+  res.sendStatus(200);
 });
 
 export default router;

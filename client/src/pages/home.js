@@ -1,11 +1,13 @@
-import { useContext } from 'react'
+import React, { useContext } from 'react'
 import { ReducerContext } from '../app';
 
-import Menu from '../components/menu';
-import Dashboard from '../components/dashboard';
+import Menu from '../components/home/menu';
+import Dashboard from '../components/home/dashboard';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+
+export const ToggleMenuContext = React.createContext();
 
 export default function HomePage()
 {
@@ -20,11 +22,14 @@ export default function HomePage()
 
   return (
     <>
-      <div className='dashboard__burger' id="dashboard__burger" onClick={toggleMenu}>
-        <FontAwesomeIcon icon={faBars}/>
+      <div className='dashboard__burger' id="dashboard__burger" onClick={ toggleMenu }>
+        <FontAwesomeIcon icon={ faBars }/>
       </div>
 
-      <Menu/>
+      <ToggleMenuContext.Provider value={{ toggleMenu }}>
+        <Menu/>
+      </ToggleMenuContext.Provider>
+
       <Dashboard/>
     </>
   )

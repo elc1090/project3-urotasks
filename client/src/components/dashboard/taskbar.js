@@ -2,8 +2,8 @@ import { useContext } from 'react';
 import { ProjectsContext, UserContext } from "../../app";
 import axios from 'axios';
 
-import TaskbarTitle from './taskbar-title';
-import TaskbarProjectColor from './taskbar-color';
+import TaskbarTitle from './taskbar/taskbar-title';
+import TaskbarProjectColor from './taskbar/taskbar-color';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDownWideShort, faTrashCan } from '@fortawesome/free-solid-svg-icons';
@@ -48,12 +48,6 @@ export default function UpperSection()
         <TaskbarTitle value={ activeProject?.name }/>
       </h1>
       
-      <div className="taskbar__sort">
-        <FontAwesomeIcon icon={ faArrowDownWideShort }/>
-        <span className='controls-big'> Sort</span>
-        <span className='controls-small'></span>
-      </div>
-
       <div className="taskbar__delete" onClick={ deleteProject }>
         <FontAwesomeIcon icon={ faTrashCan }/> 
         <span className='controls-big'> Delete</span>
