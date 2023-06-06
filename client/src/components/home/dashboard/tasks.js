@@ -85,7 +85,7 @@ export default function ColumnContainer({ taskType })
       }
       </TaskTypeContext.Provider>
       
-      <div className="add-task-container">
+      <div className="tasks__add">
       {
         editing 
           ? <textarea 
@@ -100,7 +100,7 @@ export default function ColumnContainer({ taskType })
               autoFocus
             />
           
-          : (<button onClick={ () => {setEditing(true)} } className="btn-add-task"><FontAwesomeIcon icon={faPlus}/><span> Add task</span></button>)
+          : (<button onClick={ () => {setEditing(true)} } className="btn--add-task"><FontAwesomeIcon icon={faPlus}/><span> Add task</span></button>)
       }
       </div>
     </div>

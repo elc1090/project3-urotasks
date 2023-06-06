@@ -120,7 +120,7 @@ export default function ListItemControls({ task })
     if (toggle === 'toggle')
     {
       clearOtherOptions();
-      options.ellipsis.classList.toggle('options__ellipsis--shown');
+      options.ellipsis.classList.toggle('options--ellipsis--shown');
       options.tags.classList.toggle('option--shown');
       options.move.classList.toggle('option--shown');
       options.remove.classList.toggle('option--shown');
@@ -131,7 +131,7 @@ export default function ListItemControls({ task })
 
     else
     {
-      options.ellipsis.classList.remove('options__ellipsis--shown');
+      options.ellipsis.classList.remove('options--ellipsis--shown');
       options.tags.classList.remove('option--shown');
       options.move.classList.remove('option--shown');
       options.remove.classList.remove('option--shown');
@@ -167,16 +167,16 @@ export default function ListItemControls({ task })
   }
 
   return (
-    <div className='list-item-options' onMouseLeave={optionFocus ? () => {} : () => {toggleOptions('hide')}}>
-      <div className='option options__ellipsis' id={ optionEllipsis } onClick={ () => {toggleOptions('toggle')} }>
+    <div className='options' onMouseLeave={optionFocus ? null : () => {toggleOptions('hide')}}>
+      <div className='option options--ellipsis' id={ optionEllipsis } onClick={ () => {toggleOptions('toggle')} }>
         <div className='option__icon'><FontAwesomeIcon icon={ faEllipsisVertical }/></div>
       </div>
       
-      <div className='option options__tags' id={ optionTags }>
+      <div className='option options--tags' id={ optionTags }>
         <div className='option__icon'><FontAwesomeIcon icon={ faTag }/></div>
       </div>
 
-      <div className='option options__move' id={ optionMove }>
+      <div className='option options--move' id={ optionMove }>
         <div className='option__icon' onClick={toggleMoveOptions}><FontAwesomeIcon icon={ faArrowsLeftRight }/></div>
         
         <div className='options__select' id={moveSelect}>
@@ -185,10 +185,9 @@ export default function ListItemControls({ task })
           <div className='options__location' id={location2} onClick={ () => {changeLocation(taskType2, 'location--2')}}>{ formatTaskType(taskType2) }</div>
           <button className='options__submit' onClick={moveTask}>MOVE</button>
         </div>
-
       </div>
 
-      <div className='option options__remove' id={ optionRemove } onClick={deleteTask}>
+      <div className='option options--remove' id={ optionRemove } onClick={deleteTask}>
         <div className='option__icon'><FontAwesomeIcon icon={ faMultiply }/></div>
       </div>
     </div>

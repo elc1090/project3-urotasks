@@ -1,12 +1,12 @@
 import TaskText from './task-text';
-import TaskControls from './task-controls';
+import TaskOptions from './task-options';
 
 export default function TasksItem({ itemData })
 {
   return (
-    <li className="tasks-list-item" id={ itemData?.id }>
+    <li className="task" id={ itemData?.id }>
       <TaskText value={ itemData?.content } taskID={ itemData?.id }/>
-      <TaskControls task={ itemData }/>
+      <TaskOptions task={ itemData }/>
     </li>
   )
 }

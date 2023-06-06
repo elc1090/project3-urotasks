@@ -77,7 +77,7 @@ export default function ItemText({ value, taskID })
   }
 
   return (
-    <div className='list-item-text'>
+    <div className='task__text'>
       {
         editing ? 
         (
