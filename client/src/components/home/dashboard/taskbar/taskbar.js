@@ -2,10 +2,10 @@ import { useContext } from 'react';
 import { ProjectsContext, UserContext } from "../../../../app";
 import axios from 'axios';
 
-import './style/taskbar.css'
+import './_style/taskbar.css'
 
-import TaskbarTitle from './/taskbar-title';
-import TaskbarProjectColor from './taskbar-color';
+import TaskbarTitle from './_taskbar-title';
+import TaskbarProjectColor from './_taskbar-color';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';

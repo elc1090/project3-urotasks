@@ -1,5 +1,5 @@
-import TaskText from './task-text';
-import TaskOptions from './task-options';
+import TaskText from './_task-text';
+import TaskOptions from './_task-options';
 
 export default function TasksItem({ itemData })
 {

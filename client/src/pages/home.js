@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { ReducerContext } from '../app';
 
 import Menu from '../components/home/menu';
-import Dashboard from '../components/home/dashboard';
+import Dashboard from '../components/home/dashboard/dashboard';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';

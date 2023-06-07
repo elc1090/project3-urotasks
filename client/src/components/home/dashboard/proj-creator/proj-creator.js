@@ -1,9 +1,11 @@
 import { useContext, useRef, useState } from 'react';
-import { ProjectsContext, ReducerContext, UserContext } from "../../../app";
+import { ProjectsContext, ReducerContext, UserContext } from "../../../../app";
 import { v4 as uuid } from 'uuid';
 import axios from 'axios';
 
-import ButtonClose from '../../utils/btn--close';
+import './_style/proj-creator.css'
+
+import ButtonClose from '../../../utils/btn--close';
 import { ChromePicker } from 'react-color';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -84,7 +86,9 @@ export default function ProjCreator()
   }
 
   return (
-    <div className={`proj-creator__bg ${state.isProjCreatorShown ? 'proj-creator__bg--shown' : 'proj-creator__bg--hidden'}`}>
+    <>
+      {/*<div className={`proj-creator__bg ${state.isProjCreatorShown ? 'proj-creator__bg--shown' : 'proj-creator__bg--hidden'}`}></div>*/}
+
       <div className={`proj-creator ${state.isProjCreatorShown ? 'proj-creator--shown' : 'proj-creator--hidden'}`}>
         <h2 className="proj-creator__title">CREATE PROJECT <FontAwesomeIcon icon={ faBarsProgress }/> </h2>
         <ButtonClose onClick={ () => {dispatch({ type: 'projCreatorShown' })} }/>
@@ -95,6 +99,6 @@ export default function ProjCreator()
         
         <button className="creator__submit" onClick={ createProject }>CONFIRM</button>
       </div>
-    </div>
+    </>
   )
 }

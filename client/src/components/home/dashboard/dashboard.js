@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
-import { ProjectsContext, ReducerContext } from "../../app";
+import { ProjectsContext, ReducerContext } from "../../../app";
 
-import '../../css/dashboard.css';
+import './_style/dashboard.css';
 
-import ProjectCreator from './dashboard/project-creator';
-import Searchbar from './dashboard/searchbar/searchbar';
-import Taskbar from './dashboard/taskbar/taskbar';
-import Tasks from './dashboard/tasks';
+import ProjectCreator from './proj-creator/proj-creator';
+import Searchbar from './searchbar/searchbar';
+import Taskbar from './taskbar/taskbar';
+import Tasks from './tasks/tasks';
 
 export default function Dashboard()
 {
@@ -21,7 +21,7 @@ export default function Dashboard()
         <>
           <Searchbar/>
           <Taskbar/>
-          <div className="tasks" id="tasks">
+          <div className="dashboard__tasks" id="dashboard__tasks">
             <Tasks taskType="todo"/>
             <Tasks taskType="doing"/>
             <Tasks taskType="done"/>

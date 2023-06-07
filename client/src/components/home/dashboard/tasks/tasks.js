@@ -1,10 +1,12 @@
 import React, { useState, useContext, useRef } from "react";
-import { ProjectsContext } from "../../../app";
+import { ProjectsContext } from "../../../../app";
 import { v4 as uuid } from 'uuid';
 import axios from 'axios';
 
-import Task from './tasks/task'
-import List from '../../utils/list';
+import './_style/tasks.css'
+
+import Task from './_task'
+import List from '../../../utils/list';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -73,9 +75,9 @@ export default function ColumnContainer({ taskType })
   }
 
   return (
-    <div className="tasks__container">
-      <h2 className="tasks__container__header">{taskTypeName}</h2>
-      <div className="tasks__container__options"><FontAwesomeIcon icon={ faEllipsisVertical }/></div>
+    <div className="tasks">
+      <h2 className="tasks__header">{taskTypeName}</h2>
+      <div className="tasks__options"><FontAwesomeIcon icon={ faEllipsisVertical }/></div>
       
       <TaskTypeContext.Provider value={taskType}>
       {
@@ -100,7 +102,7 @@ export default function ColumnContainer({ taskType })
               autoFocus
             />
           
-          : (<button onClick={ () => {setEditing(true)} } className="btn--add-task"><FontAwesomeIcon icon={faPlus}/><span> Add task</span></button>)
+          : (<button onClick={ () => {setEditing(true)} }><FontAwesomeIcon icon={faPlus}/><span> Add task</span></button>)
       }
       </div>
     </div>

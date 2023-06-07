@@ -1,0 +1,53 @@
+@import './_variables.scss';
+
+.dashboard
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  
+  position: absolute;
+  left: $menu-width;
+
+  min-height: 100dvh;
+  width: calc(100% - $menu-width);  
+  padding: 24px;
+
+  color: #fff;
+  background-color: $bg-blue-dark;
+
+  animation: ease-in-out 1s forwards fade-in;
+
+  &--moved
+  {
+    width: 100%;
+    left: 0;
+  }
+
+  &__tasks
+  {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+
+    width: 1400px;
+    max-width: 100%;
+  }
+
+  &__burger
+  {
+    position: absolute;
+    left: 24px;
+    top: 24px;
+    z-index: 3;
+    
+    color: #fff;
+
+    font-size: 2rem;
+    cursor: pointer;
+
+    &:hover > svg
+    { filter: drop-shadow(0px 0px 1px #fff); }
+  }
+}

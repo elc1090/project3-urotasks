@@ -2,14 +2,7 @@
 @import './variables';
 
 * 
-{
-  margin: 0; 
-  padding: 0; 
-  border: 0; 
-  outline: 0; 
-  box-sizing: border-box; 
-  transition: all 0.15s ease-in-out;
-}
+{ margin: 0; padding: 0; border: 0; outline: 0; box-sizing: border-box; transition: all 0.15s ease-in-out; }
 
 html, input, button 
 { font-family: 'Montserrat', 'Oxygen', 'Ubuntu', sans-serif; }
@@ -66,6 +59,3 @@ textarea
 
 /***************************************************************/
 /*** 4. mobile ***/
-
-.controls-small 
-{display: none;}
