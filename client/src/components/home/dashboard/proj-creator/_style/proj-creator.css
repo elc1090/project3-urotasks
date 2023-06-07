@@ -1,62 +1,72 @@
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 .proj-creator__bg {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: absolute;
-  inset: 0;
-  height: 100%;
+  z-index: 9;
+  opacity: 0;
+  height: 97vh;
   width: 100%;
   background-color: rgba(22, 25, 29, 0.7960784314);
 }
 .proj-creator__bg--shown {
-  opacity: 1;
-  z-index: 5;
+  animation: fade-in 0.15s 0.15s forwards;
 }
 .proj-creator__bg--hidden {
-  opacity: 0;
-  z-index: -1;
+  pointer-events: none;
+  animation: fade-out 0.15s forwards;
 }
 
 .proj-creator {
   display: grid;
   grid-template-columns: minmax(0px, 320px) minmax(0px, 80px) minmax(0px, 32px);
   grid-template-rows: repeat(3, auto);
+  place-items: top;
   -moz-column-gap: 8px;
        column-gap: 8px;
   position: absolute;
   top: 40%;
-  z-index: 6;
   padding: 16px;
   border-radius: 5px;
   color: white;
   background-color: #2d3b4e;
 }
-.proj-creator::backdrop {
-  width: 100%;
-  height: 100%;
-  background: black;
-}
 .proj-creator--shown {
   transform: scale(1);
   opacity: 1;
+  z-index: 10;
 }
 .proj-creator--hidden {
   transform: scale(0.85);
   opacity: 0;
+  z-index: -1;
 }
-.proj-creator .proj-creator__title {
+.proj-creator__title {
+  grid-column: 1/3;
   display: flex;
-  justify-content: flex-start;
   align-items: center;
   gap: 8px;
-  grid-column: 1/3;
+  margin-bottom: 12px;
 }
-.proj-creator .proj-creator__input {
+.proj-creator .btn--glow {
+  margin-bottom: 12px;
+}
+.proj-creator__input {
   padding: 8px 12px;
   border-radius: 4px;
-}
-.proj-creator #input-1 {
-  grid-column: 1/2;
 }
 .proj-creator #input-2 {
   grid-column: 2/4;
@@ -65,7 +75,6 @@
 }
 .proj-creator .chrome-picker__bg {
   position: absolute;
-  top: -400px;
   z-index: 1;
   width: 100dvw;
   height: 80dvh;
@@ -76,7 +85,7 @@
   right: 16px;
   z-index: 2;
 }
-.proj-creator .creator__submit {
+.proj-creator__submit {
   grid-column: 1/4;
   margin-top: 8px;
   padding: 8px;
@@ -86,6 +95,6 @@
   font-weight: 500;
   cursor: pointer;
 }
-.proj-creator .creator__submit:hover {
+.proj-creator__submit:hover {
   background-color: #26ffa5;
 }/*# sourceMappingURL=proj-creator.css.map */

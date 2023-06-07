@@ -21,7 +21,7 @@ export default function Dashboard()
         <>
           <Searchbar/>
           <Taskbar/>
-          <div className="dashboard__tasks" id="dashboard__tasks">
+          <div className="tasks__container" id="tasks__container">
             <Tasks taskType="todo"/>
             <Tasks taskType="doing"/>
             <Tasks taskType="done"/>

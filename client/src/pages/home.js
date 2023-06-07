@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { ReducerContext } from '../app';
 
-import Menu from '../components/home/menu';
+import Menu from '../components/home/menu/menu';
 import Dashboard from '../components/home/dashboard/dashboard';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -28,9 +28,8 @@ export default function HomePage()
 
       <ToggleMenuContext.Provider value={{ toggleMenu }}>
         <Menu/>
+        <Dashboard/>
       </ToggleMenuContext.Provider>
-
-      <Dashboard/>
     </>
   )
 }

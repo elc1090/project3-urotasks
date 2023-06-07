@@ -1,7 +1,11 @@
 import { useContext } from 'react';
-import { ToggleMenuContext } from '../../../pages/home';
+import { ToggleMenuContext } from '../../../../pages/home';
 
-import ButtonClose from '../../utils/btn--close';
+import './_style/header.css';
+
+import { ButtonGlow } from '../../../utils/buttons';
+
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default function MenuHeader()
 {
@@ -10,7 +14,7 @@ export default function MenuHeader()
   return (
     <div className='menu__header'>
       <a className='menu__logo' href='/'><img src='img/logo--dark_theme.svg' alt='urotasks_logo'/></a>  
-      <ButtonClose onClick={ toggleMenu }/>
+      <ButtonGlow onClick={ toggleMenu } icon={ faXmark }/>
     </div>
   )
 }

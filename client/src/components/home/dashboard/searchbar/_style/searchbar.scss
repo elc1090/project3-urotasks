@@ -35,3 +35,24 @@
     { color: #afaeae; }
   }
 }
+
+@media screen and (max-width: 1542px)
+{
+  .searchbar
+  {
+    position: absolute;
+    left: 72px;
+    top: 22px;
+    
+    width: calc(100% - 96px);  
+  }
+}
+
+@media screen and (min-width: 1337px) and (max-width: 1542px)
+{
+  .searchbar--menu-shown
+  {
+    left: 24px;
+    width: calc(100% - 49px);
+  }
+}

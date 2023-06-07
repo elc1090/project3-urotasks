@@ -1,20 +1,22 @@
 import { useContext, useRef, useState } from 'react';
 import { ProjectsContext, ReducerContext, UserContext } from "../../../../app";
+import { ToggleMenuContext } from '../../../../pages/home';
 import { v4 as uuid } from 'uuid';
 import axios from 'axios';
 
 import './_style/proj-creator.css'
 
-import ButtonClose from '../../../utils/btn--close';
+import { ButtonGlow } from '../../../utils/buttons';
 import { ChromePicker } from 'react-color';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBarsProgress } from "@fortawesome/free-solid-svg-icons";
+import { faBarsProgress, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 export default function ProjCreator()
 {
   const projectNameRef = useRef();
   
+  const { toggleMenu } = useContext(ToggleMenuContext);
   const { user, setUser } = useContext(UserContext);
   const { state, dispatch } = useContext(ReducerContext);
   const { projects, setProjects } = useContext(ProjectsContext);
@@ -58,11 +60,7 @@ export default function ProjCreator()
     setProjects(newProjects);
     
     if (state.isMenuHidden === false)
-    {
-      dispatch({ type: 'menuHidden'      });
-      dispatch({ type: 'dashboardMoved'  });
-      dispatch({ type: 'searchbarSpaced' }); 
-    }
+      toggleMenu();
 
     dispatch({ type: 'projCreatorShown' }); 
 
@@ -72,10 +70,10 @@ export default function ProjCreator()
   function ColorPicker()
   {
     return (
-      <div>
+      <>
         <div onClick={ () => {setPickerActive(!pickerActive)} } className='chrome-picker__bg'/>
         <ChromePicker color={ color } onChangeComplete={ (color) => {setColor(color.hex)} }/> 
-      </div>
+      </>
     )
   }
 
@@ -85,19 +83,27 @@ export default function ProjCreator()
     return <div className='input-color' style={colorStyle}>.</div>
   }
 
+  function toggleProjectCreator()
+  {
+    if (state.isMenuHidden === false)
+      toggleMenu();
+
+    dispatch({ type: 'projCreatorShown' })
+  }
+
   return (
     <>
-      {/*<div className={`proj-creator__bg ${state.isProjCreatorShown ? 'proj-creator__bg--shown' : 'proj-creator__bg--hidden'}`}></div>*/}
+      <div className={`proj-creator__bg ${state.isProjCreatorShown ? 'proj-creator__bg--shown' : 'proj-creator__bg--hidden'}`} onClick={ toggleProjectCreator }/>
 
       <div className={`proj-creator ${state.isProjCreatorShown ? 'proj-creator--shown' : 'proj-creator--hidden'}`}>
         <h2 className="proj-creator__title">CREATE PROJECT <FontAwesomeIcon icon={ faBarsProgress }/> </h2>
-        <ButtonClose onClick={ () => {dispatch({ type: 'projCreatorShown' })} }/>
+        <ButtonGlow onClick={ toggleProjectCreator } icon={ faXmark }/>
         
         <input className="proj-creator__input" id="input-1" ref={ projectNameRef } type="text" placeholder="Name of the project" autoFocus/>
         <button className="proj-creator__input" id="input-2" onClick={ () => {setPickerActive(!pickerActive)} }><ColorInput/></button>
         {pickerActive ? <ColorPicker/> : null}
         
-        <button className="creator__submit" onClick={ createProject }>CONFIRM</button>
+        <button className="proj-creator__submit" onClick={ createProject }>CONFIRM</button>
       </div>
     </>
   )

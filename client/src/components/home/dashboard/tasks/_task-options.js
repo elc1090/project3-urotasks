@@ -8,8 +8,10 @@ import { faEllipsisVertical, faArrowsLeftRight, faMultiply, faTag } from '@forta
 
 export default function ListItemControls({ task })
 {
-  const [optionFocus, setOptionFocus] = useState(false);
-  const [newLocation, setNewLocation] = useState('done');
+  const [moveOpen, setMoveOpen] = useState(false);
+  const [optionsShown, setOptionsShown] = useState(false);
+
+  const [newLocation, setNewLocation] = useState('');
   const moveLocationRef = useRef();
 
   const { dispatch } = useContext(ReducerContext);
@@ -72,122 +74,60 @@ export default function ListItemControls({ task })
     dispatch({ type: "taskUpdated" });
   }
 
-  const optionEllipsis = 'option--ellipsis:' + task.id;
-  const optionTags     = 'option--tag:'      + task.id;
-  const optionMove     = 'option--move:'     + task.id;
-  const optionRemove   = 'option--remove:'   + task.id;
-  const moveSelect     = 'move__select:'     + task.id;
-  const location1      = 'location--1:'      + task.id;
-  const location2      = 'location--2:'      + task.id;
-
-  function clearOtherOptions()
-  {
-    const options = Array.from(document.getElementsByClassName('option'));
-    
-    options.forEach(option => 
-    {
-      if (!option.id.includes(task.id))
-      {
-        if (option.id.includes('option--ellipsis:'))
-          option.classList.remove('options__ellipsis--shown');
-
-        else if (option.id.includes('option--move:'))
-        {
-          option.classList.remove('option--shown');
-          option.children[1].classList.remove('options__select--shown');
-        }
-
-        else
-          option.classList.remove('option--shown');
-      }
-    })
-
-  }
-
   function toggleOptions(toggle)
   {
-    const options =  
-    {
-      ellipsis: document.getElementById(optionEllipsis),
-      tags: document.getElementById(optionTags),
-      move: document.getElementById(optionMove),
-      remove: document.getElementById(optionRemove),
-      moveSelect: document.getElementById(moveSelect)
-    }
-
-    options.moveSelect.classList.remove('options__select--shown');
-
     if (toggle === 'toggle')
     {
-      clearOtherOptions();
-      options.ellipsis.classList.toggle('options--ellipsis--shown');
-      options.tags.classList.toggle('option--shown');
-      options.move.classList.toggle('option--shown');
-      options.remove.classList.toggle('option--shown');
+      setOptionsShown(!optionsShown);
 
-      if (optionFocus === true)
-        setOptionFocus(false);
+      if (moveOpen === true)
+      {
+        setMoveOpen(false);
+        setNewLocation('');
+      }
     }
 
     else
-    {
-      options.ellipsis.classList.remove('options--ellipsis--shown');
-      options.tags.classList.remove('option--shown');
-      options.move.classList.remove('option--shown');
-      options.remove.classList.remove('option--shown');
-    }
+      setOptionsShown(false);
   }
 
-  function toggleMoveOptions()
+  const optionsCol = 'options-col:' + task.id;
+  if (optionsShown === true)
   {
-    const moveSelectElement = document.getElementById(moveSelect);
-    moveSelectElement.classList.toggle('options__select--shown');
+    document.addEventListener('click', e => 
+    {
+      const optionsElement = document.getElementById(optionsCol);
   
-    setOptionFocus(!optionFocus);
-  }
-
-  function changeLocation(location, input)
-  {
-    const location1Element = document.getElementById(location1);
-    const location2Element = document.getElementById(location2);
-
-    if (input === 'location--1')
-    {
-      location1Element.classList.add('options__location--selected');
-      location2Element.classList.remove('options__location--selected');
-    }
-
-    else
-    {
-      location1Element.classList.remove('options__location--selected');
-      location2Element.classList.add('options__location--selected');
-    }
-
-    setNewLocation(location);
+      if (e.target !== optionsElement && !optionsElement?.contains(e.target))
+      {
+        setOptionsShown(false);
+        setMoveOpen(false);
+      }
+    })
   }
 
   return (
-    <div className='options' onMouseLeave={optionFocus ? null : () => {toggleOptions('hide')}}>
-      <div className='option options--ellipsis' id={ optionEllipsis } onClick={ () => {toggleOptions('toggle')} }>
+    <div className='options' id={ optionsCol } onMouseLeave={ moveOpen ? null : () => {toggleOptions('hide')} } >
+      <div className={ `option options--ellipsis ${optionsShown ? 'options--ellipsis--shown' : ''}` } onClick={ () => {toggleOptions('toggle')} }>
         <div className='option__icon'><FontAwesomeIcon icon={ faEllipsisVertical }/></div>
       </div>
       
-      <div className='option options--tags' id={ optionTags }>
+      <div className={ `option options--tags ${optionsShown ? 'option--shown' : ''}` }>
         <div className='option__icon'><FontAwesomeIcon icon={ faTag }/></div>
       </div>
 
-      <div className='option options--move' id={ optionMove }>
-        <div className='option__icon' onClick={toggleMoveOptions}><FontAwesomeIcon icon={ faArrowsLeftRight }/></div>
+      <div className={ `option options--move ${optionsShown ? 'option--shown' : ''}` }>
+        <div className='option__icon' onClick={ () => {setMoveOpen(!moveOpen);} }><FontAwesomeIcon icon={ faArrowsLeftRight }/></div>
         
-        <div className='options__select' id={moveSelect}>
-          <input className='move__input' type='hidden' value={ newLocation } ref={ moveLocationRef } readOnly/>
-          <div className='options__location' id={location1} onClick={ () => {changeLocation(taskType1, 'location--1')}}>{ formatTaskType(taskType1) }</div>
-          <div className='options__location' id={location2} onClick={ () => {changeLocation(taskType2, 'location--2')}}>{ formatTaskType(taskType2) }</div>
+        <div className={ `options__select ${moveOpen ? 'options__select--shown' : ''}` }>
+          <input className='move__input' type='hidden' value={ newLocation } ref={ moveLocationRef }/>
+          <div className={`options__location ${newLocation === taskType1 ? 'options__location--selected' : ''}` } onClick={ () => {setNewLocation(taskType1)} }>{ formatTaskType(taskType1) }</div>
+          <div className={`options__location ${newLocation === taskType2 ? 'options__location--selected' : ''}` } onClick={ () => {setNewLocation(taskType2)} }>{ formatTaskType(taskType2) }</div>
           <button className='options__submit' onClick={moveTask}>MOVE</button>
         </div>
       </div>
 
-      <div className='option options--remove' id={ optionRemove } onClick={deleteTask}>
+      <div className={ `option options--remove ${optionsShown ? 'option--shown' : ''}` } onClick={deleteTask}>
         <div className='option__icon'><FontAwesomeIcon icon={ faMultiply }/></div>
       </div>
     </div>

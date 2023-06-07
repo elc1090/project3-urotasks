@@ -1,3 +1,19 @@
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 .searchbar {
   position: relative;
   width: 1400px;
@@ -25,4 +41,19 @@
 }
 .searchbar input::placeholder {
   color: #afaeae;
+}
+
+@media screen and (max-width: 1542px) {
+  .searchbar {
+    position: absolute;
+    left: 72px;
+    top: 22px;
+    width: calc(100% - 96px);
+  }
+}
+@media screen and (min-width: 1337px) and (max-width: 1542px) {
+  .searchbar--menu-shown {
+    left: 24px;
+    width: calc(100% - 49px);
+  }
 }/*# sourceMappingURL=searchbar.css.map */

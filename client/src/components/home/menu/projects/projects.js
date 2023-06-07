@@ -1,9 +1,11 @@
 import { useContext } from 'react';
-import { ProjectsContext, ReducerContext } from '../../../app';
-import { ToggleMenuContext } from '../../../pages/home';
+import { ProjectsContext, ReducerContext } from '../../../../app';
+import { ToggleMenuContext } from '../../../../pages/home';
 
-import List from '../../utils/list';
-import Project from './projects/project';
+import './_style/projects.css';
+
+import List from '../../../utils/list';
+import Project from './_project';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronUp, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -16,9 +18,7 @@ export default function MenuProjects()
 
   function toggleProjCreator()
   {
-    if (window.innerWidth < 1337)
-      toggleMenu();
-  
+    toggleMenu();
     dispatch({ type: 'projCreatorShown' });
   }
   

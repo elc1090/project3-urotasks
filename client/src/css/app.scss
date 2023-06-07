@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;900&display=swap');
-@import './variables';
+@import './_variables.scss';
 
 * 
 { margin: 0; padding: 0; border: 0; outline: 0; box-sizing: border-box; transition: all 0.15s ease-in-out; }
@@ -25,15 +25,6 @@ textarea
 ::-webkit-scrollbar   
 { width: 0px; }
 
-@keyframes fade-in 
-{
-  from { opacity: 0; }
-  to   { opacity: 1; }  
-}
-
-.highlight--blue
-{ color: $hl-blue-light; }
-
 .app
 {
   position: relative;
@@ -46,16 +37,19 @@ textarea
 }
 
 /***************************************************************/
-.btn--close
+.btn--glow
 {
   color: #fff;
 
   font-size: 2.3rem;
   cursor: pointer;
+
+  &:hover > svg
+  { @include glow }
 }
 
-.btn--close:hover > svg
-{ filter: drop-shadow(0px 0px 1px #fff); }
-
-/***************************************************************/
-/*** 4. mobile ***/
+@media screen and (max-width: 1336px) 
+{
+  html
+  { font-size: 14px; }
+}

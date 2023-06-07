@@ -1,0 +1,30 @@
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.menu__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.menu__logo:hover {
+  filter: drop-shadow(0px 0px 1px #fff);
+}
+.menu__logo img {
+  max-width: 192px;
+  margin-bottom: -12px;
+}/*# sourceMappingURL=header.css.map */

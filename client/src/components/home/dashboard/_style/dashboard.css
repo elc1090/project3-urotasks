@@ -1,3 +1,19 @@
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 .dashboard {
   display: flex;
   flex-direction: column;
@@ -16,17 +32,10 @@
   width: 100%;
   left: 0;
 }
-.dashboard__tasks {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  width: 1400px;
-  max-width: 100%;
-}
 .dashboard__burger {
   position: absolute;
   left: 24px;
-  top: 24px;
+  top: 26px;
   z-index: 3;
   color: #fff;
   font-size: 2rem;
@@ -34,4 +43,22 @@
 }
 .dashboard__burger:hover > svg {
   filter: drop-shadow(0px 0px 1px #fff);
+}
+
+/* media queries */
+@media screen and (max-width: 1542px) {
+  .dashboard {
+    padding-top: 96px;
+  }
+}
+@media screen and (max-width: 1336px) {
+  .dashboard {
+    position: inherit;
+    width: 100%;
+    left: 0;
+  }
+  .dashboard__burger {
+    position: absolute;
+    z-index: 2;
+  }
 }/*# sourceMappingURL=dashboard.css.map */
