@@ -39,7 +39,7 @@ export default function App()
 
   useEffect(() => 
   {
-    axios.get('/data-read')
+    axios.get(`${process.env.REACT_APP_SERVER_ROUTE}/data-read`)
       .then(res => {setUser(res.data[0]); setProjects(res.data[1])})
       .catch(err => {console.log(err)})
   }, [])
