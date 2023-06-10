@@ -31,70 +31,6 @@
     opacity: 0;
   }
 }
-.dashboard {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  position: absolute;
-  left: 400px;
-  min-height: 100dvh;
-  width: calc(100% - 400px);
-  padding: 24px;
-  color: #fff;
-  background-color: #0e1218;
-  animation: ease-in-out 1s forwards fade-in;
-}
-.dashboard--moved {
-  width: 100%;
-  left: 0;
-}
-.dashboard__burger {
-  position: absolute;
-  left: 24px;
-  top: 26px;
-  z-index: 3;
-  color: #fff;
-  font-size: 2rem;
-  cursor: pointer;
-}
-.dashboard__burger:hover > svg {
-  filter: drop-shadow(0px 0px 1px #fff);
-}
-
-/* media queries */
-@media screen and (max-width: 1542px) {
-  .dashboard {
-    padding-top: 96px;
-  }
-}
-@media screen and (max-width: 1336px) {
-  .dashboard {
-    position: inherit;
-    width: 100%;
-    left: 0;
-  }
-  .dashboard__burger {
-    position: absolute;
-    z-index: 2;
-  }
-}
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes fade-out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
 .proj-creator__bg {
   position: absolute;
   z-index: 98;
@@ -116,7 +52,8 @@
   grid-template-columns: minmax(0px, 320px) minmax(0px, 80px) minmax(0px, 32px);
   grid-template-rows: repeat(3, auto);
   place-items: top;
-  column-gap: 8px;
+  -moz-column-gap: 8px;
+       column-gap: 8px;
   position: absolute;
   top: 40%;
   padding: 16px;
@@ -218,6 +155,9 @@
   color: #fff;
   background-color: inherit;
 }
+.searchbar input::-moz-placeholder {
+  color: #afaeae;
+}
 .searchbar input::placeholder {
   color: #afaeae;
 }
@@ -265,49 +205,102 @@
   border-bottom: 2px solid #55ade8;
   font-weight: 500;
 }
-.taskbar .taskbar__header {
+.taskbar__header {
   display: flex;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
-.taskbar .taskbar__header .header__color {
+.taskbar__header .header__color {
   margin-right: 8px;
   cursor: pointer;
 }
-.taskbar .taskbar__header .chrome-picker__bg {
+.taskbar__header .chrome-picker__bg {
   position: absolute;
   width: 100dvw;
   height: 86dvh;
   z-index: 1;
 }
-.taskbar .taskbar__header .chrome-picker {
+.taskbar__header .chrome-picker {
   position: absolute;
   top: 64px;
   left: 0;
   z-index: 1;
 }
-.taskbar .taskbar__header input {
+.taskbar__header input {
   color: inherit;
   background-color: inherit;
   font-size: inherit;
   font-weight: inherit;
 }
-.taskbar .taskbar__delete {
+.taskbar__delete {
+  position: relative;
   padding: 8px 12px;
   border: 2px solid #ff4e4e;
   border-radius: 4px;
   color: #fff;
   cursor: pointer;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
-.taskbar .taskbar__delete:hover {
-  color: #2d3b4e;
+.taskbar__delete:hover, .taskbar__delete--active {
   background-color: #ff4e4e;
 }
-.taskbar .taskbar__delete .fa-trash-can {
+.taskbar__delete .fa-trash-can {
+  pointer-events: none;
   font-size: 1.2rem;
   transition: all 0s ease-in-out;
+}
+.taskbar .confirmation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  position: absolute;
+  top: 49px;
+  right: -2px;
+  width: 320px;
+  padding: 12px;
+  border-radius: 5px;
+  border: 2px solid #55ade8;
+  background-color: #212833;
+  text-align: center;
+}
+.taskbar .confirmation--shown {
+  opacity: 1;
+  z-index: 99;
+  pointer-events: initial;
+}
+.taskbar .confirmation--hidden {
+  opacity: 0;
+  z-index: -20;
+  pointer-events: none;
+}
+.taskbar .confirmation__header {
+  pointer-events: none;
+}
+.taskbar .confirmation__btns {
+  display: flex;
+  gap: 24px;
+}
+.taskbar .confirmation__btns .btn--confirmation {
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.taskbar .confirmation__btns #confirmation--confirm {
+  border: 2px solid #c53131;
+}
+.taskbar .confirmation__btns #confirmation--confirm:hover {
+  border-color: #c53131;
+  background-color: #c53131;
+}
+.taskbar .confirmation__btns #confirmation--cancel {
+  border: 2px solid #55ade8;
+}
+.taskbar .confirmation__btns #confirmation--cancel:hover {
+  background-color: #55ade8;
 }
 
 @keyframes fade-in {
@@ -404,7 +397,9 @@
   opacity: 1;
   z-index: 5;
   pointer-events: initial;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 .task .options .option__icon {
   display: grid;
@@ -490,6 +485,7 @@
   grid-template-columns: minmax(0, 100%) minmax(0, auto);
   grid-template-rows: auto minmax(0, 100%);
   gap: 16px;
+  height: -moz-fit-content;
   height: fit-content;
   padding: 16px;
   border-radius: 5px;
@@ -561,6 +557,70 @@
     opacity: 0;
   }
 }
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: absolute;
+  left: 400px;
+  min-height: 100dvh;
+  width: calc(100% - 400px);
+  padding: 24px;
+  color: #fff;
+  background-color: #0e1218;
+  animation: ease-in-out 1s forwards fade-in;
+}
+.dashboard--moved {
+  width: 100%;
+  left: 0;
+}
+.dashboard__burger {
+  position: absolute;
+  left: 24px;
+  top: 26px;
+  z-index: 3;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+}
+.dashboard__burger:hover > svg {
+  filter: drop-shadow(0px 0px 1px #fff);
+}
+
+/* media queries */
+@media screen and (max-width: 1542px) {
+  .dashboard {
+    padding-top: 96px;
+  }
+}
+@media screen and (max-width: 1336px) {
+  .dashboard {
+    position: inherit;
+    width: 100%;
+    left: 0;
+  }
+  .dashboard__burger {
+    position: absolute;
+    z-index: 2;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
 .menu__header {
   display: flex;
   justify-content: space-between;
@@ -592,45 +652,6 @@
     opacity: 0;
   }
 }
-.menu {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
-  z-index: 3;
-  width: 400px;
-  height: 100dvh;
-  padding: 32px;
-  color: #fff;
-  background-color: #212833;
-  box-shadow: 0px 0px 15px rgba(42, 54, 61, 0.3568627451);
-  transform-origin: left;
-}
-.menu--hidden {
-  transform: translateX(-400px);
-  opacity: 0;
-}
-
-@media screen and (max-width: 400px) {
-  .menu {
-    width: 100%;
-  }
-}
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes fade-out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
 .projects {
   display: grid;
   grid-template-columns: 9fr 1fr;
@@ -642,7 +663,9 @@
   align-items: center;
   gap: 12px;
   cursor: pointer;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 .projects__header:hover {
   filter: drop-shadow(0px 0px 1px #fff);
@@ -748,6 +771,47 @@
   filter: drop-shadow(0px 0px 1px #fff);
 }
 
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.menu {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  z-index: 3;
+  width: 400px;
+  height: 100dvh;
+  padding: 32px;
+  color: #fff;
+  background-color: #212833;
+  box-shadow: 0px 0px 15px rgba(42, 54, 61, 0.3568627451);
+  transform-origin: left;
+}
+.menu--hidden {
+  transform: translateX(-400px);
+  opacity: 0;
+}
+
+@media screen and (max-width: 400px) {
+  .menu {
+    width: 100%;
+  }
+}
+/***************************************************************************************************************/
+/* global styles */
 * {
   margin: 0;
   padding: 0;
@@ -787,6 +851,8 @@ textarea {
   width: 0px;
 }
 
+/***************************************************************************************************************/
+/* app */
 .app {
   position: relative;
   opacity: 1;
@@ -795,7 +861,8 @@ textarea {
   animation: ease-in-out 1s forwards fade-in;
 }
 
-/***************************************************************/
+/***************************************************************************************************************/
+/* utils */
 .btn--glow {
   color: #fff;
   font-size: 2.3rem;
@@ -809,6 +876,4 @@ textarea {
   html {
     font-size: 14px;
   }
-}
-
-/*# sourceMappingURL=app.css.map */
+}/*# sourceMappingURL=app.css.map */

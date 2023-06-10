@@ -37,6 +37,9 @@ export default function ColumnContainer({ taskType })
       .then(res => {console.log(res)})
       .catch(err => {console.log(err)})
 
+    if (!Array.isArray(activeProjectCopy[taskType]))
+      activeProjectCopy[taskType] = [];
+
     activeProjectCopy[taskType].push(newTask);
     setActiveProject(activeProjectCopy);
   }

@@ -18,7 +18,6 @@
     "react-router-dom": "^6.11.2",
     "react-scripts": "5.0.1",
     "sass": "^1.63.3",
-    "sass-loader": "^13.3.2",
     "uuidv4": "^6.2.13",
     "web-vitals": "^2.1.4"
   },
@@ -27,8 +26,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "importSass": "node src/scripts/importSassFiles.js",
-    "watchSass": "sass --watch ./src/css/:./src/css/"
+    "importSass": "node src/scripts/importSassFiles.js"
   },
   "eslintConfig": {
     "extends": [

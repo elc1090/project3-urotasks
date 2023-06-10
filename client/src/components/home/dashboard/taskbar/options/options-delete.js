@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
 import { ProjectsContext, UserContext } from "../../../../../app";
 import axios from 'axios';
 
@@ -9,6 +9,8 @@ export default function TaskbarDelete()
 {
   const { user, setUser } = useContext(UserContext);
   const { projects, setProjects, activeProject } = useContext(ProjectsContext);
+
+  const [confirmationShown, setConfirmationShown] = useState(false);
 
   function deleteProject()
   {
@@ -38,10 +40,31 @@ export default function TaskbarDelete()
       .catch(err => console.log(err))
   }
 
+  if (confirmationShown === true)
+  {
+    document.addEventListener('click', e => 
+    {
+      const confirmationElement = document.querySelector('.confirmation');
+      const deleteBtnElement = document.querySelector('.taskbar__delete');
+  
+      if (e.target !== confirmationElement && e.target !== deleteBtnElement)
+        setConfirmationShown(false);
+    })
+  }
+
   return (
     <>
-      <div className="taskbar__delete" onClick={ deleteProject }>
-        <FontAwesomeIcon icon={ faTrashCan }/> 
+      <div className={`taskbar__delete ${confirmationShown ? 'taskbar__delete--active' : ''}`} onClick={ () =>  {setConfirmationShown(!confirmationShown)} }>
+        <FontAwesomeIcon icon={ faTrashCan }/>  
+      </div>
+
+      <div className={`confirmation ${confirmationShown ? 'confirmation--shown' : 'confirmation--hidden'}`}>
+        <h3 className='confirmation__header'>Are you sure you want to delete this project?</h3>
+        
+        <div className='confirmation__btns'>
+          <div className='btn--confirmation' id='confirmation--cancel' onClick={ () =>  {setConfirmationShown(!confirmationShown)} }>CANCEL</div>
+          <div className='btn--confirmation' id='confirmation--confirm' onClick={ deleteProject }>DELETE</div>
+        </div>
       </div>
     </>
   )

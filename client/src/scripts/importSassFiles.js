@@ -36,6 +36,8 @@ function generateImportStatements()
 
   const output = importStatements.join('\n');
   fs.writeFileSync(path.join(__dirname, '../css/_imports.scss'), output, 'utf-8');
+
+  console.log('sass files successfully imported')
 }
 
 generateImportStatements();

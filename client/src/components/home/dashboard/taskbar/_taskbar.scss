@@ -1,0 +1,155 @@
+@import '../../../../css/variables';
+
+.taskbar
+{
+  display: grid;
+  grid-template-columns: minmax(0px, 100%) auto;
+  align-items: end;
+  gap: 8px;
+
+  position: relative;
+  width: 1400px;
+  max-width: 100%;
+
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid $hl-blue-light;
+
+  font-weight: 500;
+
+  &__header
+  { 
+    display: flex; 
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+    .header__color
+    {
+      margin-right: 8px;
+      cursor: pointer;
+    }
+
+    .chrome-picker__bg
+    {
+      position: absolute;
+      width: 100dvw;
+      height: 86dvh;
+        
+      z-index: 1;
+    }
+
+    .chrome-picker
+    {  
+      position: absolute;
+      top: 64px;
+      left: 0;
+
+      z-index: 1;
+    }
+
+    input
+    {
+      color: inherit;
+      background-color: inherit;
+    
+      font-size: inherit;
+      font-weight: inherit;
+    }
+  }
+  
+  &__delete
+  {
+    position: relative;
+    
+    padding: 8px 12px;
+    border: 2px solid $hl-red-light;
+    border-radius: $border-rad-small;
+
+    color: #fff;
+
+    cursor: pointer;
+    user-select: none;
+
+    &:hover, &--active
+    { background-color: $hl-red-light; }
+
+    .fa-trash-can
+    {
+      pointer-events: none;
+      font-size: 1.2rem; 
+      transition: all 0s ease-in-out; 
+    }
+  }
+
+  .confirmation
+  {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    position: absolute;
+    top: 49px;
+    right: -2px;
+    width: 320px;
+    padding: 12px;
+
+    border-radius: $border-rad-big;
+    border: 2px solid $hl-blue-light;
+    background-color: $bg-blue-mid;
+    
+    text-align: center;
+
+    &--shown
+    {
+      opacity: 1;
+      z-index: 99;
+      pointer-events: initial;
+    }
+
+    &--hidden
+    {
+      opacity: 0;
+      z-index: -20;
+      pointer-events: none;
+    }
+
+    &__header
+    { pointer-events: none; }
+
+    &__btns
+    {
+      display: flex;
+      gap: 24px;
+
+      .btn--confirmation
+      {
+        padding: 8px;
+        border-radius: $border-rad-small;
+
+        cursor: pointer;
+      }
+
+      #confirmation--confirm
+      {
+        border: 2px solid $hl-red-dark;
+
+        &:hover
+        {
+          border-color: $hl-red-dark;
+          background-color: $hl-red-dark;
+        }
+      }
+
+      #confirmation--cancel
+      {
+        border: 2px solid $hl-blue-light;
+
+        &:hover
+        { background-color: $hl-blue-light; }
+      }
+    }
+  }
+}
