@@ -3,9 +3,7 @@ import { ProjectsContext } from "../../../../app";
 import { v4 as uuid } from 'uuid';
 import axios from 'axios';
 
-import './_style/tasks.css'
-
-import Task from './_task'
+import Task from './task/task'
 import List from '../../../utils/list';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

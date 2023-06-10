@@ -1,8 +1,6 @@
 import { useContext } from 'react';
 import { ToggleMenuContext } from '../../../../pages/home';
 
-import './_style/header.css';
-
 import { ButtonGlow } from '../../../utils/buttons';
 
 import { faXmark } from '@fortawesome/free-solid-svg-icons';

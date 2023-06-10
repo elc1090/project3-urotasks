@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
 import { ProjectsContext, ReducerContext } from "../../../app";
 
-import './_style/dashboard.css';
-
 import ProjectCreator from './proj-creator/proj-creator';
 import Searchbar from './searchbar/searchbar';
 import Taskbar from './taskbar/taskbar';

@@ -1,8 +1,6 @@
 import { useContext } from 'react';
 import { ReducerContext } from '../../../../app';
 
-import './_style/searchbar.css'
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 

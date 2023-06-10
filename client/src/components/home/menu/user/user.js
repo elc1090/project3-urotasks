@@ -1,8 +1,6 @@
 import { useContext } from 'react';
 import { UserContext } from '../../../../app';
 
-import './_style/user.css';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 

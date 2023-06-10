@@ -4,7 +4,6 @@ import { ToggleMenuContext } from '../../../../pages/home';
 import { v4 as uuid } from 'uuid';
 import axios from 'axios';
 
-import './_style/proj-creator.css'
 
 import { ButtonGlow } from '../../../utils/buttons';
 import { ChromePicker } from 'react-color';

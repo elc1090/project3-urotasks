@@ -1,0 +1,189 @@
+@import '../../../../../css/_variables.scss';
+
+.task
+{
+  display: grid;
+  grid-template-columns: 13fr 1fr;
+  
+  position: relative;
+  width: 100%;
+  padding: 12px;
+  border-radius: $border-rad-small;
+
+  background-color: $bg-blue-light;
+
+  &__text textarea
+  {
+    color: inherit;
+    background-color: inherit;
+  
+    font-family: inherit;
+    font-size: inherit;
+  
+    cursor: text;
+  }
+
+  .options
+  {
+    position: absolute;
+    right: 0px;
+    top: 8px;
+    opacity: 1;
+
+    border-radius: $border-rad-small;
+
+    text-align: center;
+    cursor: pointer;
+
+    &--ellipsis
+    { 
+      padding: 0;
+      margin-top: -8px;
+
+      &:hover, &--shown
+      { 
+        color: $bg-blue-light;
+        background-color: #fff;
+      }
+
+      & > *
+      { transition: all 0s ease-in-out; }
+    }
+
+    &--tags
+    { 
+      transform: translateY(-34px); 
+      pointer-events: none;
+      z-index: 4;
+      opacity: 0; 
+    
+      background-color: $hl-green-dark; 
+
+      &:hover 
+      { background-color: lighten($hl-green-dark, 10%); }
+    }
+
+    &--move
+    { 
+      transform: translateY(-68px); 
+      pointer-events: none;
+      z-index: 3;
+      opacity: 0; 
+    
+      background-color: $hl-blue-dark;
+      
+      &:hover 
+      { background-color: lighten($hl-blue-dark, 10%); }
+    }
+
+    &--remove
+    { 
+      transform: translateY(-96px); 
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0; 
+
+      background-color: $hl-red-dark; 
+
+      &:hover 
+      { background-color: lighten($hl-red-dark, 10%); }
+    }
+
+    .option
+    {
+      position: relative;
+      width: 42px;
+      height: 42px;
+      border-radius: $border-rad-small;
+
+      font-size: 1.2rem;
+
+      &--shown
+      { 
+        transform: translateY(0px); 
+        opacity: 1;
+        z-index: 5;
+        pointer-events: initial;
+        user-select: none;
+      }
+
+      &__icon
+      { 
+        display: grid;
+        place-items: center;
+      
+        width: 42px; 
+        height: 42px;
+      }
+    }
+
+    &__select
+    {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      
+      position: absolute;
+      left: -120px;
+      top: 1px;
+      opacity: 0;
+      
+      padding: 8px;
+      border: 2px solid $hl-blue-light;
+      border-radius: $border-rad-big;
+
+      background-color: $bg-blue-mid;
+
+      font-size: 1.1rem;
+
+      pointer-events: none;
+      cursor: default;
+
+      &--shown
+      {
+        opacity: 1;
+        pointer-events: initial;
+        cursor: pointer;
+      }
+
+      & > *
+      {
+        width: 96px;
+        height: 40px;
+      }
+    }
+
+    &__location
+    { 
+      display: grid;
+      place-items: center;
+
+      border-radius: $border-rad-small;
+
+      color: #000;
+      background-color: rgb(255, 255, 255);
+
+      &--selected, &:hover
+      {
+        color: #fff;
+        background-color: $bg-blue-dark;
+      }
+    }
+
+    &__submit
+    {
+      left: 0px;
+      margin-top: 8px;
+      border-radius: $border-rad-small;
+
+      color: #fff;
+      background-color: $hl-blue-dark;
+
+      font-size: inherit;
+      cursor: pointer;
+
+      &:hover
+      { background-color: $hl-blue-light; }
+    }
+  }
+}

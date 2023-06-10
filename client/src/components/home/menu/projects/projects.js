@@ -2,8 +2,6 @@ import { useContext } from 'react';
 import { ProjectsContext, ReducerContext } from '../../../../app';
 import { ToggleMenuContext } from '../../../../pages/home';
 
-import './_style/projects.css';
-
 import List from '../../../utils/list';
 import Project from './_project';
 

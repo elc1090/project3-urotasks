@@ -1,6 +1,6 @@
 import React, { useState, useContext, useRef } from 'react';
-import { ProjectsContext, ReducerContext } from '../../../../app';
-import { TaskTypeContext } from './tasks';
+import { ProjectsContext, ReducerContext } from '../../../../../app';
+import { TaskTypeContext } from '../tasks';
 import axios from 'axios';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

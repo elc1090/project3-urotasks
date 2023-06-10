@@ -1,8 +1,6 @@
 import { useContext } from 'react';
 import { ReducerContext } from '../../../app';
 
-import './_style/menu.css';
-
 import Header from './header/header';
 import Projects from './projects/projects'
 import User from './user/user';
