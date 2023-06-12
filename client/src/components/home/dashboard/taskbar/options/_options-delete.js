@@ -45,16 +45,19 @@ export default function TaskbarDelete()
     document.addEventListener('click', e => 
     {
       const confirmationElement = document.querySelector('.confirmation');
-      const deleteBtnElement = document.querySelector('.taskbar__delete');
+      const deleteBtnElement = document.getElementById('taskbar__delete');
   
       if (e.target !== confirmationElement && e.target !== deleteBtnElement)
         setConfirmationShown(false);
     })
   }
 
+  function toggleConfirmation()
+  { setConfirmationShown(!confirmationShown); }
+
   return (
     <>
-      <div className={`taskbar__delete ${confirmationShown ? 'taskbar__delete--active' : ''}`} onClick={ () =>  {setConfirmationShown(!confirmationShown)} }>
+      <div className={`option option--delete ${confirmationShown ? 'option--delete--active' : ''}`} id='taskbar__delete' onClick={ toggleConfirmation }>
         <FontAwesomeIcon icon={ faTrashCan }/>  
       </div>
 
@@ -62,7 +65,7 @@ export default function TaskbarDelete()
         <h3 className='confirmation__header'>Are you sure you want to delete this project?</h3>
         
         <div className='confirmation__btns'>
-          <div className='btn--confirmation' id='confirmation--cancel' onClick={ () =>  {setConfirmationShown(!confirmationShown)} }>CANCEL</div>
+          <div className='btn--confirmation' id='confirmation--cancel' onClick={ toggleConfirmation }>CANCEL</div>
           <div className='btn--confirmation' id='confirmation--confirm' onClick={ deleteProject }>DELETE</div>
         </div>
       </div>

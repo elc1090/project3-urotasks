@@ -205,38 +205,41 @@
   border-bottom: 2px solid #55ade8;
   font-weight: 500;
 }
-.taskbar__header {
+.taskbar .header {
   display: flex;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
-.taskbar__header .header__color {
+.taskbar .header__color {
   margin-right: 8px;
   cursor: pointer;
 }
-.taskbar__header .chrome-picker__bg {
+.taskbar .header .chrome-picker__bg {
   position: absolute;
   width: 100dvw;
   height: 86dvh;
   z-index: 1;
 }
-.taskbar__header .chrome-picker {
+.taskbar .header .chrome-picker {
   position: absolute;
   top: 64px;
   left: 0;
   z-index: 1;
 }
-.taskbar__header input {
+.taskbar .header input {
   color: inherit;
   background-color: inherit;
   font-size: inherit;
   font-weight: inherit;
 }
-.taskbar__delete {
+.taskbar .options {
+  display: flex;
+  gap: 8px;
+}
+.taskbar .options .option {
   position: relative;
-  padding: 8px 12px;
-  border: 2px solid #ff4e4e;
+  padding: 10px 14px;
   border-radius: 4px;
   color: #fff;
   cursor: pointer;
@@ -244,13 +247,25 @@
      -moz-user-select: none;
           user-select: none;
 }
-.taskbar__delete:hover, .taskbar__delete--active {
-  background-color: #ff4e4e;
+.taskbar .options .option--orient:hover {
+  color: #0e1218;
+  background-color: #fff;
 }
-.taskbar__delete .fa-trash-can {
+.taskbar .options .option--orient .fa-bars {
+  transform: rotate(90deg);
   pointer-events: none;
   font-size: 1.2rem;
-  transition: all 0s ease-in-out;
+  transition: color 0s ease-in-out;
+  transition: transform 0.15s ease-in-out;
+}
+.taskbar .options .option--delete:hover, .taskbar .options .option--delete--active {
+  color: #0e1218;
+  background-color: #ff4e4e;
+}
+.taskbar .options .option--delete .fa-trash-can {
+  pointer-events: none;
+  font-size: 1.2rem;
+  transition: color 0s ease-in-out;
 }
 .taskbar .confirmation {
   display: flex;
@@ -274,7 +289,7 @@
 }
 .taskbar .confirmation--hidden {
   opacity: 0;
-  z-index: -20;
+  z-index: -99;
   pointer-events: none;
 }
 .taskbar .confirmation__header {
@@ -293,7 +308,6 @@
   border: 2px solid #c53131;
 }
 .taskbar .confirmation__btns #confirmation--confirm:hover {
-  border-color: #c53131;
   background-color: #c53131;
 }
 .taskbar .confirmation__btns #confirmation--cancel {
@@ -303,6 +317,11 @@
   background-color: #55ade8;
 }
 
+@media screen and (max-width: 820px) {
+  .option--orient {
+    display: none;
+  }
+}
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -474,7 +493,7 @@
 }
 .tasks__container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 16px;
   width: 1400px;
   max-width: 100%;
@@ -538,7 +557,7 @@
 
 @media screen and (max-width: 820px) {
   .tasks__container {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
 }
 @keyframes fade-in {

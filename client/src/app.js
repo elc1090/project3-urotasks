@@ -72,19 +72,19 @@ export default function App()
   return (
     <div className="app" id='app'>
       <ProjectsContext.Provider value={{ projects, setProjects, activeProject, setActiveProject }}>
-        <ReducerContext.Provider value={{ state, dispatch }}>
-          <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{ user, setUser }}>
+          <ReducerContext.Provider value={{ state, dispatch }}>
             <Routes>
               <Route exact path='/' element={ <HomePage/> }/>
               <Route path='/login' element={ <LoginPage/> }/>
               <Route path='/register' element={ <RegisterPage/> }/>
               <Route path='/settings' element={ <SettingsPage/> }/>
-
+    
               <Route path='/404' element={ <NotFoundPage/> }/>
               <Route path='*' element={ <Navigate to='/404'/> }/>
             </Routes>
-          </UserContext.Provider>
-        </ReducerContext.Provider>
+          </ReducerContext.Provider>
+        </UserContext.Provider>
       </ProjectsContext.Provider>
     </div>
   );

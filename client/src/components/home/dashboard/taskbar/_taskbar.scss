@@ -17,7 +17,7 @@
 
   font-weight: 500;
 
-  &__header
+  .header
   { 
     display: flex; 
 
@@ -25,7 +25,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
 
-    .header__color
+    &__color
     {
       margin-right: 8px;
       cursor: pointer;
@@ -58,28 +58,58 @@
       font-weight: inherit;
     }
   }
-  
-  &__delete
+
+  .options
   {
-    position: relative;
-    
-    padding: 8px 12px;
-    border: 2px solid $hl-red-light;
-    border-radius: $border-rad-small;
+    display: flex;
+    gap: 8px;
 
-    color: #fff;
-
-    cursor: pointer;
-    user-select: none;
-
-    &:hover, &--active
-    { background-color: $hl-red-light; }
-
-    .fa-trash-can
+    .option
     {
-      pointer-events: none;
-      font-size: 1.2rem; 
-      transition: all 0s ease-in-out; 
+      position: relative;
+      padding: 10px 14px;
+      border-radius: $border-rad-small;
+
+      color: #fff;
+
+      cursor: pointer;
+      user-select: none;
+
+      &--orient
+      {
+        &:hover
+        { 
+          color: $bg-blue-dark;
+          background-color: #fff;
+        }
+
+        .fa-bars
+        { 
+          transform: rotate(90deg);
+
+          pointer-events: none;
+          font-size: 1.2rem;
+
+          transition: color 0s ease-in-out; 
+          transition: transform 0.15s ease-in-out; 
+        }
+      }
+
+      &--delete
+      {
+        &:hover, &--active
+        { 
+          color: $bg-blue-dark;
+          background-color: $hl-red-light;
+        }
+        
+        .fa-trash-can
+        {
+          pointer-events: none;
+          font-size: 1.2rem; 
+          transition: color 0s ease-in-out; 
+        }
+      }
     }
   }
 
@@ -112,7 +142,7 @@
     &--hidden
     {
       opacity: 0;
-      z-index: -20;
+      z-index: -99;
       pointer-events: none;
     }
 
@@ -137,10 +167,7 @@
         border: 2px solid $hl-red-dark;
 
         &:hover
-        {
-          border-color: $hl-red-dark;
-          background-color: $hl-red-dark;
-        }
+        { background-color: $hl-red-dark; }
       }
 
       #confirmation--cancel
@@ -152,4 +179,10 @@
       }
     }
   }
+}
+
+@media screen and (max-width: 820px) 
+{
+  .option--orient
+  { display: none; }  
 }
