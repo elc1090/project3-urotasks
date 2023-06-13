@@ -22,7 +22,7 @@ export default function HomePage()
   }
 
   if (loading)
-    return <p className='sexo'>loading...</p>
+    return <div className='loading'>loading...</div>
 
   else
   {

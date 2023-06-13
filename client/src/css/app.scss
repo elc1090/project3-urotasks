@@ -60,8 +60,16 @@ textarea
   { font-size: 14px; }
 }
 
-.sexo
+.loading
 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100vw;
+  height: 100vh;
+
   color: #fff;
-  font-size: 10rem;
+  
+  font-size: 3rem;
 }

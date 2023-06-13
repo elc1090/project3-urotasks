@@ -13,6 +13,7 @@ import SettingsPage from './pages/settings'
 
 export const LoadingContext = React.createContext();
 export const ReducerContext = React.createContext();
+
 export const UserContext = React.createContext();
 export const ProjectsContext = React.createContext();
 
