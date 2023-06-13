@@ -22,25 +22,23 @@ const projectSchema = new mongoose.Schema(
     maxlength: 7
   },
 
-  todo:
+  tasks:
   {
     type: [taskSchema],
-    default: [{id: uuid(), content: ""}]
+    default: [{id: uuid(), type: "todo", content: ""}]
   },
 
-  doing:
+  created_at:
   {
-    type: [taskSchema],
-    default: [{id: uuid(), content: ""}]
-  },
+    type: Date,
+    default: new Date()
+  }, 
 
-  done:
+  updated_at:
   {
-    type: [taskSchema],
-    default: [{id: uuid(), content: ""}]
+    type: Date,
+    default: new Date()
   }
-
-});
-
+}, { strict: false });
 
 export default mongoose.model("Project", projectSchema);

@@ -10,16 +10,20 @@ export default function Project({ itemData })
   const { user, setUser } = useContext(UserContext);
   const { state, dispatch } = useContext(ReducerContext);
 
-  // quick fix, refactor
-  function activeTasksAmount()
+  function getActiveTasksAmount()
   {
-    if (!Array.isArray(itemData.todo))
-      itemData.todo = [];
+    let totalActiveTasks = 0;
 
-    if (!Array.isArray(itemData.doing))
-      itemData.doing = [];
-  
-    return itemData.todo.length + itemData.doing.length;
+    if (Array.isArray(itemData.tasks))
+    {
+      itemData.tasks.forEach(task => 
+      {
+        if (task.type === 'todo' || task.type === 'doing')
+          totalActiveTasks++;
+      });
+    }
+
+    return totalActiveTasks;
   }
 
   function activateProject()
@@ -45,7 +49,7 @@ export default function Project({ itemData })
         <div className='item__name'>{ itemData?.name }</div>
       </div> 
   
-      <div className='item__total-tasks'>{ activeTasksAmount() }</div>
+      <div className='item__total-tasks'>{ itemData.activeTasks }</div>
     </li>
   )
 }

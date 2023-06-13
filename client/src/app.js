@@ -37,6 +37,8 @@ export default function App()
       activeProjectIndex === -1 
         ? setActiveProject(projects[0]) 
         : setActiveProject(projects[activeProjectIndex]);
+
+      console.log(projects[0].activeTasks)
     }
   }, [user, projects]);
 

@@ -17,15 +17,14 @@ export default function ListItemControls({ task })
   const { dispatch } = useContext(ReducerContext);
   const { activeProject, setActiveProject } = useContext(ProjectsContext);
   
-  const taskType0 = useContext(TaskTypeContext);
-  let taskType1, taskType2;
+  const taskType = useContext(TaskTypeContext);
+  let moveLocation0, moveLocation1;
 
-  switch (taskType0)
+  switch (taskType)
   {
-    case 'todo' : taskType1 = "doing"; taskType2 = "done" ; break;
-    case 'doing': taskType1 = "todo" ; taskType2 = "done" ; break;
-    case 'done' : taskType1 = "todo" ; taskType2 = "doing"; break;
-    default: break;
+    case 'todo' : moveLocation0 = "doing"; moveLocation1 = "done" ; break;
+    case 'doing': moveLocation0 = "todo" ; moveLocation1 = "done" ; break;
+    case 'done' : moveLocation0 = "todo" ; moveLocation1 = "doing"; break;
   }
 
   function formatTaskType(taskTypeName)
@@ -40,16 +39,17 @@ export default function ListItemControls({ task })
   {
     const moveLocation = moveLocationRef.current.value;
     const placeholderActiveProject = activeProject;
-    const taskList = placeholderActiveProject[taskType0];
+    const taskList = placeholderActiveProject.tasks;
 
     const taskIndex = taskList.findIndex(taskItem => taskItem.id === task.id);
     const taskToMove = taskList.splice(taskIndex, 1)[0];
+    taskToMove.type = moveLocation;
+    taskList.push(taskToMove);
 
-    placeholderActiveProject[moveLocation].push(taskToMove);
-    placeholderActiveProject[taskType0] = taskList;
+    placeholderActiveProject.tasks = taskList;
     setActiveProject(placeholderActiveProject);
 
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-move`, [activeProject.id, task.id, taskType0, moveLocation ])
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-move`, [activeProject.id, task.id, moveLocation ])
       .then(res => {console.log(res)})
       .catch(err => {console.log(err)})
 
@@ -59,15 +59,15 @@ export default function ListItemControls({ task })
   function deleteTask()
   {
     const placeholderActiveProject = activeProject;
-    const taskList = placeholderActiveProject[taskType0];
+    const taskList = placeholderActiveProject.tasks;
 
     const taskIndex = taskList.findIndex(taskItem => taskItem.id === task.id);
     taskList.splice(taskIndex, 1);
     
-    placeholderActiveProject[taskType0] = taskList;
+    placeholderActiveProject[taskType] = taskList;
     setActiveProject(placeholderActiveProject);
     
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-delete`, [activeProject.id, task.id, taskType0])
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-delete`, [activeProject.id, task.id])
       .then(res => {console.log(res)})
       .catch(err => {console.log(err)})
 
@@ -121,8 +121,8 @@ export default function ListItemControls({ task })
         
         <div className={ `options__select ${moveOpen ? 'options__select--shown' : ''}` }>
           <input className='move__input' type='hidden' value={ newLocation } ref={ moveLocationRef }/>
-          <div className={`options__location ${newLocation === taskType1 ? 'options__location--selected' : ''}` } onClick={ () => {setNewLocation(taskType1)} }>{ formatTaskType(taskType1) }</div>
-          <div className={`options__location ${newLocation === taskType2 ? 'options__location--selected' : ''}` } onClick={ () => {setNewLocation(taskType2)} }>{ formatTaskType(taskType2) }</div>
+          <div className={`options__location ${newLocation === moveLocation0 ? 'options__location--selected' : ''}` } onClick={ () => {setNewLocation(moveLocation0)} }>{ formatTaskType(moveLocation0) }</div>
+          <div className={`options__location ${newLocation === moveLocation1 ? 'options__location--selected' : ''}` } onClick={ () => {setNewLocation(moveLocation1)} }>{ formatTaskType(moveLocation1) }</div>
           <button className='options__submit' onClick={moveTask}>MOVE</button>
         </div>
       </div>
