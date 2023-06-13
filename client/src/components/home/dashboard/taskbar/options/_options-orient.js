@@ -11,12 +11,14 @@ export default function TaskbarOrient()
   {
     const orientButton = document.querySelector('.option--orient .fa-bars');
     const tasksContainer = document.getElementById('tasks__container');
+    const tasksLists = Array.from(document.getElementsByClassName('tasks__list'));
 
     if (tasksColumn)
     {
       setTasksColumn(false);
       orientButton.style.transform = 'rotate(0deg)';
       tasksContainer.style.gridTemplateColumns = '1fr';
+      tasksLists.forEach(tasksList => {tasksList.style.gridTemplateColumns = 'repeat(3, 1fr)'})
     }
 
     else
@@ -24,6 +26,7 @@ export default function TaskbarOrient()
       setTasksColumn(true);
       orientButton.style.transform = 'rotate(90deg)';
       tasksContainer.style.gridTemplateColumns = 'repeat(3, 1fr)';
+      tasksLists.forEach(tasksList => {tasksList.style.gridTemplateColumns = '1fr'})
     }
   }
 

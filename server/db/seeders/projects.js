@@ -9,5 +9,5 @@ const seedProjects = async () =>
   await Project.insertMany(projectSeeds);
 };
 
-mongoose.connect('mongodb://127.0.0.1:27017/urotasks');
+mongoose.connect('mongodb+srv://marcola88:egdb1122@urotasks.wwkpbcj.mongodb.net/');
 seedProjects().then(() => {mongoose.connection.close();});

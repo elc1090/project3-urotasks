@@ -33,10 +33,11 @@ export default function ProjCreator()
       id: uuid(), 
       name: name,
       color: color,
-      todo:  [{ id: uuid(), content: "" }],
-      doing: [{ id: uuid(), content: "" }],
-      done:  [{ id: uuid(), content: "" }]
+      tasks: [{ id: uuid(), type: "todo", content: "" }]
     };
+
+    // quick fix, can't do better
+    delete newProject.tasks;
 
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-create`, newProject)
       .then(res => {console.log(res);})
@@ -49,11 +50,6 @@ export default function ProjCreator()
     const userCopy = { ...user };
     userCopy.activeProject = newProject.id;
     setUser(userCopy);
-
-    // gambiarra
-    delete newProject.todo; 
-    delete newProject.doing; 
-    delete newProject.done;
 
     const newProjects = [...projects, newProject];
     setProjects(newProjects);

@@ -4,6 +4,14 @@ import idSchema from './_id.js';
 const taskSchema = new mongoose.Schema(
 {
   id: idSchema,
+  type: String,
+  position: Number,
+
+  content:
+  {
+    type: String,
+    maxlength: 1024
+  },
 
   created_at:
   {
@@ -15,12 +23,6 @@ const taskSchema = new mongoose.Schema(
   {
     type: Date,
     default: new Date()
-  }, 
-
-  content:
-  {
-    type: String,
-    maxlength: 512
   }
 }, { _id: false });
 

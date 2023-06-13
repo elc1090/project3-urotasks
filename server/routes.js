@@ -18,11 +18,21 @@ router.get('/data-read', async (req, res) =>
 
     for (let i = 0; i < projects.length; i++)
     {
-      if (projects[i].todo[0].content === "") projects[i].todo.splice(0, 1);
-      if (projects[i].doing[0].content === "") projects[i].doing.splice(0, 1);
-      if (projects[i].done[0].content === "") projects[i].done.splice(0, 1);
+      let activeTasks = 0;
+    
+      if (projects[i].tasks[0].content === "") 
+        projects[i].tasks.splice(0, 1);
+      
+      for (let j = 0; j < projects[i].tasks.length; j++)
+      {
+        if (projects[i].tasks[j].type === 'todo' || projects[i].tasks[j].type === 'doing')
+          activeTasks++;
+      }
+
+      projects[i].set('activeTasks', activeTasks);
+      console.log(projects[i]);
     }
- 
+
     const data = [user, projects];
 
     res.status(200).send(data);
@@ -70,36 +80,36 @@ router.post('/project-delete', async (req, res) =>
 router.post('/task-create', async (req, res) => 
 {
   const data = req.body;
-  const [projectID, taskType, taskData] = [data[0], data[1], data[2]];
+  const [projectID, taskData] = [data[0], data[1]];
 
-  await taskController.create(projectID, taskType, taskData);
+  await taskController.create(projectID, taskData);
   res.sendStatus(201);
 });
 
 router.post('/task-update', async (req, res) => 
 {
   const data = req.body;
-  const [projectID, taskType, taskID, newContent] = [data[0], data[1], data[2], data[3]];
+  const [projectID, taskID, newContent] = [data[0], data[1], data[2]];
 
-  await taskController.update(projectID, taskType, taskID, newContent);
+  await taskController.update(projectID, taskID, newContent);
   res.sendStatus(200);
 })
 
 router.post('/task-move', async (req, res) => 
 {
   const data = req.body;
-  const [projectID, taskID, taskType, moveLocation] = [data[0], data[1], data[2], data[3]]
+  const [projectID, taskID, moveLocation] = [data[0], data[1], data[2]]
 
-  await taskController.move(projectID, taskID, taskType, moveLocation);
+  await taskController.move(projectID, taskID, moveLocation);
   res.sendStatus(200);
 });
 
 router.post('/task-delete', async (req, res) => 
 {
   const data = req.body;
-  const [projectID, taskID, taskType] = [data[0], data[1], data[2]]
+  const [projectID, taskID] = [data[0], data[1]]
 
-  await taskController.delete(projectID, taskID, taskType);
+  await taskController.delete(projectID, taskID);
   res.sendStatus(200);
 })
 

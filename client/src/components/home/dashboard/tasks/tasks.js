@@ -16,7 +16,6 @@ export default function ColumnContainer({ taskType })
   const { activeProject, setActiveProject } = useContext(ProjectsContext);
   const [editing, setEditing] = useState(false);
   const [inputValue, setInputValue] = useState("");
-
   const taskTextRef = useRef();
 
   let taskTypeName;
@@ -31,16 +30,16 @@ export default function ColumnContainer({ taskType })
   function handleTextChange(newContent) 
   { 
     const activeProjectCopy = { ...activeProject }
-    const newTask = { id: uuid(), content: newContent, created_at: new Date(), updated_at: new Date() }
+    const newTask = { id: uuid(), type: taskType, content: newContent, created_at: new Date(), updated_at: new Date() }
 
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-create`, [activeProjectCopy.id, taskType, newTask])
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-create`, [activeProjectCopy.id, newTask])
       .then(res => {console.log(res)})
       .catch(err => {console.log(err)})
 
-    if (!Array.isArray(activeProjectCopy[taskType]))
-      activeProjectCopy[taskType] = [];
+    if (!Array.isArray(activeProjectCopy.tasks))
+      activeProjectCopy.tasks = [];
 
-    activeProjectCopy[taskType].push(newTask);
+    activeProjectCopy.tasks.push(newTask);
     setActiveProject(activeProjectCopy);
   }
 
@@ -80,10 +79,10 @@ export default function ColumnContainer({ taskType })
       <h2 className="tasks__header">{taskTypeName}</h2>
       <div className="tasks__options"><FontAwesomeIcon icon={ faEllipsisVertical }/></div>
       
-      <TaskTypeContext.Provider value={taskType}>
+      <TaskTypeContext.Provider value={ taskType }>
       {
-        activeProject?.[taskType] 
-          ? <List elements={ activeProject[taskType] } ListItem={ Task } classes='tasks__list'/> 
+        activeProject?.tasks
+          ? <List elements={ activeProject.tasks.filter(task => task.type === taskType) } ListItem={ Task } classes='tasks__list'/> 
           : null
       }
       </TaskTypeContext.Provider>
