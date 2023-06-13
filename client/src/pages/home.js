@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { ReducerContext } from '../app';
+import { ReducerContext, LoadingContext } from '../app';
 
 import Menu from '../components/home/menu/menu';
 import Dashboard from '../components/home/dashboard/dashboard';
@@ -12,6 +12,7 @@ export const ToggleMenuContext = React.createContext();
 export default function HomePage()
 {
   const { dispatch } = useContext(ReducerContext);
+  const { loading } = useContext(LoadingContext);
 
   function toggleMenu()
   { 
@@ -20,16 +21,22 @@ export default function HomePage()
     dispatch({ type: 'searchbarSpaced' });  
   }
 
-  return (
-    <>
-      <div className='dashboard__burger' id="dashboard__burger" onClick={ toggleMenu }>
-        <FontAwesomeIcon icon={ faBars }/>
-      </div>
+  if (loading)
+    return <p className='sexo'>loading...</p>
 
-      <ToggleMenuContext.Provider value={{ toggleMenu }}>
-        <Menu/>
-        <Dashboard/>
-      </ToggleMenuContext.Provider>
-    </>
-  )
+  else
+  {
+    return (
+      <>
+        <div className='dashboard__burger' id="dashboard__burger" onClick={ toggleMenu }>
+          <FontAwesomeIcon icon={ faBars }/>
+        </div>
+  
+        <ToggleMenuContext.Provider value={{ toggleMenu }}>
+          <Menu/>
+          <Dashboard/>
+        </ToggleMenuContext.Provider>
+      </>
+    )
+  }
 }

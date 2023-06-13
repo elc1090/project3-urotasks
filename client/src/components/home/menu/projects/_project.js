@@ -10,8 +10,17 @@ export default function Project({ itemData })
   const { user, setUser } = useContext(UserContext);
   const { state, dispatch } = useContext(ReducerContext);
 
-  let todoLength = itemData.todo ? itemData.todo.length : 0;
-  let doingLength = itemData.doing ? itemData.doing.length : 0;
+  // quick fix, refactor
+  function activeTasksAmount()
+  {
+    if (!Array.isArray(itemData.todo))
+      itemData.todo = [];
+
+    if (!Array.isArray(itemData.doing))
+      itemData.doing = [];
+  
+    return itemData.todo.length + itemData.doing.length;
+  }
 
   function activateProject()
   {
@@ -36,7 +45,7 @@ export default function Project({ itemData })
         <div className='item__name'>{ itemData?.name }</div>
       </div> 
   
-      <div className='item__total-tasks'>{ todoLength + doingLength }</div>
+      <div className='item__total-tasks'>{ activeTasksAmount() }</div>
     </li>
   )
 }
