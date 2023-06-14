@@ -25,7 +25,7 @@ export default function ItemText({ value, taskID })
       {
         taskList[i].content = newContent;
 
-        axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update`, [activeProject.id, taskID, newContent])
+        axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update`, [taskID, newContent])
           .then(function(response) {console.log(response)})
           .catch(function(error) {console.log(error)});
       }

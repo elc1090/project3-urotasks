@@ -46,10 +46,10 @@ projectController.update = async (projectData, updateType) =>
 }
 
 /*****************************************************************************************************************/
-projectController.delete = async (projectData) =>
+projectController.delete = async projectID =>
 {
-  await Project.deleteOne({ id: projectData.id });
-  console.log(`${new Date()}: successfully deleted project: ${projectData.id}`);
+  await Project.deleteOne({ id: projectID });
+  console.log(`${new Date()}: successfully deleted project: ${projectID}`);
 }
 
 export default projectController;

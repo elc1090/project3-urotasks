@@ -8,7 +8,7 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 export default function TaskbarDelete()
 {
   const { user, setUser } = useContext(UserContext);
-  const { projects, setProjects, activeProject } = useContext(ProjectsContext);
+  const { projects, setProjects, activeProject, setActiveProject } = useContext(ProjectsContext);
 
   const [confirmationShown, setConfirmationShown] = useState(false);
 
@@ -33,9 +33,12 @@ export default function TaskbarDelete()
     }
   
     else
+    {
       setProjects([]);
-  
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-delete`, { id: activeProject.id })
+      setActiveProject(null);
+    }
+
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-delete`, activeProject.id)
       .then(res => {console.log(res)})
       .catch(err => console.log(err))
   }

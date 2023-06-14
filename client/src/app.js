@@ -14,12 +14,14 @@ import SettingsPage from './pages/settings'
 export const UserContext = React.createContext();
 export const ProjectsContext = React.createContext();
 
-export const LoadingContext = React.createContext();
+export const FlagsContext = React.createContext();
 export const ReducerContext = React.createContext();
 
 export default function App() 
 {
   const [loading, setLoading] = useState(true);
+  const [fetchTasks, setFetchTasks] = useState(true);
+
   const [user, setUser] = useState(null);
   const [projects, setProjects] = useState([]);
   const [activeProject, setActiveProject] = useState(null);
@@ -42,7 +44,7 @@ export default function App()
 
   useEffect(() => 
   {
-    axios.get(`${process.env.REACT_APP_SERVER_ROUTE}/data-read`)
+    axios.get(`${process.env.REACT_APP_SERVER_ROUTE}/initial-load`)
       .then(res => {setUser(res.data[0]); setProjects(res.data[1]); setLoading(false)})
       .catch(err => {console.log(err)})
   }, [])
@@ -77,7 +79,7 @@ export default function App()
       <ProjectsContext.Provider value={{ projects, setProjects, activeProject, setActiveProject }}>
         <UserContext.Provider value={{ user, setUser }}>
           <ReducerContext.Provider value={{ state, dispatch }}>
-            <LoadingContext.Provider value={{ loading, setLoading }}>
+            <FlagsContext.Provider value={{ loading, setLoading, fetchTasks, setFetchTasks }}>
               <Routes>
                 <Route exact path='/' element={ <HomePage/> }/>
                 <Route path='/login' element={ <LoginPage/> }/>
@@ -87,7 +89,7 @@ export default function App()
                 <Route path='/404' element={ <NotFoundPage/> }/>
                 <Route path='*' element={ <Navigate to='/404'/> }/>
               </Routes>
-            </LoadingContext.Provider>
+            </FlagsContext.Provider>
           </ReducerContext.Provider>
         </UserContext.Provider>
       </ProjectsContext.Provider>

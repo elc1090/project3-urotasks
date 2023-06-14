@@ -81,12 +81,13 @@ export default function ListItemControls({ task })
     const taskList = activeProjectCopy.tasks;
 
     const taskIndex = taskList.findIndex(taskItem => taskItem.id === task.id);
+    const position = taskList[taskIndex].position;
     taskList.splice(taskIndex, 1);
     
     activeProjectCopy[taskType] = taskList;
     setActiveProject(activeProjectCopy);
     
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-delete`, [activeProject.id, task.id])
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-delete`, [activeProject.id, task.id, taskType, position])
       .then(res => {console.log(res)})
       .catch(err => {console.log(err)})
 

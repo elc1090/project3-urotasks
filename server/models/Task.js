@@ -4,8 +4,16 @@ import idSchema from './_id.js';
 const taskSchema = new mongoose.Schema(
 {
   id: idSchema,
+
   type: String,
+  
   position: Number,
+
+  /*owned: 
+  {
+    type: Boolean,
+    default: true
+  },*/
 
   content:
   {
@@ -24,7 +32,6 @@ const taskSchema = new mongoose.Schema(
     type: Date,
     default: new Date()
   }
-}, { _id: false });
+}, { strict: false });
 
-const taskModel = mongoose.model("Task", taskSchema);
-export { taskSchema, taskModel as Task }
+export default mongoose.model("Task", taskSchema);

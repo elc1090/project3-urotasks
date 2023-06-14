@@ -14,8 +14,12 @@ export const TaskTypeContext = React.createContext();
 export default function TasksContainer({ taskType })
 {
   const { activeProject, setActiveProject } = useContext(ProjectsContext);
-  const tasksArray = activeProject?.tasks.filter(task => task.type === taskType);
-
+  
+  if (!Array.isArray(activeProject.tasks))
+    activeProject.tasks = [];
+  
+  const tasksArray = activeProject.tasks.filter(task => task.type === taskType);
+    
   const [editing, setEditing] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const taskTextRef = useRef();
@@ -32,7 +36,7 @@ export default function TasksContainer({ taskType })
   function handleTextChange(content) 
   { 
     let greatestPosition = 0;
-    for (let i = 0; i < activeProject.tasks.length; i++)
+    for (let i = 0; i < activeProject?.tasks.length; i++)
       if (activeProject.tasks[i].type === taskType && activeProject.tasks[i].position > greatestPosition)
         greatestPosition = activeProject.tasks[i].position
 

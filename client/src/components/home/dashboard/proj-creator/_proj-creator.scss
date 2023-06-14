@@ -12,12 +12,12 @@
   background-color: #16191dcb;
 
   &--shown
-  { animation: fade-in 0.15s 0.15s forwards; }
+  { animation: fade_in 0.15s 0.15s forwards; }
 
   &--hidden
   { 
     pointer-events: none; 
-    animation: fade-out 0.15s forwards;
+    animation: fade_out 0.15s forwards;
   }
 }
 
