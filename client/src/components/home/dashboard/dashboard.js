@@ -1,19 +1,35 @@
-import React, { useContext } from "react";
-import { ProjectsContext, ReducerContext } from "../../../app";
+import React, { useState, useContext, useEffect } from "react";
+import { ProjectsContext, ReducerContext, FlagsContext } from "../../../app";
+import axios from 'axios';
 
 import ProjectCreator from './proj-creator/proj-creator';
+import Screensaver from './screensaver/screensaver';
 import Searchbar from './searchbar/searchbar';
 import Taskbar from './taskbar/taskbar';
 import Tasks from './tasks/tasks';
 
 export default function Dashboard()
 {
-  const { projects } = useContext(ProjectsContext);
+  const { activeProject, setActiveProject } = useContext(ProjectsContext);
+  const {fetchTasks, setFetchTasks} = useContext(FlagsContext);
   const { state } = useContext(ReducerContext);
+
+  useEffect(() => 
+  {
+    if (activeProject !== null && fetchTasks === true)
+    {
+      let activeProjectCopy = { ...activeProject };
+
+      axios.get(`${process.env.REACT_APP_SERVER_ROUTE}/get-tasks?projectID=${activeProject.id}`)
+        .then(res => {setActiveProject({ ...activeProjectCopy, tasks: res.data }); setFetchTasks(false);})
+        .catch(err => {console.log(err)})
+    }
+
+  }, [activeProject]);
 
   function DashboardContent()
   {
-    if (projects.length > 0)
+    if (activeProject !== null)
     {
       return (
         <>
@@ -29,7 +45,7 @@ export default function Dashboard()
     }
 
     else
-      return <p>no projects found</p>
+      return <Screensaver/>
   }
 
   return (

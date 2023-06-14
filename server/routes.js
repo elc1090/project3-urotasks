@@ -2,6 +2,7 @@ import express from 'express';
 
 import User from './models/User.js';
 import Project from './models/Project.js';
+import Task from './models/Task.js';
 
 import projectController from './controllers/projectController.js'
 import taskController from './controllers/taskController.js';
@@ -9,30 +10,13 @@ import userController from './controllers/userController.js';
 
 const router = express.Router();
 
-router.get('/data-read', async (req, res) =>  
+router.get('/initial-load', async (req, res) =>  
 {
   try
   {
     const user = await User.findOne({ id: "1d33e9a5-697b-4d80-b2fb-d854fb2f7fa2" });
-    const projects = await Project.find();
-
-    for (let i = 0; i < projects.length; i++)
-    {
-      let activeTasks = 0;
-    
-      if (projects[i].tasks[0].content === "") 
-        projects[i].tasks.splice(0, 1);
-      
-      for (let j = 0; j < projects[i].tasks.length; j++)
-      {
-        if (projects[i].tasks[j].type === 'todo' || projects[i].tasks[j].type === 'doing')
-          activeTasks++;
-      }
-
-      projects[i].set('activeTasks', activeTasks);
-    }
-
-    const data = [user, projects];
+    const projectsMeta = await Project.find().lean().select('-tasks -created_at -updated_at -_id -__v');
+    const data = [user, projectsMeta];
 
     res.status(200).send(data);
     console.log(`${new Date()}: successfully sent data to client`)
@@ -43,6 +27,17 @@ router.get('/data-read', async (req, res) =>
     console.log(err);
     res.status(500).send("Internal server error");
   }
+});
+
+router.get('/get-tasks', async (req, res) => 
+{
+  const projectID = req.query.projectID;
+  const project = await Project.findOne({ id: projectID }).select('tasks -_id');
+  
+  const taskIDs = project.tasks;
+  const tasks = await Task.find({ id: { $in: taskIDs } }).lean().select('-_id -__v');
+
+  res.status(200).send(tasks);
 });
 
 /********************************************************************************************/
@@ -69,8 +64,8 @@ router.post('/project-update', async (req, res) =>
 
 router.post('/project-delete', async (req, res) => 
 {
-  const project = req.body;
-  await projectController.delete(project);
+  const projectID = req.body.projectID;
+  await projectController.delete(projectID);
   res.sendStatus(200);
 });
 
@@ -88,9 +83,9 @@ router.post('/task-create', async (req, res) =>
 router.post('/task-update', async (req, res) => 
 {
   const data = req.body;
-  const [projectID, taskID, newContent] = [data[0], data[1], data[2]];
+  const [taskID, newContent] = [data[0], data[1]];
 
-  await taskController.update(projectID, taskID, newContent);
+  await taskController.update(taskID, newContent);
   res.sendStatus(200);
 })
 
@@ -106,9 +101,9 @@ router.post('/task-move', async (req, res) =>
 router.post('/task-delete', async (req, res) => 
 {
   const data = req.body;
-  const [projectID, taskID] = [data[0], data[1]]
+  const [projectID, taskID, taskType, location] = [data[0], data[1], data[2], data[3]]
 
-  await taskController.delete(projectID, taskID);
+  await taskController.delete(projectID, taskID, taskType, location);
   res.sendStatus(200);
 })
 

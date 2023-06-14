@@ -40,11 +40,11 @@
   background-color: rgba(22, 25, 29, 0.7960784314);
 }
 .proj-creator__bg--shown {
-  animation: fade-in 0.15s 0.15s forwards;
+  animation: fade_in 0.15s 0.15s forwards;
 }
 .proj-creator__bg--hidden {
   pointer-events: none;
-  animation: fade-out 0.15s forwards;
+  animation: fade_out 0.15s forwards;
 }
 
 .proj-creator {
@@ -595,6 +595,20 @@
 .dashboard--moved {
   width: 100%;
   left: 0;
+}
+.dashboard__screensaver {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  height: 100%;
+  margin-block: auto;
+  text-align: center;
+}
+.dashboard__screensaver img {
+  max-width: 280px;
 }
 .dashboard__burger {
   position: absolute;

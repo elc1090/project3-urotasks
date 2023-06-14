@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { ReducerContext, LoadingContext } from '../app';
+import { ReducerContext, FlagsContext } from '../app';
 
 import Menu from '../components/home/menu/menu';
 import Dashboard from '../components/home/dashboard/dashboard';
@@ -12,7 +12,7 @@ export const ToggleMenuContext = React.createContext();
 export default function HomePage()
 {
   const { dispatch } = useContext(ReducerContext);
-  const { loading } = useContext(LoadingContext);
+  const { loading } = useContext(FlagsContext);
 
   function toggleMenu()
   { 

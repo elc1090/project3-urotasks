@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ReducerContext, UserContext } from "../../../../app";
+import { ReducerContext, UserContext, FlagsContext } from "../../../../app";
 import axios from 'axios';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,21 +9,27 @@ export default function Project({ itemData })
 {
   const { user, setUser } = useContext(UserContext);
   const { state, dispatch } = useContext(ReducerContext);
+  const { setFetchTasks } = useContext(FlagsContext);
 
   function activateProject()
   {
-    const userCopy = { ...user };
-    userCopy.activeProject = itemData.id;
-    setUser(userCopy);
-
-    if (window.innerWidth < 1337 && state.isMenuHidden === false)
+    if (itemData.id !== user.activeProject)
     {
-      dispatch({ type: 'menuHidden'      });
-      dispatch({ type: 'dashboardMoved'  });
-      dispatch({ type: 'searchbarSpaced' });  
-    }  
+      setFetchTasks(true);
 
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update`, [user.id, itemData.id, 'activeProject']);
+      const userCopy = { ...user };
+      setUser({ ...userCopy, activeProject: itemData.id });
+
+      if (window.innerWidth < 1337 && state.isMenuHidden === false)
+      {
+        dispatch({ type: 'menuHidden'      });
+        dispatch({ type: 'dashboardMoved'  });
+        dispatch({ type: 'searchbarSpaced' });  
+      }  
+  
+      axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update`, [user.id, itemData.id, 'activeProject'])
+        .catch(err => {console.log(err)})
+    }
   }
 
   return (

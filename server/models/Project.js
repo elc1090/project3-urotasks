@@ -1,8 +1,5 @@
 import mongoose from "mongoose";
-import { v4 as uuid } from 'uuid';
-
 import idSchema from './_id.js';
-import { taskSchema } from './Task.js';
 
 const projectSchema = new mongoose.Schema(
 {
@@ -22,11 +19,7 @@ const projectSchema = new mongoose.Schema(
     maxlength: 7
   },
 
-  tasks:
-  {
-    type: [taskSchema],
-    default: [{id: uuid(), type: "todo", content: ""}]
-  },
+  tasks: [String],
 
   created_at:
   {
