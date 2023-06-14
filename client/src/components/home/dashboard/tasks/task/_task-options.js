@@ -35,37 +35,56 @@ export default function ListItemControls({ task })
     return taskTypeName.toUpperCase();
   }
 
-  function moveTask()
+  function moveTaskHorizontal()
   {
-    const moveLocation = moveLocationRef.current.value;
-    const placeholderActiveProject = activeProject;
-    const taskList = placeholderActiveProject.tasks;
+    const newLocation = moveLocationRef.current.value;
+    const activeProjectCopy = activeProject;
+    const taskList = activeProjectCopy.tasks;
 
     const taskIndex = taskList.findIndex(taskItem => taskItem.id === task.id);
     const taskToMove = taskList.splice(taskIndex, 1)[0];
-    taskToMove.type = moveLocation;
+    
+    let greatestPosition = 0;
+    for (let i = 0; i < activeProject.tasks.length; i++)
+      if (activeProject.tasks[i].type === newLocation && activeProject.tasks[i].position > greatestPosition)
+        greatestPosition = activeProject.tasks[i].position
+
+    const locations = { old: taskType, new: newLocation };
+    const positions = { old: taskToMove.position, new: greatestPosition + 1 };
+    
+    taskToMove.type = locations.new;
+    taskToMove.position = positions.new;
     taskList.push(taskToMove);
 
-    placeholderActiveProject.tasks = taskList;
-    setActiveProject(placeholderActiveProject);
+    for (let i = 0; i < taskList.length ; i++)
+      if (taskList[i].type === taskType && taskList[i].position > positions.old)
+        taskList[i].position = taskList[i].position - 1;
 
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-move`, [activeProject.id, task.id, moveLocation ])
+    activeProjectCopy.tasks = taskList;
+    setActiveProject(activeProjectCopy);
+
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-move`, [activeProject.id, task.id, locations, positions])
       .then(res => {console.log(res)})
       .catch(err => {console.log(err)})
 
     dispatch({ type: "taskUpdated" });
   }
 
+  function moveTaskVertical()
+  {
+
+  }
+
   function deleteTask()
   {
-    const placeholderActiveProject = activeProject;
-    const taskList = placeholderActiveProject.tasks;
+    const activeProjectCopy = activeProject;
+    const taskList = activeProjectCopy.tasks;
 
     const taskIndex = taskList.findIndex(taskItem => taskItem.id === task.id);
     taskList.splice(taskIndex, 1);
     
-    placeholderActiveProject[taskType] = taskList;
-    setActiveProject(placeholderActiveProject);
+    activeProjectCopy[taskType] = taskList;
+    setActiveProject(activeProjectCopy);
     
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-delete`, [activeProject.id, task.id])
       .then(res => {console.log(res)})
@@ -108,26 +127,26 @@ export default function ListItemControls({ task })
 
   return (
     <div className='options' id={ optionsCol } onMouseLeave={ moveOpen ? null : () => {toggleOptions('hide')} } >
-      <div className={ `option options--ellipsis ${optionsShown ? 'options--ellipsis--shown' : ''}` } onClick={ () => {toggleOptions('toggle')} }>
+      <div className={ `option option--ellipsis ${optionsShown ? 'option--ellipsis--shown' : ''}` } onClick={ () => {toggleOptions('toggle')} }>
         <div className='option__icon'><FontAwesomeIcon icon={ faEllipsisVertical }/></div>
       </div>
       
-      <div className={ `option options--tags ${optionsShown ? 'option--shown' : ''}` }>
+      <div className={ `option option--tags ${optionsShown ? 'option--shown' : ''}` }>
         <div className='option__icon'><FontAwesomeIcon icon={ faTag }/></div>
       </div>
 
-      <div className={ `option options--move ${optionsShown ? 'option--shown' : ''}` }>
+      <div className={ `option option--move-horizontal ${optionsShown ? 'option--shown' : ''}` }>
         <div className='option__icon' onClick={ () => {setMoveOpen(!moveOpen);} }><FontAwesomeIcon icon={ faArrowsLeftRight }/></div>
         
         <div className={ `options__select ${moveOpen ? 'options__select--shown' : ''}` }>
           <input className='move__input' type='hidden' value={ newLocation } ref={ moveLocationRef }/>
           <div className={`options__location ${newLocation === moveLocation0 ? 'options__location--selected' : ''}` } onClick={ () => {setNewLocation(moveLocation0)} }>{ formatTaskType(moveLocation0) }</div>
           <div className={`options__location ${newLocation === moveLocation1 ? 'options__location--selected' : ''}` } onClick={ () => {setNewLocation(moveLocation1)} }>{ formatTaskType(moveLocation1) }</div>
-          <button className='options__submit' onClick={moveTask}>MOVE</button>
+          <button className='options__submit' onClick={moveTaskHorizontal}>MOVE</button>
         </div>
       </div>
 
-      <div className={ `option options--remove ${optionsShown ? 'option--shown' : ''}` } onClick={deleteTask}>
+      <div className={ `option option--remove ${optionsShown ? 'option--shown' : ''}` } onClick={deleteTask}>
         <div className='option__icon'><FontAwesomeIcon icon={ faMultiply }/></div>
       </div>
     </div>

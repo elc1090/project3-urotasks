@@ -41,6 +41,6 @@
     cursor: pointer;
 
     &:hover
-    { @include glow }
+    { @include glow-content }
   }
 }

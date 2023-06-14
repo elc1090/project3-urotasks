@@ -12,7 +12,7 @@
 .menu__logo
 {
   &:hover
-  { @include glow }
+  { @include glow-content }
 
   img
   {

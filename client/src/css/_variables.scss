@@ -12,24 +12,24 @@ $hl-green-dark: #25df91;
 $hl-green-light: #26ffa5;
 
 $menu-width: 400px;
-$menu-width-translate: -400px;
+$menu-width-translate: -420px;
 
 $border-rad-big: 5px;
 $border-rad-small: 4px;
 
-@mixin glow 
+@mixin glow-content
 { filter: drop-shadow(0px 0px 1px #fff); }
 
 @mixin gradient 
 { background: linear-gradient(270deg, rgba(255, 255, 255, 0) 5%, rgba(52, 122, 170, 0.50) 100%); }
 
-@keyframes fade-in 
+@keyframes fade_in 
 {
   from { opacity: 0; }
   to   { opacity: 1; }  
 }
 
-@keyframes fade-out 
+@keyframes fade_out 
 {
   from { opacity: 1; }
   to   { opacity: 0; }  

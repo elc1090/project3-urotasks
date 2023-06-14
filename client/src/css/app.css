@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;900&display=swap");
-@keyframes fade-in {
+@keyframes fade_in {
   from {
     opacity: 0;
   }
@@ -7,7 +7,7 @@
     opacity: 1;
   }
 }
-@keyframes fade-out {
+@keyframes fade_out {
   from {
     opacity: 1;
   }
@@ -15,7 +15,7 @@
     opacity: 0;
   }
 }
-@keyframes fade-in {
+@keyframes fade_in {
   from {
     opacity: 0;
   }
@@ -23,7 +23,7 @@
     opacity: 1;
   }
 }
-@keyframes fade-out {
+@keyframes fade_out {
   from {
     opacity: 1;
   }
@@ -117,7 +117,7 @@
   background-color: #26ffa5;
 }
 
-@keyframes fade-in {
+@keyframes fade_in {
   from {
     opacity: 0;
   }
@@ -125,7 +125,7 @@
     opacity: 1;
   }
 }
-@keyframes fade-out {
+@keyframes fade_out {
   from {
     opacity: 1;
   }
@@ -139,6 +139,7 @@
   max-width: 100%;
   margin-bottom: 48px;
   border-radius: 5px;
+  box-shadow: 0px 0px 24px rgba(255, 255, 255, 0.0941176471);
   background-color: #2d3b4e;
 }
 .searchbar .fa-magnifying-glass {
@@ -176,7 +177,7 @@
     width: calc(100% - 49px);
   }
 }
-@keyframes fade-in {
+@keyframes fade_in {
   from {
     opacity: 0;
   }
@@ -184,7 +185,7 @@
     opacity: 1;
   }
 }
-@keyframes fade-out {
+@keyframes fade_out {
   from {
     opacity: 1;
   }
@@ -322,7 +323,7 @@
     display: none;
   }
 }
-@keyframes fade-in {
+@keyframes fade_in {
   from {
     opacity: 0;
   }
@@ -330,7 +331,7 @@
     opacity: 1;
   }
 }
-@keyframes fade-out {
+@keyframes fade_out {
   from {
     opacity: 1;
   }
@@ -363,62 +364,63 @@
   text-align: center;
   cursor: pointer;
 }
-.task .options--ellipsis {
-  padding: 0;
-  margin-top: -8px;
-}
-.task .options--ellipsis:hover, .task .options--ellipsis--shown {
-  color: #2d3b4e;
-  background-color: #fff;
-}
-.task .options--ellipsis > * {
-  transition: all 0s ease-in-out;
-}
-.task .options--tags {
-  transform: translateY(-34px);
-  pointer-events: none;
-  z-index: 4;
-  opacity: 0;
-  background-color: #25df91;
-}
-.task .options--tags:hover {
-  background-color: #51e6a7;
-}
-.task .options--move {
-  transform: translateY(-68px);
-  pointer-events: none;
-  z-index: 3;
-  opacity: 0;
-  background-color: #4b99cc;
-}
-.task .options--move:hover {
-  background-color: #73b0d7;
-}
-.task .options--remove {
-  transform: translateY(-96px);
-  pointer-events: none;
-  z-index: 2;
-  opacity: 0;
-  background-color: #c53131;
-}
-.task .options--remove:hover {
-  background-color: #d55454;
-}
 .task .options .option {
+  opacity: 0;
+  z-index: 5;
   position: relative;
   width: 42px;
   height: 42px;
   border-radius: 4px;
   font-size: 1.2rem;
-}
-.task .options .option--shown {
-  transform: translateY(0px);
-  opacity: 1;
-  z-index: 5;
-  pointer-events: initial;
+  cursor: default;
+  pointer-events: none;
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
+}
+.task .options .option--shown {
+  opacity: 1;
+  z-index: 6;
+  cursor: pointer;
+  pointer-events: initial;
+}
+.task .options .option--ellipsis {
+  opacity: 1;
+  padding: 0;
+  margin-top: -8px;
+  cursor: pointer;
+  pointer-events: all;
+}
+.task .options .option--ellipsis:hover, .task .options .option--ellipsis--shown {
+  color: #2d3b4e;
+  background-color: #fff;
+}
+.task .options .option--ellipsis > * {
+  transition: all 0s ease-in-out;
+}
+.task .options .option--tags {
+  background-color: #25df91;
+}
+.task .options .option--tags:hover {
+  background-color: #51e6a7;
+}
+.task .options .option--move-horizontal {
+  background-color: #4b99cc;
+}
+.task .options .option--move-horizontal:hover {
+  background-color: #73b0d7;
+}
+.task .options .option--move-vertical {
+  background-color: #4b99cc;
+}
+.task .options .option--move-vertical:hover {
+  background-color: #73b0d7;
+}
+.task .options .option--remove {
+  background-color: #c53131;
+}
+.task .options .option--remove:hover {
+  background-color: #d55454;
 }
 .task .options .option__icon {
   display: grid;
@@ -475,7 +477,7 @@
   background-color: #55ade8;
 }
 
-@keyframes fade-in {
+@keyframes fade_in {
   from {
     opacity: 0;
   }
@@ -483,7 +485,7 @@
     opacity: 1;
   }
 }
-@keyframes fade-out {
+@keyframes fade_out {
   from {
     opacity: 1;
   }
@@ -560,7 +562,7 @@
     grid-template-columns: 1fr !important;
   }
 }
-@keyframes fade-in {
+@keyframes fade_in {
   from {
     opacity: 0;
   }
@@ -568,7 +570,7 @@
     opacity: 1;
   }
 }
-@keyframes fade-out {
+@keyframes fade_out {
   from {
     opacity: 1;
   }
@@ -624,7 +626,7 @@
     z-index: 2;
   }
 }
-@keyframes fade-in {
+@keyframes fade_in {
   from {
     opacity: 0;
   }
@@ -632,7 +634,7 @@
     opacity: 1;
   }
 }
-@keyframes fade-out {
+@keyframes fade_out {
   from {
     opacity: 1;
   }
@@ -655,7 +657,7 @@
   margin-bottom: -12px;
 }
 
-@keyframes fade-in {
+@keyframes fade_in {
   from {
     opacity: 0;
   }
@@ -663,7 +665,7 @@
     opacity: 1;
   }
 }
-@keyframes fade-out {
+@keyframes fade_out {
   from {
     opacity: 1;
   }
@@ -691,16 +693,6 @@
 }
 .projects__header .chevron-rotate {
   transform: rotate(180deg);
-}
-.projects__add {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-.projects__add:hover {
-  filter: drop-shadow(0px 0px 1px #fff);
 }
 .projects__list {
   grid-column: 1/3;
@@ -753,7 +745,7 @@
   text-align: center;
 }
 
-@keyframes fade-in {
+@keyframes fade_in {
   from {
     opacity: 0;
   }
@@ -761,7 +753,7 @@
     opacity: 1;
   }
 }
-@keyframes fade-out {
+@keyframes fade_out {
   from {
     opacity: 1;
   }
@@ -802,7 +794,7 @@
   filter: drop-shadow(0px 0px 1px #fff);
 }
 
-@keyframes fade-in {
+@keyframes fade_in {
   from {
     opacity: 0;
   }
@@ -810,7 +802,7 @@
     opacity: 1;
   }
 }
-@keyframes fade-out {
+@keyframes fade_out {
   from {
     opacity: 1;
   }
@@ -832,7 +824,7 @@
   transform-origin: left;
 }
 .menu--hidden {
-  transform: translateX(-400px);
+  transform: translateX(-420px);
   opacity: 0;
 }
 
@@ -889,12 +881,25 @@ textarea {
   opacity: 1;
   height: 100dvh;
   width: 100dvw;
-  animation: ease-in-out 1s forwards fade-in;
+  animation: ease-in-out 1s forwards fade_in;
 }
 
 /***************************************************************************************************************/
 /* utils */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  color: #fff;
+  font-size: 3rem;
+}
+
 .btn--glow {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   color: #fff;
   font-size: 2.3rem;
   cursor: pointer;
@@ -907,13 +912,4 @@ textarea {
   html {
     font-size: 14px;
   }
-}
-.loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  color: #fff;
-  font-size: 3rem;
 }/*# sourceMappingURL=app.css.map */

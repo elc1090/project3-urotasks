@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { ProjectsContext, ReducerContext } from '../../../../app';
 import { ToggleMenuContext } from '../../../../pages/home';
 
+import { ButtonGlow } from '../../../utils/buttons';
 import List from '../../../utils/list';
 import Project from './_project';
 
@@ -32,7 +33,7 @@ export default function MenuProjects()
   return (
     <div className='projects'>
       <h2 className='projects__header' onClick={ toggleProjectList }>Projects <FontAwesomeIcon icon={ faChevronUp }/></h2>
-      <div className='projects__add' onClick={ toggleProjCreator }><FontAwesomeIcon icon={ faPlus }/></div>
+      <ButtonGlow onClick={ toggleProjCreator } icon={ faPlus } fontSize='1.5rem'/>
       <List elements={ projects } ListItem={ Project } classes="projects__list" ids="projects__list"/>
     </div>
   )

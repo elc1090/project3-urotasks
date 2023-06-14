@@ -17,23 +17,10 @@
     user-select: none;
 
     &:hover
-    { @include glow }
+    { @include glow-content }
 
     .chevron-rotate 
     { transform: rotate(180deg); }
-  }
-
-  &__add
-  {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  
-    font-size: 1.5rem;
-    cursor: pointer;
-
-    &:hover
-    { @include glow }
   }
 
   &__list

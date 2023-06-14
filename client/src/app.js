@@ -11,11 +11,11 @@ import LoginPage from './pages/login'
 import RegisterPage from './pages/register'
 import SettingsPage from './pages/settings'
 
-export const LoadingContext = React.createContext();
-export const ReducerContext = React.createContext();
-
 export const UserContext = React.createContext();
 export const ProjectsContext = React.createContext();
+
+export const LoadingContext = React.createContext();
+export const ReducerContext = React.createContext();
 
 export default function App() 
 {
@@ -36,9 +36,7 @@ export default function App()
 
       activeProjectIndex === -1 
         ? setActiveProject(projects[0]) 
-        : setActiveProject(projects[activeProjectIndex]);
-
-      console.log(projects[0].activeTasks)
+        : setActiveProject(projects[activeProjectIndex]);   
     }
   }, [user, projects]);
 

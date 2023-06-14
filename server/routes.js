@@ -30,7 +30,6 @@ router.get('/data-read', async (req, res) =>
       }
 
       projects[i].set('activeTasks', activeTasks);
-      console.log(projects[i]);
     }
 
     const data = [user, projects];
@@ -98,9 +97,9 @@ router.post('/task-update', async (req, res) =>
 router.post('/task-move', async (req, res) => 
 {
   const data = req.body;
-  const [projectID, taskID, moveLocation] = [data[0], data[1], data[2]]
+  const [projectID, taskID, locations, positions] = [data[0], data[1], data[2], data[3]]
 
-  await taskController.move(projectID, taskID, moveLocation);
+  await taskController.move(projectID, taskID, locations, positions);
   res.sendStatus(200);
 });
 
