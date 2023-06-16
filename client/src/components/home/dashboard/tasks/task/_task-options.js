@@ -4,7 +4,7 @@ import { TaskTypeContext } from '../tasks';
 import axios from 'axios';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisVertical, faArrowsLeftRight, faMultiply, faTag } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisVertical, faTag, faArrowsLeftRight, faArrowUp, faArrowDown, faMultiply } from '@fortawesome/free-solid-svg-icons';
 
 export default function ListItemControls({ task })
 {
@@ -25,6 +25,7 @@ export default function ListItemControls({ task })
     case 'todo' : moveLocation0 = "doing"; moveLocation1 = "done" ; break;
     case 'doing': moveLocation0 = "todo" ; moveLocation1 = "done" ; break;
     case 'done' : moveLocation0 = "todo" ; moveLocation1 = "doing"; break;
+    default: break;
   }
 
   function formatTaskType(taskTypeName)
@@ -35,7 +36,7 @@ export default function ListItemControls({ task })
     return taskTypeName.toUpperCase();
   }
 
-  function moveTaskHorizontal()
+  function updateTaskType()
   {
     const newLocation = moveLocationRef.current.value;
     const activeProjectCopy = activeProject;
@@ -63,16 +64,76 @@ export default function ListItemControls({ task })
     activeProjectCopy.tasks = taskList;
     setActiveProject(activeProjectCopy);
 
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-move`, [activeProject.id, task.id, locations, positions])
-      .then(res => {console.log(res)})
-      .catch(err => {console.log(err)})
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update-type`, [activeProject.id, task.id, locations, positions])
+      .then( res => {console.log(res)} )
+      .catch( err => {console.log(err) })
 
     dispatch({ type: "taskUpdated" });
   }
 
-  function moveTaskVertical()
-  {
+  function updateTaskPosition(direction)
+  { 
+    const filteredTaskList = activeProject.tasks.filter(taskObj => taskObj.type === taskType);
+    const updatedTask = filteredTaskList.find(taskObj => taskObj.id === task.id);
+    const lastTaskPos = Math.max(...filteredTaskList.map(taskObj => taskObj.position));
+   
+    if (direction === 'up')
+    {
+      if (updatedTask.position === 1)
+        return
+      
+      const otherTask = filteredTaskList.find(taskObj => taskObj.position === updatedTask.position - 1);
+    
+      const taskList = activeProject.tasks.map(taskObj => 
+      {
+        if (taskObj.id === updatedTask.id)
+          taskObj.position--;
 
+        else if (taskObj.id === otherTask.id)
+          taskObj.position++;
+        
+        return taskObj;
+      })
+
+      axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update-position`, [updatedTask.id, otherTask.id, 'up'])
+        .then(res => 
+        {
+          console.log(res);
+          setActiveProject({ ...activeProject, tasks: taskList });
+        })
+        .catch( err => {console.log(err)} );
+    }
+
+    else if (direction === 'down')
+    {
+      if (updatedTask.position === lastTaskPos)
+        return;
+
+      const otherTask = filteredTaskList.find(taskObj => taskObj.position === updatedTask.position + 1);
+      
+      const taskList = activeProject.tasks.map(taskObj => 
+      {
+        if (taskObj.id === updatedTask.id)
+          taskObj.position++;
+
+        else if (taskObj.id === otherTask.id)
+          taskObj.position--;
+        
+        return taskObj;
+      })
+
+      axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update-position`, [updatedTask.id, otherTask.id, 'down'])
+        .then(res => 
+        {
+          console.log(res);
+          setActiveProject({ ...activeProject, tasks: taskList });
+        })
+        .catch( err => {console.log(err)} );
+    }
+
+    setOptionsShown(false);
+    setMoveOpen(false);
+    setNewLocation('');
   }
 
   function deleteTask()
@@ -111,12 +172,12 @@ export default function ListItemControls({ task })
       setOptionsShown(false);
   }
 
-  const optionsCol = 'options-col:' + task.id;
+  const options = 'options-col:' + task.id;
   if (optionsShown === true)
   {
     document.addEventListener('click', e => 
     {
-      const optionsElement = document.getElementById(optionsCol);
+      const optionsElement = document.getElementById(options);
   
       if (e.target !== optionsElement && !optionsElement?.contains(e.target))
       {
@@ -127,7 +188,7 @@ export default function ListItemControls({ task })
   }
 
   return (
-    <div className='options' id={ optionsCol } onMouseLeave={ moveOpen ? null : () => {toggleOptions('hide')} } >
+    <div className='options' id={ options } onMouseLeave={ !moveOpen ? () => {toggleOptions('hide')} : null  } >
       <div className={ `option option--ellipsis ${optionsShown ? 'option--ellipsis--shown' : ''}` } onClick={ () => {toggleOptions('toggle')} }>
         <div className='option__icon'><FontAwesomeIcon icon={ faEllipsisVertical }/></div>
       </div>
@@ -136,15 +197,23 @@ export default function ListItemControls({ task })
         <div className='option__icon'><FontAwesomeIcon icon={ faTag }/></div>
       </div>
 
-      <div className={ `option option--move-horizontal ${optionsShown ? 'option--shown' : ''}` }>
+      <div className={ `option option--type ${optionsShown ? 'option--shown' : ''}` }>
         <div className='option__icon' onClick={ () => {setMoveOpen(!moveOpen);} }><FontAwesomeIcon icon={ faArrowsLeftRight }/></div>
         
         <div className={ `options__select ${moveOpen ? 'options__select--shown' : ''}` }>
           <input className='move__input' type='hidden' value={ newLocation } ref={ moveLocationRef }/>
           <div className={`options__location ${newLocation === moveLocation0 ? 'options__location--selected' : ''}` } onClick={ () => {setNewLocation(moveLocation0)} }>{ formatTaskType(moveLocation0) }</div>
           <div className={`options__location ${newLocation === moveLocation1 ? 'options__location--selected' : ''}` } onClick={ () => {setNewLocation(moveLocation1)} }>{ formatTaskType(moveLocation1) }</div>
-          <button className='options__submit' onClick={moveTaskHorizontal}>MOVE</button>
+          <button className='options__submit' onClick={updateTaskType}>MOVE</button>
         </div>
+      </div>
+
+      <div className={ `option option--position option--position--up ${optionsShown ? 'option--shown' : ''}` } onClick={() => {updateTaskPosition('up')}}>
+        <div className='option__icon'><FontAwesomeIcon icon={ faArrowUp }/></div>
+      </div>
+
+      <div className={ `option option--position option--position--down ${optionsShown ? 'option--shown' : ''}` } onClick={() => {updateTaskPosition('down')}}>
+        <div className='option__icon'><FontAwesomeIcon icon={ faArrowDown }/></div>
       </div>
 
       <div className={ `option option--remove ${optionsShown ? 'option--shown' : ''}` } onClick={deleteTask}>

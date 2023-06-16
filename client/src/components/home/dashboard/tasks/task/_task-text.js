@@ -25,7 +25,7 @@ export default function ItemText({ value, taskID })
       {
         taskList[i].content = newContent;
 
-        axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update`, [taskID, newContent])
+        axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update-content`, [taskID, newContent])
           .then(function(response) {console.log(response)})
           .catch(function(error) {console.log(error)});
       }
@@ -77,9 +77,8 @@ export default function ItemText({ value, taskID })
   return (
     <div className='task__text'>
       {
-        editing ? 
-        (
-          <textarea 
+        editing 
+        ? <textarea 
             style={{ width: '100%', overflow: 'hidden' }} 
             id='text-area' 
             ref={ taskTextRef } 
@@ -89,8 +88,7 @@ export default function ItemText({ value, taskID })
             onKeyDown={ handleKeyDown }
             onInput={ handleInputGrowth }
           />
-        ) 
-                
+   
         : (<div style={{width: '100%'}} onClick={handleEdit}>{value}</div>)
       }
     </div>

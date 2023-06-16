@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { ProjectsContext, ReducerContext, FlagsContext } from "../../../app";
 import axios from 'axios';
 
@@ -11,21 +11,36 @@ import Tasks from './tasks/tasks';
 export default function Dashboard()
 {
   const { activeProject, setActiveProject } = useContext(ProjectsContext);
-  const {fetchTasks, setFetchTasks} = useContext(FlagsContext);
+  const { fetchTasks, setFetchTasks } = useContext(FlagsContext);
   const { state } = useContext(ReducerContext);
 
   useEffect(() => 
   {
     if (activeProject !== null && fetchTasks === true)
     {
-      let activeProjectCopy = { ...activeProject };
-
       axios.get(`${process.env.REACT_APP_SERVER_ROUTE}/get-tasks?projectID=${activeProject.id}`)
-        .then(res => {setActiveProject({ ...activeProjectCopy, tasks: res.data }); setFetchTasks(false);})
-        .catch(err => {console.log(err)})
+        .then(res => 
+        {
+          setActiveProject({ ...activeProject, tasks: res.data }); 
+          setFetchTasks(false);
+        })
+        .catch(err => 
+        { console.log(err) })
     }
-
+    
+    // eslint-disable-next-line
   }, [activeProject]);
+
+  function TasksContainer()
+  {
+    return (
+      <div className="tasks__container" id="tasks__container">
+        <Tasks taskType="todo"/>
+        <Tasks taskType="doing"/>
+        <Tasks taskType="done"/>
+      </div>
+    )
+  }
 
   function DashboardContent()
   {
@@ -34,12 +49,11 @@ export default function Dashboard()
       return (
         <>
           <Searchbar/>
-          <Taskbar/>
-          <div className="tasks__container" id="tasks__container">
-            <Tasks taskType="todo"/>
-            <Tasks taskType="doing"/>
-            <Tasks taskType="done"/>
-          </div>
+          { 
+            fetchTasks === true
+            ? null
+            : <><Taskbar/> <TasksContainer/></>
+          }
         </>
       )
     }

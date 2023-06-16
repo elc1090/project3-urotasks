@@ -1,6 +1,5 @@
 @import '../../../../../css/_variables.scss';
 
-
 .task
 {
   display: grid;
@@ -29,9 +28,6 @@
     position: absolute;
     right: 0px;
     top: 8px;
-    opacity: 1;
-
-    border-radius: $border-rad-small;
 
     text-align: center;
     cursor: pointer;
@@ -44,7 +40,6 @@
       position: relative;
       width: 42px;
       height: 42px;
-      border-radius: $border-rad-small;
 
       font-size: 1.2rem;
 
@@ -67,6 +62,7 @@
   
         padding: 0;
         margin-top: -8px;
+        border-radius: $border-rad-small;
   
         cursor: pointer;
         pointer-events: all;
@@ -83,30 +79,45 @@
   
       &--tags
       { 
+        border-radius: $border-rad-small;
         background-color: $hl-green-dark; 
 
         &:hover 
         { background-color: lighten($hl-green-dark, 10%); }
       }
   
-      &--move-horizontal
-      {   
+      &--type
+      {  
+        border-radius: $border-rad-small; 
         background-color: $hl-blue-dark;
         
         &:hover 
         { background-color: lighten($hl-blue-dark, 10%); }
       }
   
-      &--move-vertical
+      &--position
       { 
-        background-color: $hl-blue-dark;
+        background-color: $hl-purple-dark;
         
         &:hover 
-        { background-color: lighten($hl-blue-dark, 10%); }
+        { background-color: lighten($hl-purple-dark, 10%); }
+
+        &--up
+        {
+          border-top-left-radius: $border-rad-small;
+          border-top-right-radius: $border-rad-small;
+        }
+
+        &--down
+        {
+          border-bottom-left-radius: $border-rad-small;
+          border-bottom-right-radius: $border-rad-small;
+        }
       }
-  
+
       &--remove
       { 
+        border-radius: $border-rad-small;
         background-color: $hl-red-dark; 
   
         &:hover 

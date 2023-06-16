@@ -56,7 +56,9 @@ export default function App()
     isSearchbarSpaced: true,
     isProjCreatorShown: false,
     isOptionOnFocus: false,
-    isTaskUpdated: false
+    
+    isTaskUpdated: false,
+    isTaskFetched: false
   });
       
   function reducer(state, action)
@@ -69,7 +71,9 @@ export default function App()
       case 'searchbarSpaced': return { ...state, isSearchbarSpaced: !state.isSearchbarSpaced };
       case 'projCreatorShown': return { ...state, isProjCreatorShown: !state.isProjCreatorShown };
       case 'optionOnFocus': return { ...state,  isOptionOnFocus: !state.isOptionOnFocus };
+      
       case 'taskUpdated': return { ...state, isTaskUpdated: !state.isTaskUpdated };
+
       default: return state;
     }
   }

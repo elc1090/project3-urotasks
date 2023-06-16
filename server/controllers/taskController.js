@@ -14,14 +14,14 @@ taskController.create = async (projectID, taskData) =>
 }
 
 /*********************************************************************************************************************************/
-taskController.update = async (taskID, newContent) => 
+taskController.updateContent = async (taskID, newContent) => 
 {
   await Task.updateOne({ id: taskID }, { content: newContent, updated_at: new Date() });
   console.log(`${new Date()}: successfully updated task |${taskID}|`);
 }
 
 /*********************************************************************************************************************************/
-taskController.move = async (projectID, taskID, locations, positions) => 
+taskController.updateType = async (projectID, taskID, locations, positions) => 
 {
   const project = await Project.findOne({ id: projectID }).lean().select('tasks -_id');
 
@@ -36,6 +36,21 @@ taskController.move = async (projectID, taskID, locations, positions) =>
       await Task.updateOne({ id: taskList[i].id }, { $inc: { position: -1 } });
   
   console.log(`${new Date()}: successfully moved task to |${locations.new}|`);
+}
+
+taskController.updatePosition = async (updatedTaskID, otherTaskID, direction) =>
+{
+  if (direction === 'up')
+  {
+    await Task.updateOne({ id: updatedTaskID }, { $inc: { position: -1 } });
+    await Task.updateOne({ id: otherTaskID }, { $inc: { position: +1 } });
+  }
+
+  else if (direction === 'down')
+  {
+    await Task.updateOne({ id: updatedTaskID }, { $inc: { position: +1 } });
+    await Task.updateOne({ id: otherTaskID }, { $inc: { position: -1 } });
+  }
 }
 
 /*********************************************************************************************************************************/

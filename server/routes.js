@@ -80,23 +80,32 @@ router.post('/task-create', async (req, res) =>
   res.sendStatus(201);
 });
 
-router.post('/task-update', async (req, res) => 
+router.post('/task-update-content', async (req, res) => 
 {
   const data = req.body;
   const [taskID, newContent] = [data[0], data[1]];
 
-  await taskController.update(taskID, newContent);
+  await taskController.updateContent(taskID, newContent);
   res.sendStatus(200);
 })
 
-router.post('/task-move', async (req, res) => 
+router.post('/task-update-type', async (req, res) => 
 {
   const data = req.body;
   const [projectID, taskID, locations, positions] = [data[0], data[1], data[2], data[3]]
 
-  await taskController.move(projectID, taskID, locations, positions);
+  await taskController.updateType(projectID, taskID, locations, positions);
   res.sendStatus(200);
 });
+
+router.post('/task-update-position', async (req, res) => 
+{
+  const data = req.body;
+  const [updatedTaskID, otherTaskID, direction] = [data[0], data[1], data[2]];
+
+  await taskController.updatePosition(updatedTaskID, otherTaskID, direction);
+  res.sendStatus(200);
+})
 
 router.post('/task-delete', async (req, res) => 
 {
