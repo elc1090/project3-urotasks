@@ -9,30 +9,35 @@ import { faSquare } from '@fortawesome/free-solid-svg-icons';
 
 export default function TaskbarProjectColor()
 {
-  const { projects, setProjects, activeProject } = useContext(ProjectsContext); 
+  const { projects, setProjects, activeProject, setActiveProject } = useContext(ProjectsContext); 
 
-  const [color, setColor] = useState(activeProject?.color);
+  const [newColor, setNewColor] = useState(activeProject?.color);
   const [pickerActive, setPickerActive] = useState(false);
 
   function toggleColorPicker()
   {
-    if (pickerActive)
+    if (pickerActive && newColor !== activeProject.color)
     {
-      const placeholderProjects = projects.map(project => 
-        {
-          if (project.id === activeProject.id)
-            return { ...project, color: color }
-  
-          return project;
-        });
+      setActiveProject({ ...activeProject, color: newColor });
 
-      setProjects(placeholderProjects);
+      const projectsCopy = projects.map(project => 
+      {
+        if (project.id === activeProject.id)
+          return { ...project, color: newColor, tasks: activeProject.tasks }
+
+        return project;
+      });
+
+      axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-update`, [{ id: activeProject.id, color: newColor }, 'color'])
+        .then(res => 
+        {
+          console.log(res);
+          setProjects(projectsCopy);
+        })
+        .catch( err => {console.log(err)} )
     }
 
     setPickerActive(!pickerActive);
-
-    if (color !== activeProject.color)
-      axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-update`, [{ id: activeProject.id, color: color }, 'color'])
   }
 
   function ColorPicker()
@@ -40,14 +45,14 @@ export default function TaskbarProjectColor()
     return (
       <div>
         <div onClick={ toggleColorPicker } className='chrome-picker__bg'/>
-        <ChromePicker color={ color } onChangeComplete={ (color) => {setColor(color.hex)} }/> 
+        <ChromePicker color={ newColor } onChangeComplete={ (color) => {setNewColor(color.hex)} }/> 
       </div>
     )
   }
 
   return (
     <>
-      <div className='header__color' onClick={ toggleColorPicker } style={{ color: color }}><FontAwesomeIcon icon={ faSquare }/></div>
+      <div className='header__color' onClick={ toggleColorPicker } style={{ color: newColor }}><FontAwesomeIcon icon={ faSquare }/></div>
       {pickerActive ? <ColorPicker/> : null}
     </>
   )

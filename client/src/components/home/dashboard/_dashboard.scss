@@ -25,24 +25,6 @@
     left: 0;
   }
 
-  &__screensaver
-  {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 24px;
-
-    width: 100%;
-    height: 100%;
-    margin-block: auto;
-
-    text-align: center;
-
-    img 
-    { max-width: 280px; }
-  }
-
   &__burger
   {
     position: absolute;

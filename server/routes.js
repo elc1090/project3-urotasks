@@ -64,7 +64,7 @@ router.post('/project-update', async (req, res) =>
 
 router.post('/project-delete', async (req, res) => 
 {
-  const projectID = req.body.projectID;
+  const projectID = req.body[0];
   await projectController.delete(projectID);
   res.sendStatus(200);
 });

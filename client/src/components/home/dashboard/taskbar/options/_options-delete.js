@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { ProjectsContext, UserContext } from "../../../../../app";
+import { ProjectsContext, UserContext, FlagsContext } from "../../../../../app";
 import axios from 'axios';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,39 +8,31 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 export default function TaskbarDelete()
 {
   const { user, setUser } = useContext(UserContext);
-  const { projects, setProjects, activeProject, setActiveProject } = useContext(ProjectsContext);
+  const { projects, setProjects, activeProject } = useContext(ProjectsContext);
+  const { setFetchTasks } = useContext(FlagsContext);
 
   const [confirmationShown, setConfirmationShown] = useState(false);
 
   function deleteProject()
   {
-    let placeholderProjects;
-  
-    if (projects.length > 1)
-    { 
-      placeholderProjects = projects.filter(project => project.id !== activeProject.id);
-      placeholderProjects[0].active = true;
-      
-      setProjects(placeholderProjects);
-  
-      const userCopy = { ...user };
-      userCopy.activeProject = projects[0].id;
-      setUser(userCopy);
-  
-      axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update`, [user.id, projects[0].id, 'activeProject'])
-        .then(res => {console.log(res)})
-        .catch(err => {console.log(err)})
-    }
-  
-    else
-    {
-      setProjects([]);
-      setActiveProject(null);
-    }
+    const projectsCopy = projects.filter(project => project.id !== activeProject.id);
 
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-delete`, activeProject.id)
-      .then(res => {console.log(res)})
-      .catch(err => console.log(err))
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-delete`, [activeProject.id])
+      .then(res => 
+      {
+        console.log(res); 
+        setFetchTasks(true);
+        setProjects(projectsCopy);
+      })
+      .catch( err => {console.log(err)} )
+
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update`, [user.id, "0", 'activeProject'])
+      .then(res => 
+      {
+        console.log(res);
+        setUser({ ...user, activeProject: "0" });
+      })
+      .catch( err => {console.log(err)} ) 
   }
 
   if (confirmationShown === true)

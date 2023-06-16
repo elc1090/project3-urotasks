@@ -4,7 +4,7 @@ import idSchema from './_id.js';
 const userSchema = new mongoose.Schema(
 {
   id: idSchema,
-  activeProject: idSchema,
+  activeProject: String,
 
   name: 
   { 

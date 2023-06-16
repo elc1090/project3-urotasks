@@ -32,16 +32,17 @@ projectController.read = async (req, res) =>
 /*****************************************************************************************************************/
 projectController.update = async (projectData, updateType) =>
 {
-  if (updateType === 'name')
+  switch (updateType)
   {
-    await Project.updateOne({ id: projectData.id }, { name: projectData.name });
-    console.log(`${new Date()}: successfully updated project name to: ${projectData.name}`);
-  }
+    case 'name':
+      await Project.updateOne({ id: projectData.id }, { name: projectData.name });
+      console.log(`${new Date()}: successfully updated project name to: ${projectData.name}`);
+      break;
 
-  else if (updateType === 'color')
-  {
-    await Project.updateOne({ id: projectData.id }, { color: projectData.color });
-    console.log(`${new Date()}: successfully updated project color to: ${projectData.color}`);
+    case 'color':
+      await Project.updateOne({ id: projectData.id }, { color: projectData.color });
+      console.log(`${new Date()}: successfully updated project color to: ${projectData.color}`);
+      break;
   }
 }
 

@@ -30,15 +30,18 @@ export default function App()
   {
     if (user !== null && projects.length > 0)
     {
-      let activeProjectIndex = -1;
+      if (user.activeProject !== '0')
+      {
+        let activeProjectIndex = -1;
 
-      for (let i = 0; i < projects.length; i++)
-        if (projects[i].id === user.activeProject)
-          activeProjectIndex = i;
-
-      activeProjectIndex === -1 
-        ? setActiveProject(projects[0]) 
-        : setActiveProject(projects[activeProjectIndex]);   
+        for (let i = 0; i < projects.length; i++)
+          if (projects[i].id === user.activeProject)
+            activeProjectIndex = i;
+  
+        activeProjectIndex === -1 
+          ? setActiveProject(null) 
+          : setActiveProject(projects[activeProjectIndex]);   
+      }
     }
   }, [user, projects]);
 

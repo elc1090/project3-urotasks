@@ -1,0 +1,26 @@
+PROJECT:
+  - create
+  - delete
+  - update:
+    - update color
+    - update name
+
+------------------------------
+
+TASKS:
+  - create
+  - delete
+  - update:
+    - update content
+    - update type
+    - update position
+
+------------------------------
+
+TAGS:
+
+------------------------------
+
+USERS:
+
+------------------------------

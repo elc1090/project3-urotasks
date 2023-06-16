@@ -16,9 +16,7 @@ export default function Project({ itemData })
     if (itemData.id !== user.activeProject)
     {
       setFetchTasks(true);
-
-      const userCopy = { ...user };
-      setUser({ ...userCopy, activeProject: itemData.id });
+      setUser({ ...user, activeProject: itemData.id });
 
       if (window.innerWidth < 1337 && state.isMenuHidden === false)
       {

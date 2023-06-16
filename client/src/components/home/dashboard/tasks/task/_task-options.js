@@ -8,23 +8,23 @@ import { faEllipsisVertical, faTag, faArrowsLeftRight, faArrowUp, faArrowDown, f
 
 export default function ListItemControls({ task })
 {
-  const [moveOpen, setMoveOpen] = useState(false);
+  const [changeTypeOpen, setChangeTypeOpen] = useState(false);
   const [optionsShown, setOptionsShown] = useState(false);
 
-  const [newLocation, setNewLocation] = useState('');
-  const moveLocationRef = useRef();
+  const [newType, setNewType] = useState('');
+  const newTypeRef = useRef();
 
   const { dispatch } = useContext(ReducerContext);
   const { activeProject, setActiveProject } = useContext(ProjectsContext);
   
   const taskType = useContext(TaskTypeContext);
-  let moveLocation0, moveLocation1;
+  let otherTaskType0, otherTaskType1;
 
   switch (taskType)
   {
-    case 'todo' : moveLocation0 = "doing"; moveLocation1 = "done" ; break;
-    case 'doing': moveLocation0 = "todo" ; moveLocation1 = "done" ; break;
-    case 'done' : moveLocation0 = "todo" ; moveLocation1 = "doing"; break;
+    case 'todo' : otherTaskType0 = "doing"; otherTaskType1 = "done" ; break;
+    case 'doing': otherTaskType0 = "todo" ; otherTaskType1 = "done" ; break;
+    case 'done' : otherTaskType0 = "todo" ; otherTaskType1 = "doing"; break;
     default: break;
   }
 
@@ -38,33 +38,34 @@ export default function ListItemControls({ task })
 
   function updateTaskType()
   {
-    const newLocation = moveLocationRef.current.value;
-    const activeProjectCopy = activeProject;
-    const taskList = activeProjectCopy.tasks;
-
-    const taskIndex = taskList.findIndex(taskItem => taskItem.id === task.id);
-    const taskToMove = taskList.splice(taskIndex, 1)[0];
+    const newType = newTypeRef.current.value;
     
-    let greatestPosition = 0;
-    for (let i = 0; i < activeProject.tasks.length; i++)
-      if (activeProject.tasks[i].type === newLocation && activeProject.tasks[i].position > greatestPosition)
-        greatestPosition = activeProject.tasks[i].position
+    const taskList = activeProject.tasks;
+    const taskToMove = taskList.find(taskItem => taskItem.id === task.id);
+    const lastTaskPos = Math.max(...taskList.map(taskObj => taskObj.position));
 
-    const locations = { old: taskType, new: newLocation };
-    const positions = { old: taskToMove.position, new: greatestPosition + 1 };
+    const types = { old: taskType, new: newType };
+    const positions = { old: taskToMove.position, new: lastTaskPos + 1 };
     
-    taskToMove.type = locations.new;
-    taskToMove.position = positions.new;
-    taskList.push(taskToMove);
+    taskList.map(taskObj => 
+    {
+      if (taskObj.id === taskToMove.id)
+      {
+        taskObj.type = types.new;
+        taskObj.position = positions.new;
+      }
+        
+      return taskObj;
+    })
 
     for (let i = 0; i < taskList.length ; i++)
       if (taskList[i].type === taskType && taskList[i].position > positions.old)
         taskList[i].position = taskList[i].position - 1;
 
-    activeProjectCopy.tasks = taskList;
-    setActiveProject(activeProjectCopy);
+    activeProject.tasks = taskList;
+    setActiveProject({ ...activeProject, tasks: taskList });
 
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update-type`, [activeProject.id, task.id, locations, positions])
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update-type`, [activeProject.id, task.id, types, positions])
       .then( res => {console.log(res)} )
       .catch( err => {console.log(err) })
 
@@ -132,8 +133,8 @@ export default function ListItemControls({ task })
     }
 
     setOptionsShown(false);
-    setMoveOpen(false);
-    setNewLocation('');
+    setChangeTypeOpen(false);
+    setNewType('');
   }
 
   function deleteTask()
@@ -161,10 +162,10 @@ export default function ListItemControls({ task })
     {
       setOptionsShown(!optionsShown);
 
-      if (moveOpen === true)
+      if (changeTypeOpen === true)
       {
-        setMoveOpen(false);
-        setNewLocation('');
+        setChangeTypeOpen(false);
+        setNewType('');
       }
     }
 
@@ -182,13 +183,13 @@ export default function ListItemControls({ task })
       if (e.target !== optionsElement && !optionsElement?.contains(e.target))
       {
         setOptionsShown(false);
-        setMoveOpen(false);
+        setChangeTypeOpen(false);
       }
     })
   }
 
   return (
-    <div className='options' id={ options } onMouseLeave={ !moveOpen ? () => {toggleOptions('hide')} : null  } >
+    <div className='options' id={ options } onMouseLeave={ !changeTypeOpen ? () => {toggleOptions('hide')} : null  } >
       <div className={ `option option--ellipsis ${optionsShown ? 'option--ellipsis--shown' : ''}` } onClick={ () => {toggleOptions('toggle')} }>
         <div className='option__icon'><FontAwesomeIcon icon={ faEllipsisVertical }/></div>
       </div>
@@ -198,12 +199,12 @@ export default function ListItemControls({ task })
       </div>
 
       <div className={ `option option--type ${optionsShown ? 'option--shown' : ''}` }>
-        <div className='option__icon' onClick={ () => {setMoveOpen(!moveOpen);} }><FontAwesomeIcon icon={ faArrowsLeftRight }/></div>
+        <div className='option__icon' onClick={ () => {setChangeTypeOpen(!changeTypeOpen);} }><FontAwesomeIcon icon={ faArrowsLeftRight }/></div>
         
-        <div className={ `options__select ${moveOpen ? 'options__select--shown' : ''}` }>
-          <input className='move__input' type='hidden' value={ newLocation } ref={ moveLocationRef }/>
-          <div className={`options__location ${newLocation === moveLocation0 ? 'options__location--selected' : ''}` } onClick={ () => {setNewLocation(moveLocation0)} }>{ formatTaskType(moveLocation0) }</div>
-          <div className={`options__location ${newLocation === moveLocation1 ? 'options__location--selected' : ''}` } onClick={ () => {setNewLocation(moveLocation1)} }>{ formatTaskType(moveLocation1) }</div>
+        <div className={ `options__select ${changeTypeOpen ? 'options__select--shown' : ''}` }>
+          <input className='move__input' type='hidden' value={ newType } ref={ newTypeRef }/>
+          <div className={`options__location ${newType === otherTaskType0 ? 'options__location--selected' : ''}` } onClick={ () => {setNewType(otherTaskType0)} }>{ formatTaskType(otherTaskType0) }</div>
+          <div className={`options__location ${newType === otherTaskType1 ? 'options__location--selected' : ''}` } onClick={ () => {setNewType(otherTaskType1)} }>{ formatTaskType(otherTaskType1) }</div>
           <button className='options__submit' onClick={updateTaskType}>MOVE</button>
         </div>
       </div>
