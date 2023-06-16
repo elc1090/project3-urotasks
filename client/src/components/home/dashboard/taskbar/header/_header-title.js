@@ -4,13 +4,15 @@ import axios from 'axios';
 
 export default function ItemText({ value }) 
 {
+  const { projects, setProjects, activeProject, setActiveProject } = useContext(ProjectsContext);
+  
   const [editing, setEditing] = useState(false);
   const [inputValue, setInputValue] = useState(value);
-  
-  const { projects, setProjects, activeProject, setActiveProject } = useContext(ProjectsContext);
 
   function handleNameChange(newName) 
   { 
+    // not setting the activeProject directly makes the name flicker when changing
+    const oldName = activeProject.name;
     setActiveProject({ ...activeProject, name: newName });
 
     const projectsCopy = projects.map(project => 
@@ -27,17 +29,11 @@ export default function ItemText({ value })
       console.log(res);
       setProjects(projectsCopy);
     })
-    .catch( err => {console.log(err)} )
-  }
-
-  function handleInputChange(e) 
-  {
-    setInputValue(e.target.value);
-  }
-
-  function handleEdit() 
-  {
-    setEditing(true);
+    .catch(err => 
+    {
+      console.log(err);
+      setActiveProject({ ...activeProject, name: oldName });
+    })
   }
 
   function handleSave() 
@@ -56,8 +52,17 @@ export default function ItemText({ value })
     <div className='header__text'>
       {
         editing 
-          ? <input style={{width: '100%'}} autoFocus type="text" value={inputValue} onChange={handleInputChange} onBlur={handleSave} onKeyDown={handleKeyDown}/>
-          : <div style={{width: '100%'}} onClick={handleEdit}>{value}</div>
+        ? <input 
+            autoFocus 
+            type="text" 
+            value={ inputValue } 
+            style={ {width: '100%'} } 
+            onChange={ (e) => {setInputValue(e.target.value)} } 
+            onBlur={ handleSave } 
+            onKeyDown={ handleKeyDown }
+          />
+
+        : <div style={{width: '100%'}} onClick={ () => {setEditing(true)} }>{ value }</div>
       }
     </div>
   );

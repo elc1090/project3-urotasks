@@ -1,9 +1,10 @@
 import Project from '../models/Project.js';
+import Task from '../models/Task.js';
 
 const projectController = {};
 
 /*****************************************************************************************************************/
-projectController.create = async (projectData) =>
+projectController.create = async projectData =>
 {
   const project = new Project(projectData);
   await project.save();
@@ -49,7 +50,12 @@ projectController.update = async (projectData, updateType) =>
 /*****************************************************************************************************************/
 projectController.delete = async projectID =>
 {
+  const project = await Project.findOne({ id: projectID }).lean().select('tasks -_id');
+  const taskIDs = project.tasks;
+  
+  await Task.deleteMany({ id: { $in: taskIDs } });
   await Project.deleteOne({ id: projectID });
+  
   console.log(`${new Date()}: successfully deleted project: ${projectID}`);
 }
 

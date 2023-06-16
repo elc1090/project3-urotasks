@@ -43,6 +43,10 @@ export default function App()
           : setActiveProject(projects[activeProjectIndex]);   
       }
     }
+
+    else
+      setActiveProject(null);
+      
   }, [user, projects]);
 
   useEffect(() => 

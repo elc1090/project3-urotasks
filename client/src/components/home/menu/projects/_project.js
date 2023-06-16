@@ -15,9 +15,6 @@ export default function Project({ itemData })
   {
     if (itemData.id !== user.activeProject)
     {
-      setFetchTasks(true);
-      setUser({ ...user, activeProject: itemData.id });
-
       if (window.innerWidth < 1337 && state.isMenuHidden === false)
       {
         dispatch({ type: 'menuHidden'      });
@@ -26,18 +23,24 @@ export default function Project({ itemData })
       }  
   
       axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update`, [user.id, itemData.id, 'activeProject'])
-        .catch(err => {console.log(err)})
+        .then(res => 
+        {
+          console.log(res);
+          setFetchTasks(true);
+          setUser({ ...user, activeProject: itemData.id });
+        })
+        .catch( err => {console.log(err)} )
     }
   }
 
   return (
-    <li className='projects__item' onClick={ activateProject }>
-      <div className='item__data'>
+    <li className='project' onClick={ activateProject }>
+      <div className='project__data'>
         <span style={{ color: itemData?.color }}><FontAwesomeIcon icon={ faSquare }/></span> 
-        <div className='item__name'>{ itemData?.name }</div>
+        <div className='project__name'>{ itemData?.name }</div>
       </div> 
   
-      <div className='item__total-tasks'>{ itemData?.activeTasks }</div>
+      <div className='project__total-tasks'>{ itemData?.activeTasks }</div>
     </li>
   )
 }

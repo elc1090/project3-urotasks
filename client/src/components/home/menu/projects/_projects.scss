@@ -38,7 +38,7 @@
     { opacity: 0; }
   }
 
-  &__item
+  .project
   {
     display: grid;
     grid-template-columns: minmax(0px, 296px) auto;
@@ -68,7 +68,7 @@
     &:hover::before
     { opacity: 1; }
 
-    .item__data
+    &__data
     {
       display: flex;
       align-items: center;
@@ -77,14 +77,14 @@
       color: #cecece;
     }
 
-    .item__name
+    &__name
     {
       white-space: nowrap;
       overflow-x: hidden;
       text-overflow: ellipsis;
     }
 
-    .item__total-tasks
+    &__total-tasks
     {
       padding: 1px 8px;
       border-radius: $border-rad-small;

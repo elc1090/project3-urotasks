@@ -15,24 +15,32 @@ export default function TaskbarDelete()
 
   function deleteProject()
   {
-    const projectsCopy = projects.filter(project => project.id !== activeProject.id);
+    const projectsOld = projects;
 
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-delete`, [activeProject.id])
       .then(res => 
       {
         console.log(res); 
         setFetchTasks(true);
-        setProjects(projectsCopy);
-      })
-      .catch( err => {console.log(err)} )
+        setProjects(projects.filter(project => project.id !== activeProject.id));
 
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update`, [user.id, "0", 'activeProject'])
-      .then(res => 
-      {
-        console.log(res);
-        setUser({ ...user, activeProject: "0" });
+        axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update`, [user.id, "0", 'activeProject'])
+          .then(res => 
+          {
+            console.log(res);
+            setUser({ ...user, activeProject: "0" });
+          })
+          .catch(err => 
+          {
+            console.log(err);
+            setUser({ ...user, activeProject: activeProject.id })
+          }) 
       })
-      .catch( err => {console.log(err)} ) 
+      .catch(err => 
+      {
+        console.log(err);
+        setProjects(projectsOld);
+      })
   }
 
   if (confirmationShown === true)

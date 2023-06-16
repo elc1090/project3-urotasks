@@ -32,12 +32,8 @@ export default function ProjCreator()
     { 
       id: uuid(), 
       name: name,
-      color: color,
-      tasks: [{ id: uuid(), type: "todo", content: "" }]
+      color: color
     };
-
-    // quick fix, can't do better
-    delete newProject.tasks;
 
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-create`, newProject)
       .then(res => {console.log(res);})
@@ -47,12 +43,8 @@ export default function ProjCreator()
       .then(res => {console.log(res)})
       .catch(err => {console.log(err)})
     
-    const userCopy = { ...user };
-    userCopy.activeProject = newProject.id;
-    setUser(userCopy);
-
-    const newProjects = [...projects, newProject];
-    setProjects(newProjects);
+    setUser({ ...user, activeProject: newProject.id });
+    setProjects([...projects, newProject]);
     
     if (state.isMenuHidden === false)
       toggleMenu();

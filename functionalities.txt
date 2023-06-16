@@ -1,9 +1,10 @@
 PROJECT:
+  - activate
   - create
   - delete
   - update:
-    - update color
-    - update name
+    - color
+    - name
 
 ------------------------------
 
@@ -11,9 +12,9 @@ TASKS:
   - create
   - delete
   - update:
-    - update content
-    - update type
-    - update position
+    - content
+    - type
+    - position
 
 ------------------------------
 

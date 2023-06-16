@@ -13,12 +13,11 @@ export const TaskTypeContext = React.createContext();
 
 export default function TasksContainer({ taskType })
 {
-  const { activeProject, setActiveProject } = useContext(ProjectsContext);
+  const { activeProject, setActiveProject } = useContext(ProjectsContext);  
   
-  if (!Array.isArray(activeProject.tasks))
-    activeProject.tasks = [];
-  
-  const tasksArray = activeProject.tasks.filter(task => task.type === taskType);
+  const taskList = Array.isArray(activeProject.tasks) 
+    ? activeProject.tasks.filter(task => task.type === taskType)
+    : [];
     
   const [editing, setEditing] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -35,12 +34,11 @@ export default function TasksContainer({ taskType })
 
   function handleTextChange(content) 
   { 
-    let greatestPosition = 0;
-    for (let i = 0; i < activeProject?.tasks.length; i++)
-      if (activeProject.tasks[i].type === taskType && activeProject.tasks[i].position > greatestPosition)
-        greatestPosition = activeProject.tasks[i].position
-
-    const newPosition = greatestPosition + 1;
+    const oldTasks = activeProject.tasks ?? [];
+    
+    const newPosition = taskList.length > 0 
+      ? Math.max(...taskList.map(taskObj => taskObj.position)) + 1 
+      : 1;
 
     const newTask = 
     { 
@@ -52,17 +50,15 @@ export default function TasksContainer({ taskType })
       updated_at: new Date() 
     }
 
+    setActiveProject({ ...activeProject, tasks: [...oldTasks, newTask] });
+
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-create`, [activeProject.id, newTask])
-      .then(res => {console.log(res)})
-      .catch(err => {console.log(err)})
-
-    const activeProjectCopy = { ...activeProject }
-
-    if (!Array.isArray(activeProjectCopy.tasks))
-      activeProjectCopy.tasks = [];
-
-    activeProjectCopy.tasks.push(newTask);
-    setActiveProject(activeProjectCopy);
+      .then( res => {console.log(res)} )
+      .catch(err => 
+      {
+        console.log(err);
+        setActiveProject({ ...activeProject, tasks: oldTasks });
+      })
   }
 
   function handleSave() 
@@ -104,7 +100,7 @@ export default function TasksContainer({ taskType })
       <TaskTypeContext.Provider value={ taskType }>
       {
         activeProject?.tasks
-          ? <List elements={ tasksArray.sort((a, b) => {return a.position - b.position}) } ListItem={ Task } classes='tasks__list'/> 
+          ? <List elements={ taskList.sort((a, b) => {return a.position - b.position}) } ListItem={ Task } classes='tasks__list'/> 
           : null
       }
       </TaskTypeContext.Provider>

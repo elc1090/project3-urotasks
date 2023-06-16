@@ -54,13 +54,15 @@ export default function ListItemControls({ task })
         taskObj.type = types.new;
         taskObj.position = positions.new;
       }
+
+      else if (taskObj.position > positions.old && taskObj.type === taskType)
+      {
+        console.log(taskObj.position - 1)
+        return { ...taskObj, position: taskObj.position - 1 };
+      }
         
       return taskObj;
     })
-
-    for (let i = 0; i < taskList.length ; i++)
-      if (taskList[i].type === taskType && taskList[i].position > positions.old)
-        taskList[i].position = taskList[i].position - 1;
 
     activeProject.tasks = taskList;
     setActiveProject({ ...activeProject, tasks: taskList });

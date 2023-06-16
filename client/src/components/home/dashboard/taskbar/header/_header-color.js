@@ -10,7 +10,7 @@ import { faSquare } from '@fortawesome/free-solid-svg-icons';
 export default function TaskbarProjectColor()
 {
   const { projects, setProjects, activeProject, setActiveProject } = useContext(ProjectsContext); 
-
+  
   const [newColor, setNewColor] = useState(activeProject?.color);
   const [pickerActive, setPickerActive] = useState(false);
 
@@ -18,6 +18,8 @@ export default function TaskbarProjectColor()
   {
     if (pickerActive && newColor !== activeProject.color)
     {
+      // not setting the activeProject directly makes the color flicker when changing
+      const oldColor = activeProject.color;
       setActiveProject({ ...activeProject, color: newColor });
 
       const projectsCopy = projects.map(project => 
@@ -34,7 +36,11 @@ export default function TaskbarProjectColor()
           console.log(res);
           setProjects(projectsCopy);
         })
-        .catch( err => {console.log(err)} )
+        .catch(err => 
+        {
+          console.log(err);
+          setActiveProject({ ...activeProject, color: oldColor })
+        })
     }
 
     setPickerActive(!pickerActive);
