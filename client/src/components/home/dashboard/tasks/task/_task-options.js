@@ -42,7 +42,9 @@ export default function ListItemControls({ task })
     
     const taskList = activeProject.tasks;
     const taskToMove = taskList.find(taskItem => taskItem.id === task.id);
-    const lastTaskPos = Math.max(...taskList.map(taskObj => taskObj.position));
+    
+    const filteredTaskList = taskList.filter(taskObj => taskObj.type === newType);
+    const lastTaskPos = Math.max(...filteredTaskList.map(taskObj => taskObj.position));
 
     const types = { old: taskType, new: newType };
     const positions = { old: taskToMove.position, new: lastTaskPos + 1 };
@@ -55,88 +57,61 @@ export default function ListItemControls({ task })
         taskObj.position = positions.new;
       }
 
-      else if (taskObj.position > positions.old && taskObj.type === taskType)
-      {
-        console.log(taskObj.position - 1)
-        return { ...taskObj, position: taskObj.position - 1 };
-      }
+      else if (taskObj.type === taskType && taskObj.position > positions.old)
+        taskObj.position = taskObj.position - 1;
         
       return taskObj;
     })
 
-    activeProject.tasks = taskList;
-    setActiveProject({ ...activeProject, tasks: taskList });
-
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update-type`, [activeProject.id, task.id, types, positions])
-      .then( res => {console.log(res)} )
-      .catch( err => {console.log(err) })
-
-    dispatch({ type: "taskUpdated" });
+      .then(res => 
+      {
+        console.log(res);
+        setActiveProject({ ...activeProject, tasks: taskList });
+        dispatch({ type: "taskUpdated" });
+      })
+      .catch( err => {console.log(err)} )
   }
 
   function updateTaskPosition(direction)
   { 
+    
     const filteredTaskList = activeProject.tasks.filter(taskObj => taskObj.type === taskType);
     const updatedTask = filteredTaskList.find(taskObj => taskObj.id === task.id);
     const lastTaskPos = Math.max(...filteredTaskList.map(taskObj => taskObj.position));
-   
-    if (direction === 'up')
-    {
-      if (updatedTask.position === 1)
-        return
-      
-      const otherTask = filteredTaskList.find(taskObj => taskObj.position === updatedTask.position - 1);
+  
+    if (direction === 'up' && updatedTask.position === 1)
+      return
+
+    if (direction == 'down' && updatedTask.position === lastTaskPos) 
+      return 
+
+    const offset = direction === 'up' ? -1 : 1; 
+    const otherOffset = offset * -1;
+
+    const otherTask = filteredTaskList.find(taskObj => taskObj.position === updatedTask.position + offset);
     
-      const taskList = activeProject.tasks.map(taskObj => 
-      {
-        if (taskObj.id === updatedTask.id)
-          taskObj.position--;
-
-        else if (taskObj.id === otherTask.id)
-          taskObj.position++;
-        
-        return taskObj;
-      })
-
-      axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update-position`, [updatedTask.id, otherTask.id, 'up'])
-        .then(res => 
-        {
-          console.log(res);
-          setActiveProject({ ...activeProject, tasks: taskList });
-        })
-        .catch( err => {console.log(err)} );
-    }
-
-    else if (direction === 'down')
+    const taskList = activeProject.tasks.map(taskObj => 
     {
-      if (updatedTask.position === lastTaskPos)
-        return;
+      if (taskObj.id === updatedTask.id)
+        taskObj.position = taskObj.position + offset;
 
-      const otherTask = filteredTaskList.find(taskObj => taskObj.position === updatedTask.position + 1);
+      else if (taskObj.id === otherTask.id)
+        taskObj.position = taskObj.position + otherOffset;
       
-      const taskList = activeProject.tasks.map(taskObj => 
+      return taskObj;
+    })
+
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update-position`, [updatedTask.id, otherTask.id, direction])
+      .then(res => 
       {
-        if (taskObj.id === updatedTask.id)
-          taskObj.position++;
-
-        else if (taskObj.id === otherTask.id)
-          taskObj.position--;
-        
-        return taskObj;
+        console.log(res);
+        setActiveProject({ ...activeProject, tasks: taskList });
+        setOptionsShown(false);
+        setChangeTypeOpen(false);
+        setNewType('');
       })
-
-      axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update-position`, [updatedTask.id, otherTask.id, 'down'])
-        .then(res => 
-        {
-          console.log(res);
-          setActiveProject({ ...activeProject, tasks: taskList });
-        })
-        .catch( err => {console.log(err)} );
-    }
-
-    setOptionsShown(false);
-    setChangeTypeOpen(false);
-    setNewType('');
+      .catch( err => {console.log(err)} );
   }
 
   function deleteTask()

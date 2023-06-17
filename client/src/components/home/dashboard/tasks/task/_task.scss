@@ -12,6 +12,17 @@
 
   background-color: $bg-blue-light;
 
+  &__position
+  {
+    position: absolute;
+    left: 4px;
+    top: 4px;
+
+    color: #aaaaaa;
+
+    font-size: 0.7rem;
+  }
+
   &__text textarea
   {
     color: inherit;

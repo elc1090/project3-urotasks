@@ -16,6 +16,12 @@ router.get('/initial-load', async (req, res) =>
   {
     const user = await User.findOne({ id: "1d33e9a5-697b-4d80-b2fb-d854fb2f7fa2" });
     const projectsMeta = await Project.find().lean().select('-tasks -created_at -updated_at -_id -__v');
+    
+    projectsMeta.forEach(project => 
+    {
+      return;
+    })
+    
     const data = [user, projectsMeta];
 
     res.status(200).send(data);

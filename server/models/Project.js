@@ -21,6 +21,12 @@ const projectSchema = new mongoose.Schema(
 
   tasks: [String],
 
+  activeTasks:
+  {
+    type: Number,
+    default: -1
+  },
+
   created_at:
   {
     type: Date,

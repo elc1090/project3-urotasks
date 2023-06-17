@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { ReducerContext, UserContext, FlagsContext } from "../../../../app";
 import axios from 'axios';
 
@@ -10,6 +10,18 @@ export default function Project({ itemData })
   const { user, setUser } = useContext(UserContext);
   const { state, dispatch } = useContext(ReducerContext);
   const { setFetchTasks } = useContext(FlagsContext);
+
+  const [activeTasks, setActiveTasks] = useState(itemData?.activeTasks);
+
+  useEffect(() => 
+  {
+    if (activeTasks < 0)
+      setActiveTasks(0);
+
+    else if (activeTasks > 99)
+      setActiveTasks(99);
+
+  }, [itemData, activeTasks])
 
   function activateProject()
   {
@@ -40,7 +52,7 @@ export default function Project({ itemData })
         <div className='project__name'>{ itemData?.name }</div>
       </div> 
   
-      <div className='project__total-tasks'>{ itemData?.activeTasks }</div>
+      <div className='project__total-tasks'>{ activeTasks }</div>
     </li>
   )
 }
