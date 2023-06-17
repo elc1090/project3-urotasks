@@ -9,16 +9,28 @@ const taskSchema = new mongoose.Schema(
   
   position: Number,
 
-  /*owned: 
-  {
-    type: Boolean,
-    default: true
-  },*/
+  project: String,
+
+  tags: [String],
 
   content:
   {
     type: String,
     maxlength: 1024
+  },
+
+  start_date:
+  {
+    type: Date,
+    default: null,
+    required: false
+  },
+
+  due_date:
+  {
+    type: Date,
+    default: null,
+    required: false
   },
 
   created_at:

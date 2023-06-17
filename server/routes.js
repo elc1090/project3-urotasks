@@ -15,12 +15,21 @@ router.get('/initial-load', async (req, res) =>
   try
   {
     const user = await User.findOne({ id: "1d33e9a5-697b-4d80-b2fb-d854fb2f7fa2" });
-    const projectsMeta = await Project.find().lean().select('-tasks -created_at -updated_at -_id -__v');
+    const projectsMeta = await Project.find().lean().select('-created_at -updated_at -_id -__v');
     
-    projectsMeta.forEach(project => 
+    await Promise.all (projectsMeta.map(async project => 
     {
-      return;
-    })
+      if (project.activeTasks === -1)
+      {
+        await Task.countDocuments({ id: { $in: project.tasks }, type: { $in: ['todo', 'doing'] } })
+        .then(async count => 
+        {
+          await Project.updateOne({ id: project.id }, { activeTasks: count });
+          project.activeTasks = count;
+        })
+        .catch( err => {console.log(err)} )
+      }
+    }))
     
     const data = [user, projectsMeta];
 

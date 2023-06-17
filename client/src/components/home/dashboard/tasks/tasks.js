@@ -13,7 +13,7 @@ export const TaskTypeContext = React.createContext();
 
 export default function TasksContainer({ taskType })
 {
-  const { activeProject, setActiveProject } = useContext(ProjectsContext);  
+  const { setProjects, activeProject, setActiveProject } = useContext(ProjectsContext);  
   
   const taskList = Array.isArray(activeProject.tasks) 
     ? activeProject.tasks.filter(task => task.type === taskType)
@@ -26,16 +26,14 @@ export default function TasksContainer({ taskType })
   let taskTypeName;
   switch(taskType)
   {
-    case "todo":  taskTypeName = "TO-DO"; break;
+    case "todo" : taskTypeName = "TO-DO"; break;
     case "doing": taskTypeName = "DOING"; break;
-    case "done":  taskTypeName = "DONE";  break;
+    case "done" : taskTypeName = "DONE" ; break;
     default: break;
   }
 
   function handleTextChange(content) 
-  { 
-    const oldTasks = activeProject.tasks ?? [];
-    
+  {     
     const newPosition = taskList.length > 0 
       ? Math.max(...taskList.map(taskObj => taskObj.position)) + 1 
       : 1;
@@ -46,11 +44,15 @@ export default function TasksContainer({ taskType })
       type: taskType,
       position: newPosition,
       content: content, 
+      project: activeProject.id,
       created_at: new Date(), 
       updated_at: new Date() 
     }
 
-    setActiveProject({ ...activeProject, tasks: [...oldTasks, newTask] });
+    const oldTasks = activeProject.tasks ?? [];
+    setActiveProject({ ...activeProject, tasks: [...oldTasks, newTask], activeTasks: activeProject.activeTasks + 1 });
+  
+    // data cache
 
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-create`, [activeProject.id, newTask])
       .then( res => {console.log(res)} )

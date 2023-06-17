@@ -4,7 +4,7 @@ import { TaskTypeContext } from '../tasks';
 import axios from 'axios';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisVertical, faTag, faArrowsLeftRight, faArrowUp, faArrowDown, faMultiply } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisVertical, faTag, faArrowsLeftRight, faArrowLeft, faArrowRight, faArrowUp, faArrowDown, faMultiply } from '@fortawesome/free-solid-svg-icons';
 
 export default function ListItemControls({ task })
 {
@@ -18,13 +18,13 @@ export default function ListItemControls({ task })
   const { activeProject, setActiveProject } = useContext(ProjectsContext);
   
   const taskType = useContext(TaskTypeContext);
-  let otherTaskType0, otherTaskType1;
+  let otherTaskType0, otherTaskType1, changeTypeIcon;
 
   switch (taskType)
   {
-    case 'todo' : otherTaskType0 = "doing"; otherTaskType1 = "done" ; break;
-    case 'doing': otherTaskType0 = "todo" ; otherTaskType1 = "done" ; break;
-    case 'done' : otherTaskType0 = "todo" ; otherTaskType1 = "doing"; break;
+    case 'todo' : otherTaskType0 = "doing"; otherTaskType1 = "done" ; changeTypeIcon = faArrowRight;      break;
+    case 'doing': otherTaskType0 = "todo" ; otherTaskType1 = "done" ; changeTypeIcon = faArrowsLeftRight; break;
+    case 'done' : otherTaskType0 = "todo" ; otherTaskType1 = "doing"; changeTypeIcon = faArrowLeft;       break;
     default: break;
   }
 
@@ -75,7 +75,6 @@ export default function ListItemControls({ task })
 
   function updateTaskPosition(direction)
   { 
-    
     const filteredTaskList = activeProject.tasks.filter(taskObj => taskObj.type === taskType);
     const updatedTask = filteredTaskList.find(taskObj => taskObj.id === task.id);
     const lastTaskPos = Math.max(...filteredTaskList.map(taskObj => taskObj.position));
@@ -176,7 +175,7 @@ export default function ListItemControls({ task })
       </div>
 
       <div className={ `option option--type ${optionsShown ? 'option--shown' : ''}` }>
-        <div className='option__icon' onClick={ () => {setChangeTypeOpen(!changeTypeOpen);} }><FontAwesomeIcon icon={ faArrowsLeftRight }/></div>
+        <div className='option__icon' onClick={ () => {setChangeTypeOpen(!changeTypeOpen)} }><FontAwesomeIcon icon={ changeTypeIcon }/></div>
         
         <div className={ `options__select ${changeTypeOpen ? 'options__select--shown' : ''}` }>
           <input className='move__input' type='hidden' value={ newType } ref={ newTypeRef }/>
@@ -186,11 +185,11 @@ export default function ListItemControls({ task })
         </div>
       </div>
 
-      <div className={ `option option--position option--position--up ${optionsShown ? 'option--shown' : ''}` } onClick={() => {updateTaskPosition('up')}}>
+      <div className={ `option option--position option--position--up ${optionsShown ? 'option--shown' : ''}` } onClick={ () => {updateTaskPosition('up')} }>
         <div className='option__icon'><FontAwesomeIcon icon={ faArrowUp }/></div>
       </div>
 
-      <div className={ `option option--position option--position--down ${optionsShown ? 'option--shown' : ''}` } onClick={() => {updateTaskPosition('down')}}>
+      <div className={ `option option--position option--position--down ${optionsShown ? 'option--shown' : ''}` } onClick={ () => {updateTaskPosition('down')} }>
         <div className='option__icon'><FontAwesomeIcon icon={ faArrowDown }/></div>
       </div>
 

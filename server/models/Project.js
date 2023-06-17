@@ -5,6 +5,8 @@ const projectSchema = new mongoose.Schema(
 {
   id: idSchema,
   
+  tasks: [String],
+
   name: 
   { 
     type: String, 
@@ -18,8 +20,6 @@ const projectSchema = new mongoose.Schema(
     require: true,
     maxlength: 7
   },
-
-  tasks: [String],
 
   activeTasks:
   {
