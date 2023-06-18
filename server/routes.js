@@ -1,8 +1,8 @@
 import express from 'express';
 
-import User from './models/User.js';
 import Project from './models/Project.js';
 import Task from './models/Task.js';
+import User from './models/User.js';
 
 import projectController from './controllers/projectController.js'
 import taskController from './controllers/taskController.js';
@@ -36,7 +36,6 @@ router.get('/initial-load', async (req, res) =>
     res.status(200).send(data);
     console.log(`${new Date()}: successfully sent data to client`)
   }
-
   catch (err)
   {
     console.log(err);
@@ -111,7 +110,7 @@ router.post('/task-update-type', async (req, res) =>
 
   await taskController.updateType(projectID, taskID, locations, positions);
   res.sendStatus(200);
-});
+}); 
 
 router.post('/task-update-position', async (req, res) => 
 {
@@ -145,7 +144,6 @@ router.post('/user-create', async (req, res) =>
   await userController.read(req, res);
   console.log(`${new Date()}: successfully sent user data to client`)
 })*/
-
 
 router.post('/user-update', async (req, res) => 
 {

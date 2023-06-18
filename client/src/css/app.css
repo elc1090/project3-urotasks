@@ -738,6 +738,7 @@
 }
 .projects__list--hidden {
   opacity: 0;
+  pointer-events: none;
 }
 .projects .project {
   display: flex;
