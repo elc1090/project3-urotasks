@@ -9,7 +9,6 @@ export default function Project({ itemData })
 {
   const { user, setUser } = useContext(UserContext);
   const { state, dispatch } = useContext(ReducerContext);
-  const { setFetchTasks } = useContext(FlagsContext);
 
   const [activeTasks, setActiveTasks] = useState(itemData?.activeTasks);
 
@@ -34,11 +33,10 @@ export default function Project({ itemData })
         dispatch({ type: 'searchbarSpaced' });  
       }  
   
-      axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update`, [user.id, itemData.id, 'activeProject'])
+      axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update?type=activeProject`, [user.id, itemData.id])
         .then(res => 
         {
           console.log(res);
-          setFetchTasks(true);
           setUser({ ...user, activeProject: itemData.id });
         })
         .catch( err => {console.log(err)} )

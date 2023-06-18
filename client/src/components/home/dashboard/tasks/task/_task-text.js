@@ -16,23 +16,28 @@ export default function ItemText({ value, taskID })
   {
     if (newContent === "")
       return;
+
+    const oldTaskList = JSON.parse(JSON.stringify(activeProject.tasks));
     
-    const activeProjectCopy = activeProject;
-    const taskList = activeProjectCopy.tasks;
-
-    for (let i = 0; i < taskList.length; i++)
-      if (taskList[i].id === taskID && taskList[i].content !== newContent)
+    const taskList = activeProject.tasks.map(taskObj => 
+    {
+      if (taskObj.id === taskID && taskObj.content !== newContent)
       {
-        taskList[i].content = newContent;
+        taskObj.content = newContent;
 
-        axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update-content`, [taskID, newContent])
-          .then(function(response) {console.log(response)})
-          .catch(function(error) {console.log(error)});
+        axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update?type=content`, [taskID, newContent])
+          .then( res => {console.log(res)} )
+          .catch(err => 
+          {
+            console.log(err);
+            setActiveProject({ ...activeProject, tasks: oldTaskList });
+          })
       }
 
-    activeProjectCopy.tasks = taskList;
-    setActiveProject(activeProjectCopy);
-    dispatch({ type: 'taskUpdated' });
+      return taskObj;
+    });
+
+    setActiveProject({ ...activeProject, tasks: taskList });
   }
 
   async function handleEdit() 

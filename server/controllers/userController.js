@@ -2,40 +2,19 @@ import User from '../models/User.js'
 const userController = {};
 
 /*****************************************************************************************************************/
-userController.read = async (req, res) => 
-{
-  try
-  {
-    const user = await User.find();
-    res.send(user);
-
-    console.log(`${new Date()}: successfully sent user data to client`)
-  }
-
-  catch (err)
-  {
-    console.log(err);
-    res.status(500).send("Internal server error");
-  }
-}
-
-/*****************************************************************************************************************/
 userController.create = async (userData) => 
 {
   const user = new User(userData);
   user.save();
+
+  console.log(`${new Date()}: successfully created user ${user.name}`);
 }
 
 /*****************************************************************************************************************/
-userController.update = async (userID, projectID, updateType) => 
+userController.updateActiveProject = async (userID, projectID) => 
 {
-  switch (updateType)
-  {
-    case 'activeProject':
-      await User.updateOne({ id: userID }, { activeProject: projectID }); 
-      console.log(`${new Date()}: successfully updated user's active project to |${projectID}|`)
-      break;
-  }
+  await User.updateOne({ id: userID }, { activeProject: projectID }); 
+  console.log(`${new Date()}: successfully updated user's active project to |${projectID}|`);
 }
 
 export default userController;

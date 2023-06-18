@@ -10,24 +10,32 @@ import Tasks from './tasks/tasks';
 
 export default function Dashboard()
 {
-  const { activeProject, setActiveProject } = useContext(ProjectsContext);
-  const { fetchTasks, setFetchTasks } = useContext(FlagsContext);
+  const { projects, setProjects, activeProject, setActiveProject } = useContext(ProjectsContext);
   const { state } = useContext(ReducerContext);
 
-  useEffect(() => 
+  useEffect(() => // create lastUpdate check
   {
-    if (activeProject !== null && fetchTasks === true)
+    if (activeProject !== null && activeProject.tasks === undefined)
     {
-      axios.get(`${process.env.REACT_APP_SERVER_ROUTE}/get-tasks?projectID=${activeProject.id}`)
+      axios.get(`${process.env.REACT_APP_SERVER_ROUTE}/tasks-get?projectID=${activeProject.id}`)
         .then(res => 
         {
-          setActiveProject({ ...activeProject, tasks: res.data }); 
-          setFetchTasks(false);
+          const projectsCopy = projects.map(project => 
+          {
+            if (project.id === activeProject.id)
+              project.tasks = res.data;
+
+            return project;
+          });
+          
+          console.log('project tasks fetched');
+          setProjects(projectsCopy);
+          setActiveProject({ ...activeProject, tasks: res.data });
         })
         .catch(err => 
         { console.log(err) })
     }
-    
+
     // eslint-disable-next-line
   }, [activeProject]);
 
@@ -50,9 +58,9 @@ export default function Dashboard()
         <>
           <Searchbar/>
           { 
-            fetchTasks === true
-            ? null
-            : <><Taskbar/> <TasksContainer/></>
+            activeProject.tasks !== undefined
+            ? <><Taskbar/> <TasksContainer/></>
+            : null
           }
         </>
       )

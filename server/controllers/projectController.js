@@ -3,7 +3,7 @@ import Task from '../models/Task.js';
 
 const projectController = {};
 
-/*****************************************************************************************************************/
+/*********************************************************************************************************************************/
 projectController.create = async projectData =>
 {
   const project = new Project(projectData);
@@ -12,42 +12,21 @@ projectController.create = async projectData =>
   console.log(`${new Date()}: successfully created project: ${projectData.name}`);
 }
 
-/*****************************************************************************************************************/
-projectController.read = async (req, res) =>
+/*********************************************************************************************************************************/
+projectController.updateName = async (projectID, newName) => 
 {
-  try
-  {
-    const projects = await Project.find();
-    res.status(200).send(projects);
+  await Project.updateOne({ id: projectID }, { name: newName });
+  console.log(`${new Date()}: successfully updated project name to: ${newName}`);
+};
 
-    console.log(`${new Date()}: successfully sent projects data to client`)
-  }
-
-  catch (err)
-  {
-    console.log(err);
-    res.status(500).send("Internal server error");
-  }
-}
-
-/*****************************************************************************************************************/
-projectController.update = async (projectData, updateType) =>
+/*********************************************************************************************************************************/
+projectController.updateColor = async (projectID, newColor) => 
 {
-  switch (updateType)
-  {
-    case 'name':
-      await Project.updateOne({ id: projectData.id }, { name: projectData.name });
-      console.log(`${new Date()}: successfully updated project name to: ${projectData.name}`);
-      break;
+  await Project.updateOne({ id: projectID }, { color: newColor });
+  console.log(`${new Date()}: successfully updated project color to: ${newColor}`);
+};
 
-    case 'color':
-      await Project.updateOne({ id: projectData.id }, { color: projectData.color });
-      console.log(`${new Date()}: successfully updated project color to: ${projectData.color}`);
-      break;
-  }
-}
-
-/*****************************************************************************************************************/
+/*********************************************************************************************************************************/
 projectController.delete = async projectID =>
 {
   const project = await Project.findOne({ id: projectID }).lean().select('tasks -_id');

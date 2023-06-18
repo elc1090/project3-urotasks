@@ -10,6 +10,8 @@ import userController from './controllers/userController.js';
 
 const router = express.Router();
 
+/********************************************************************************************/
+/*** general routes ***/
 router.get('/initial-load', async (req, res) =>  
 {
   try
@@ -29,6 +31,9 @@ router.get('/initial-load', async (req, res) =>
         })
         .catch( err => {console.log(err)} )
       }
+
+      delete project.tasks;
+      return project;
     }))
     
     const data = [user, projectsMeta];
@@ -43,7 +48,46 @@ router.get('/initial-load', async (req, res) =>
   }
 });
 
-router.get('/get-tasks', async (req, res) => 
+/********************************************************************************************/
+/*** project routes ***/
+router.post('/project-create', async (req, res) => 
+{
+  const project = req.body;
+  
+  await projectController.create(project);
+  res.sendStatus(201);
+});
+
+router.post('/project-update', async (req, res) => 
+{
+  const type = req.query.type;
+
+  if (type === 'name')
+  {
+    const [projectID, newName] = [req.body[0], req.body[1]];
+    await projectController.updateName(projectID, newName);
+  }
+  
+  else if (type === 'color')
+  {
+    const [projectID, newColor] = [req.body[0], req.body[1]];
+    await projectController.updateColor(projectID, newColor);
+  }
+
+  res.sendStatus(200);
+})
+
+router.post('/project-delete', async (req, res) => 
+{
+  const projectID = req.body[0];
+  
+  await projectController.delete(projectID);
+  res.sendStatus(200);
+});
+
+/********************************************************************************************/
+/*** task routes ***/
+router.get('/tasks-get', async (req, res) => 
 {
   const projectID = req.query.projectID;
   const project = await Project.findOne({ id: projectID }).select('tasks -_id');
@@ -54,37 +98,6 @@ router.get('/get-tasks', async (req, res) =>
   res.status(200).send(tasks);
 });
 
-/********************************************************************************************/
-/*** project routes ***/
-router.post('/project-create', async (req, res) => 
-{
-  const project = req.body;
-  await projectController.create(project);
-  res.sendStatus(201);
-});
-
-router.get('/project-read', async (req, res) => 
-{
-  await projectController.read(req, res);
-  console.log(`${new Date()}: successfully sent projects data to client`)
-});
-
-router.post('/project-update', async (req, res) => 
-{
-  const [project, updateType] = [req.body[0], req.body[1]]
-  await projectController.update(project, updateType);
-  res.sendStatus(201);
-})
-
-router.post('/project-delete', async (req, res) => 
-{
-  const projectID = req.body[0];
-  await projectController.delete(projectID);
-  res.sendStatus(200);
-});
-
-/********************************************************************************************/
-/*** task routes ***/
 router.post('/task-create', async (req, res) => 
 {
   const data = req.body;
@@ -94,32 +107,30 @@ router.post('/task-create', async (req, res) =>
   res.sendStatus(201);
 });
 
-router.post('/task-update-content', async (req, res) => 
+router.post('/task-update', async (req, res) => 
 {
-  const data = req.body;
-  const [taskID, newContent] = [data[0], data[1]];
+  const type = req.query.type;
+  
+  if (type === 'content')
+  {
+    const [taskID, newContent] = [req.body[0], req.body[1]];
+    await taskController.updateContent(taskID, newContent);
+  }
 
-  await taskController.updateContent(taskID, newContent);
+  else if (type === 'type')
+  {
+    const [projectID, taskID, locations, positions] = [req.body[0], req.body[1], req.body[2], req.body[3]]
+    await taskController.updateType(projectID, taskID, locations, positions);
+  }
+
+  else if (type === 'position')
+  {
+    const [updatedTaskID, otherTaskID, direction] = [req.body[0], req.body[1], req.body[2]];
+    await taskController.updatePosition(updatedTaskID, otherTaskID, direction);
+  }
+
   res.sendStatus(200);
-})
-
-router.post('/task-update-type', async (req, res) => 
-{
-  const data = req.body;
-  const [projectID, taskID, locations, positions] = [data[0], data[1], data[2], data[3]]
-
-  await taskController.updateType(projectID, taskID, locations, positions);
-  res.sendStatus(200);
-}); 
-
-router.post('/task-update-position', async (req, res) => 
-{
-  const data = req.body;
-  const [updatedTaskID, otherTaskID, direction] = [data[0], data[1], data[2]];
-
-  await taskController.updatePosition(updatedTaskID, otherTaskID, direction);
-  res.sendStatus(200);
-})
+});
 
 router.post('/task-delete', async (req, res) => 
 {
@@ -128,29 +139,28 @@ router.post('/task-delete', async (req, res) =>
 
   await taskController.delete(projectID, taskID, taskType, location);
   res.sendStatus(200);
-})
+});
 
 /********************************************************************************************/
 /*** user routes ***/
 router.post('/user-create', async (req, res) => 
 {
-  await userController.create();
-  console.log(`${new Date()}: successfully created user`)
+  const userData = req.body[0];
+  
+  await userController.create(userData);
   res.sendStatus(201);
 });
 
-/*router.get('/user-read', async (req, res) =>
-{
-  await userController.read(req, res);
-  console.log(`${new Date()}: successfully sent user data to client`)
-})*/
-
 router.post('/user-update', async (req, res) => 
 {
-  const data = req.body;
-  const [userID, projectID, updateType] = [data[0], data[1], data[2]];
+  const type = req.query.type;
   
-  await userController.update(userID, projectID, updateType);
+  if (type === 'activeProject')
+  {
+    const [userID, projectID] = [req.body[0], req.body[1]];
+    await userController.updateActiveProject(userID, projectID);
+  }
+  
   res.sendStatus(200);
 });
 

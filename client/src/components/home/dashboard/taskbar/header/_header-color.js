@@ -25,12 +25,12 @@ export default function TaskbarProjectColor()
       const projectsCopy = projects.map(project => 
       {
         if (project.id === activeProject.id)
-          return { ...project, color: newColor, tasks: activeProject.tasks }
+          project.color = newColor;
 
         return project;
       });
 
-      axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-update`, [{ id: activeProject.id, color: newColor }, 'color'])
+      axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-update?type=color`, [activeProject.id, newColor])
         .then(res => 
         {
           console.log(res);

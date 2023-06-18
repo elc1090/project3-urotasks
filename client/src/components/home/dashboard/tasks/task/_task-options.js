@@ -63,7 +63,7 @@ export default function ListItemControls({ task })
       return taskObj;
     })
 
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update-type`, [activeProject.id, task.id, types, positions])
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update?type=type`, [activeProject.id, task.id, types, positions])
       .then(res => 
       {
         console.log(res);
@@ -76,8 +76,8 @@ export default function ListItemControls({ task })
   function updateTaskPosition(direction)
   { 
     const filteredTaskList = activeProject.tasks.filter(taskObj => taskObj.type === taskType);
-    const updatedTask = filteredTaskList.find(taskObj => taskObj.id === task.id);
     const lastTaskPos = Math.max(...filteredTaskList.map(taskObj => taskObj.position));
+    const updatedTask = filteredTaskList.find(taskObj => taskObj.id === task.id);
   
     if (direction === 'up' && updatedTask.position === 1)
       return
@@ -101,11 +101,12 @@ export default function ListItemControls({ task })
       return taskObj;
     })
 
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update-position`, [updatedTask.id, otherTask.id, direction])
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update?type=position`, [updatedTask.id, otherTask.id, direction])
       .then(res => 
       {
         console.log(res);
         setActiveProject({ ...activeProject, tasks: taskList });
+        
         setOptionsShown(false);
         setChangeTypeOpen(false);
         setNewType('');

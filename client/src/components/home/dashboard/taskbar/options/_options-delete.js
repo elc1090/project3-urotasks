@@ -9,8 +9,6 @@ export default function TaskbarDelete()
 {
   const { user, setUser } = useContext(UserContext);
   const { projects, setProjects, activeProject } = useContext(ProjectsContext);
-  const { setFetchTasks } = useContext(FlagsContext);
-
   const [confirmationShown, setConfirmationShown] = useState(false);
 
   function deleteProject()
@@ -21,10 +19,9 @@ export default function TaskbarDelete()
       .then(res => 
       {
         console.log(res); 
-        setFetchTasks(true);
         setProjects(projects.filter(project => project.id !== activeProject.id));
 
-        axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update`, [user.id, "0", 'activeProject'])
+        axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update?type=activeProject`, [user.id, "0"])
           .then(res => 
           {
             console.log(res);

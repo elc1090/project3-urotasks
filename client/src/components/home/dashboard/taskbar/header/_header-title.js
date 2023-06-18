@@ -23,7 +23,7 @@ export default function ItemText({ value })
       return project;
     });
 
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-update`, [{ id: activeProject.id, name: newName }, 'name'])
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-update?type=name`, [activeProject.id, newName])
     .then(res => 
     {
       console.log(res);
