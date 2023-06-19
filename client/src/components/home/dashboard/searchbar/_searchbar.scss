@@ -9,10 +9,10 @@
 
   margin-bottom: 48px;
   border-radius: $border-rad-big;
-  box-shadow: 0px 0px 24px #ffffff18;
 
   background-color: $bg-blue-light;
 
+  @include glow-bg;
 
   .fa-magnifying-glass
   {

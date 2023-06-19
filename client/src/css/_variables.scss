@@ -23,6 +23,9 @@ $border-rad-small: 4px;
 @mixin glow-content
 { filter: drop-shadow(0px 0px 1px #fff); }
 
+@mixin glow-bg
+{ box-shadow: 0px 0px 20px #ffffff09; }
+
 @mixin gradient
 { background: linear-gradient(270deg, rgba(255, 255, 255, 0) 5%, rgba(52, 122, 170, 0.50) 100%); }
 

@@ -24,6 +24,8 @@
 
   background-color: $bg-blue-mid;
 
+  @include glow-bg;
+
   &__header
   {
     font-size: 1.2rem;
