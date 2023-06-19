@@ -15,6 +15,7 @@ Task manager inspirado no Trello só que mais focado e mais organizado
 - Node.js (v16.19.1)
 - React (v18.2.0)
 - MongoDB (v6.0.5)
+- Figma
 
 #### Ambiente de desenvolvimento
 - VSCode
