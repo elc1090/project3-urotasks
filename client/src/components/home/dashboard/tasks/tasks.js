@@ -13,12 +13,7 @@ export const TaskTypeContext = React.createContext();
 
 export default function TasksContainer({ taskType })
 {
-  const { setProjects, activeProject, setActiveProject } = useContext(ProjectsContext);  
-  
-  const taskList = Array.isArray(activeProject.tasks) 
-    ? activeProject.tasks.filter(task => task.type === taskType)
-    : [];
-    
+  const { projects, setProjects, activeProject, setActiveProject } = useContext(ProjectsContext);      
   const [editing, setEditing] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const taskTextRef = useRef();
@@ -32,10 +27,15 @@ export default function TasksContainer({ taskType })
     default: break;
   }
 
+  const tasksOld = activeProject.tasks ?? [];
+  const tasksFiltered = Array.isArray(activeProject.tasks) 
+    ? activeProject.tasks.filter(task => task.type === taskType)
+    : [];
+
   function handleTextChange(content) 
   {     
-    const newPosition = taskList.length > 0 
-      ? Math.max(...taskList.map(taskObj => taskObj.position)) + 1 
+    const newPosition = tasksFiltered.length > 0 
+      ? Math.max(...tasksFiltered.map(taskObj => taskObj.position)) + 1 
       : 1;
 
     const newTask = 
@@ -49,17 +49,27 @@ export default function TasksContainer({ taskType })
       updated_at: new Date() 
     }
 
-    const oldTasks = activeProject.tasks ?? [];
-    setActiveProject({ ...activeProject, tasks: [...oldTasks, newTask], activeTasks: activeProject.activeTasks + 1 });
+    tasksFiltered.push(newTask);
+    setActiveProject({ ...activeProject, tasks: [...tasksOld, newTask], activeTasks: activeProject.activeTasks + 1 });
   
-    // data cache
+    const projectsCopy = projects.map(project => 
+    {
+      if (project.id === activeProject.id)
+        project.tasks = [...tasksOld, newTask];
+
+      return project;
+    })
 
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-create`, [activeProject.id, newTask])
-      .then( res => {console.log(res)} )
+      .then(res => 
+      {
+        console.log(res);
+        setProjects(projectsCopy);
+      })
       .catch(err => 
       {
         console.log(err);
-        setActiveProject({ ...activeProject, tasks: oldTasks });
+        setActiveProject({ ...activeProject, tasks: tasksOld });
       })
   }
 
@@ -102,7 +112,7 @@ export default function TasksContainer({ taskType })
       <TaskTypeContext.Provider value={ taskType }>
       {
         activeProject?.tasks
-          ? <List elements={ taskList.sort((a, b) => {return a.position - b.position}) } ListItem={ Task } classes='tasks__list'/> 
+          ? <List elements={ tasksFiltered.sort((a, b) => {return a.position - b.position}) } ListItem={ Task } classes='tasks__list'/> 
           : null
       }
       </TaskTypeContext.Provider>

@@ -32,20 +32,29 @@ export default function ProjCreator()
     { 
       id: uuid(), 
       name: name,
-      color: color
+      color: color,
+      activeTasks: 0
     };
 
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-create`, newProject)
-      .then(res => {console.log(res);})
-      .catch(err => {console.log(err)})
+      .then(res => 
+      {
+        console.log(res);
+        setProjects([...projects, newProject]);
 
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update`, [user.id, newProject.id, 'activeProject'])
-      .then(res => {console.log(res)})
-      .catch(err => {console.log(err)})
-    
-    setUser({ ...user, activeProject: newProject.id });
-    setProjects([...projects, newProject]);
-    
+        axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update`, [user.id, newProject.id, 'activeProject'])
+          .then(res => 
+          {
+            console.log(res);
+            setUser({ ...user, activeProject: newProject.id });
+          })
+          .catch( err => {console.log(err)} )
+      })
+      .catch( err => {console.log(err)} )
+
+
+
+
     if (state.isMenuHidden === false)
       toggleMenu();
 
