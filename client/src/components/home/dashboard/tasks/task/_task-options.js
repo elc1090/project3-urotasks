@@ -8,23 +8,20 @@ import { faEllipsisVertical, faTag, faArrowsLeftRight, faArrowLeft, faArrowRight
 
 export default function ListItemControls({ task })
 {
+  const { projects, setProjects, activeProject, setActiveProject } = useContext(ProjectsContext);
+  const taskType = useContext(TaskTypeContext);
+  let taskTypeTop, taskTypeBottom, changeTypeIcon;
+
   const [changeTypeOpen, setChangeTypeOpen] = useState(false);
   const [optionsShown, setOptionsShown] = useState(false);
-
   const [newType, setNewType] = useState('');
   const newTypeRef = useRef();
 
-  const { dispatch } = useContext(ReducerContext);
-  const { activeProject, setActiveProject } = useContext(ProjectsContext);
-  
-  const taskType = useContext(TaskTypeContext);
-  let otherTaskType0, otherTaskType1, changeTypeIcon;
-
   switch (taskType)
   {
-    case 'todo' : otherTaskType0 = "doing"; otherTaskType1 = "done" ; changeTypeIcon = faArrowRight;      break;
-    case 'doing': otherTaskType0 = "todo" ; otherTaskType1 = "done" ; changeTypeIcon = faArrowsLeftRight; break;
-    case 'done' : otherTaskType0 = "todo" ; otherTaskType1 = "doing"; changeTypeIcon = faArrowLeft;       break;
+    case 'todo' : taskTypeTop = "doing"; taskTypeBottom = "done" ; changeTypeIcon = faArrowRight;      break;
+    case 'doing': taskTypeTop = "todo" ; taskTypeBottom = "done" ; changeTypeIcon = faArrowsLeftRight; break;
+    case 'done' : taskTypeTop = "todo" ; taskTypeBottom = "doing"; changeTypeIcon = faArrowLeft;       break;
     default: break;
   }
 
@@ -43,8 +40,8 @@ export default function ListItemControls({ task })
     const taskList = activeProject.tasks;
     const taskToMove = taskList.find(taskItem => taskItem.id === task.id);
     
-    const filteredTaskList = taskList.filter(taskObj => taskObj.type === newType);
-    const lastTaskPos = Math.max(...filteredTaskList.map(taskObj => taskObj.position));
+    const tasksFiltered = taskList.filter(taskObj => taskObj.type === newType);
+    const lastTaskPos = Math.max(...tasksFiltered.map(taskObj => taskObj.position));
 
     const types = { old: taskType, new: newType };
     const positions = { old: taskToMove.position, new: lastTaskPos + 1 };
@@ -63,21 +60,29 @@ export default function ListItemControls({ task })
       return taskObj;
     })
 
+    const projectsCopy = projects.map(project => 
+    {
+      if (project.id === activeProject.id)
+        project.tasks = taskList;
+
+      return project;
+    })
+
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update?type=type`, [activeProject.id, task.id, types, positions])
       .then(res => 
       {
         console.log(res);
         setActiveProject({ ...activeProject, tasks: taskList });
-        dispatch({ type: "taskUpdated" });
+        setProjects(projectsCopy);
       })
       .catch( err => {console.log(err)} )
   }
 
   function updateTaskPosition(direction)
   { 
-    const filteredTaskList = activeProject.tasks.filter(taskObj => taskObj.type === taskType);
-    const lastTaskPos = Math.max(...filteredTaskList.map(taskObj => taskObj.position));
-    const updatedTask = filteredTaskList.find(taskObj => taskObj.id === task.id);
+    const tasksFiltered = activeProject.tasks.filter(taskObj => taskObj.type === taskType);
+    const lastTaskPos = Math.max(...tasksFiltered.map(taskObj => taskObj.position));
+    const updatedTask = tasksFiltered.find(taskObj => taskObj.id === task.id);
   
     if (direction === 'up' && updatedTask.position === 1)
       return
@@ -88,7 +93,7 @@ export default function ListItemControls({ task })
     const offset = direction === 'up' ? -1 : 1; 
     const otherOffset = offset * -1;
 
-    const otherTask = filteredTaskList.find(taskObj => taskObj.position === updatedTask.position + offset);
+    const otherTask = tasksFiltered.find(taskObj => taskObj.position === updatedTask.position + offset);
     
     const taskList = activeProject.tasks.map(taskObj => 
     {
@@ -101,11 +106,20 @@ export default function ListItemControls({ task })
       return taskObj;
     })
 
+    const projectsCopy = projects.map(project => 
+    {
+      if (project.id === activeProject.id)
+        project.tasks = taskList;
+
+      return project;
+    })
+
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update?type=position`, [updatedTask.id, otherTask.id, direction])
       .then(res => 
       {
         console.log(res);
         setActiveProject({ ...activeProject, tasks: taskList });
+        setProjects(projectsCopy);
         
         setOptionsShown(false);
         setChangeTypeOpen(false);
@@ -116,21 +130,27 @@ export default function ListItemControls({ task })
 
   function deleteTask()
   {
-    const activeProjectCopy = activeProject;
-    const taskList = activeProjectCopy.tasks;
-
+    const taskList = activeProject.tasks;
     const taskIndex = taskList.findIndex(taskItem => taskItem.id === task.id);
     const position = taskList[taskIndex].position;
     taskList.splice(taskIndex, 1);
     
-    activeProjectCopy[taskType] = taskList;
-    setActiveProject(activeProjectCopy);
-    
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-delete`, [activeProject.id, task.id, taskType, position])
-      .then(res => {console.log(res)})
-      .catch(err => {console.log(err)})
+    const projectsCopy = projects.map(project => 
+    {
+      if (project.id === activeProject.id)
+        project.tasks = taskList;
 
-    dispatch({ type: "taskUpdated" });
+      return project;
+    })
+
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-delete`, [activeProject.id, task.id, taskType, position])
+      .then(res => 
+      {
+        console.log(res);
+        setActiveProject({ ...activeProject, tasks: taskList });
+        setProjects(projectsCopy);
+      })
+      .catch( err => {console.log(err) })
   }
 
   function toggleOptions(toggle)
@@ -180,8 +200,8 @@ export default function ListItemControls({ task })
         
         <div className={ `options__select ${changeTypeOpen ? 'options__select--shown' : ''}` }>
           <input className='move__input' type='hidden' value={ newType } ref={ newTypeRef }/>
-          <div className={`options__location ${newType === otherTaskType0 ? 'options__location--selected' : ''}` } onClick={ () => {setNewType(otherTaskType0)} }>{ formatTaskType(otherTaskType0) }</div>
-          <div className={`options__location ${newType === otherTaskType1 ? 'options__location--selected' : ''}` } onClick={ () => {setNewType(otherTaskType1)} }>{ formatTaskType(otherTaskType1) }</div>
+          <div className={`options__location ${newType === taskTypeTop ? 'options__location--selected' : ''}` } onClick={ () => {setNewType(taskTypeTop)} }>{ formatTaskType(taskTypeTop) }</div>
+          <div className={`options__location ${newType === taskTypeBottom ? 'options__location--selected' : ''}` } onClick={ () => {setNewType(taskTypeBottom)} }>{ formatTaskType(taskTypeBottom) }</div>
           <button className='options__submit' onClick={updateTaskType}>MOVE</button>
         </div>
       </div>

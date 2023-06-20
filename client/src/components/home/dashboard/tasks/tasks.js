@@ -120,19 +120,19 @@ export default function TasksContainer({ taskType })
       <div className="tasks__add">
       {
         editing 
-          ? <textarea 
-              style={{ width: '100%', overflow: 'hidden' }} 
-              id='text-area' 
-              ref={ taskTextRef } 
-              value={ inputValue } 
-              onChange={ e => {setInputValue(e.target.value)} } 
-              onBlur={ handleSave } 
-              onKeyDown={ handleKeyDown }
-              onInput={ handleInputGrowth }
-              autoFocus
-            />
-          
-          : (<button onClick={ () => {setEditing(true)} }><FontAwesomeIcon icon={faPlus}/><span> Add task</span></button>)
+        ? <textarea 
+            style={{ width: '100%', overflow: 'hidden' }} 
+            id='text-area' 
+            ref={ taskTextRef } 
+            value={ inputValue } 
+            onChange={ e => {setInputValue(e.target.value)} } 
+            onBlur={ handleSave } 
+            onKeyDown={ handleKeyDown }
+            onInput={ handleInputGrowth }
+            autoFocus
+          />
+        
+        : (<button onClick={ () => {setEditing(true)} }><FontAwesomeIcon icon={faPlus}/><span> Add task</span></button>)
       }
       </div>
     </div>
