@@ -1,0 +1,182 @@
+@import '../../../../../../css/_variables.scss';
+
+.options
+{
+  position: absolute;
+  right: 0px;
+  top: 8px;
+
+  text-align: center;
+  cursor: pointer;
+
+  .option
+  {
+    opacity: 0; 
+    z-index: 5;
+
+    position: relative;
+    width: 42px;
+    height: 42px;
+
+    font-size: 1.2rem;
+
+    cursor: default;
+    pointer-events: none;
+    user-select: none;
+
+    &--shown
+    {
+      opacity: 1;
+      z-index: 6;
+
+      cursor: pointer;
+      pointer-events: initial;
+    }
+
+    &--ellipsis
+    { 
+      opacity: 1;
+
+      padding: 0;
+      margin-top: -8px;
+      border-radius: $border-rad-small;
+
+      cursor: pointer;
+      pointer-events: all;
+
+      &:hover, &--shown
+      { 
+        color: $bg-blue-light;
+        background-color: #fff;
+      }
+
+      & > *
+      { transition: all 0s ease-in-out; }
+    }
+
+    &--tags
+    { 
+      border-radius: $border-rad-small;
+      background-color: $hl-green-dark; 
+
+      &:hover 
+      { background-color: lighten($hl-green-dark, 10%); }
+    }
+
+    &--type
+    {  
+      border-radius: $border-rad-small; 
+      background-color: $hl-blue-dark;
+      
+      &:hover 
+      { background-color: lighten($hl-blue-dark, 10%); }
+    }
+
+    &--position
+    { 
+      background-color: $hl-purple-dark;
+      
+      &:hover 
+      { background-color: lighten($hl-purple-dark, 10%); }
+
+      &--up
+      {
+        border-top-left-radius: $border-rad-small;
+        border-top-right-radius: $border-rad-small;
+      }
+
+      &--down
+      {
+        border-bottom-left-radius: $border-rad-small;
+        border-bottom-right-radius: $border-rad-small;
+      }
+    }
+
+    &--remove
+    { 
+      border-radius: $border-rad-small;
+      background-color: $hl-red-dark; 
+
+      &:hover 
+      { background-color: lighten($hl-red-dark, 10%); }
+    }
+
+    &__icon
+    { 
+      display: grid;
+      place-items: center;
+    
+      width: 42px; 
+      height: 42px;
+    }
+  }
+
+  &__select
+  {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    
+    position: absolute;
+    left: -120px;
+    top: 1px;
+    opacity: 0;
+    
+    padding: 8px;
+    border: 2px solid $hl-blue-light;
+    border-radius: $border-rad-big;
+
+    background-color: $bg-blue-mid;
+
+    font-size: 1.1rem;
+
+    pointer-events: none;
+    cursor: default;
+
+    &--shown
+    {
+      opacity: 1;
+      pointer-events: initial;
+      cursor: pointer;
+    }
+
+    & > *
+    {
+      width: 96px;
+      height: 40px;
+    }
+  }
+
+  &__location
+  { 
+    display: grid;
+    place-items: center;
+
+    border-radius: $border-rad-small;
+
+    color: #000;
+    background-color: rgb(255, 255, 255);
+
+    &--selected, &:hover
+    {
+      color: #fff;
+      background-color: $bg-blue-dark;
+    }
+  }
+
+  &__submit
+  {
+    left: 0px;
+    margin-top: 8px;
+    border-radius: $border-rad-small;
+
+    color: #fff;
+    background-color: $hl-blue-dark;
+
+    font-size: inherit;
+    cursor: pointer;
+
+    &:hover
+    { background-color: $hl-blue-light; }
+  }
+}

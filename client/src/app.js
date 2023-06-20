@@ -28,26 +28,19 @@ export default function App()
 
   useEffect(() => 
   {
-    if (user !== null && projects.length > 0)
+    if (user !== null && user.activeProject !== '0' && projects.length > 0)
     {
-      if (user.activeProject !== '0')
-      {
-        let activeProjectIndex = -1;
+      const activeProjectIndex = projects.findIndex(project => project.id === user.activeProject);
 
-        for (let i = 0; i < projects.length; i++)
-          if (projects[i].id === user.activeProject)
-            activeProjectIndex = i;
-  
-        activeProjectIndex === -1 
-          ? setActiveProject(null) 
-          : setActiveProject(projects[activeProjectIndex]);   
-      }
+      activeProjectIndex !== -1 
+      ? setActiveProject(projects[activeProjectIndex]) 
+      : setActiveProject(null);
     }
 
     else
       setActiveProject(null);
       
-  }, [user, projects]);
+  }, [user]);
 
   useEffect(() => 
   {

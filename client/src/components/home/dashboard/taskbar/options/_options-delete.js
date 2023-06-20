@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { ProjectsContext, UserContext, FlagsContext } from "../../../../../app";
+import { ProjectsContext, UserContext } from "../../../../../app";
 import axios from 'axios';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

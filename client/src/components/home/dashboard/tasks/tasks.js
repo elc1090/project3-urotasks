@@ -27,13 +27,14 @@ export default function TasksContainer({ taskType })
     default: break;
   }
 
-  const tasksOld = activeProject.tasks ?? [];
   const tasksFiltered = Array.isArray(activeProject.tasks) 
     ? activeProject.tasks.filter(task => task.type === taskType)
     : [];
 
   function handleTextChange(content) 
   {     
+    const tasksOld = activeProject.tasks ?? [];
+    
     const newPosition = tasksFiltered.length > 0 
       ? Math.max(...tasksFiltered.map(taskObj => taskObj.position)) + 1 
       : 1;
@@ -50,15 +51,20 @@ export default function TasksContainer({ taskType })
     }
 
     tasksFiltered.push(newTask);
-    setActiveProject({ ...activeProject, tasks: [...tasksOld, newTask], activeTasks: activeProject.activeTasks + 1 });
-  
+    const tasksUpdated = [...tasksOld, newTask];
+
     const projectsCopy = projects.map(project => 
     {
       if (project.id === activeProject.id)
+      {
         project.tasks = [...tasksOld, newTask];
+        project.activeTasks = project.activeTasks + 1;
+      }
 
       return project;
     })
+
+    setActiveProject({ ...activeProject, tasks: tasksUpdated, activeTasks: activeProject.activeTasks + 1 });
 
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-create`, [activeProject.id, newTask])
       .then(res => 

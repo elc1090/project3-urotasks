@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { ProjectsContext, ReducerContext, FlagsContext } from "../../../app";
+import { ProjectsContext, ReducerContext } from "../../../app";
 import axios from 'axios';
 
 import ProjectCreator from './proj-creator/proj-creator';

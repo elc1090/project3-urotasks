@@ -1,5 +1,5 @@
-import { useState, useContext, useRef, useEffect } from 'react';
-import { ProjectsContext, ReducerContext } from '../../../../../app';
+import { useState, useContext, useRef } from 'react';
+import { ProjectsContext } from '../../../../../app';
 import axios from 'axios';
 
 export default function ItemText({ value, taskID }) 
@@ -7,7 +7,6 @@ export default function ItemText({ value, taskID })
   const [editing, setEditing] = useState(false);
   const [inputValue, setInputValue] = useState(value);
 
-  const { dispatch } = useContext(ReducerContext);
   const { projects, setProjects, activeProject, setActiveProject } = useContext(ProjectsContext);
 
   const taskTextRef = useRef();
@@ -24,7 +23,7 @@ export default function ItemText({ value, taskID })
 
     const taskList = activeProject.tasks.map(taskObj => 
     {
-      if (taskObj.id == taskID && taskObj.content !== newContent)
+      if (taskObj.id === taskID && taskObj.content !== newContent)
       {
         taskObj.content = newContent;
         isNewContent = true;
