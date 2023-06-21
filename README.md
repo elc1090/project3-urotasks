@@ -23,8 +23,8 @@ Task manager inspirado no Trello só que mais focado e mais organizado
 - MongoDBAtlas
 
 #### Créditos
-- ![FontAwesome](https://fontawesome.com/start)
-- ![React Color](https://casesandberg.github.io/react-color/)
+- https://fontawesome.com/start
+- https://casesandberg.github.io/react-color
 
 #### Bastidores
 Foi um projeto muito bom pra aprender a usar react hooks e saber como manejar state num geral, usar algumas coisas como react color foram bem mais complicadas do que esperado, mesmo sendo relativamente simples de usar. MongoDB/noSQL foi a melhor criação do ser humano, incluseive o MongoDBCompass e o MongoDBAtlas, duas ferramentas sensacionais e fáceis de usar. Num geral, foi muito legal desenvolver este projeto.
