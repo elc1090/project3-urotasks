@@ -10,7 +10,7 @@ export default function OptionEllipsis({ toggleOptions })
 
   return (
     <>
-      <div className={ `option option--ellipsis ${optionsShown ? 'option--ellipsis--shown' : ''}` } onClick={ () => {toggleOptions('toggle')} }>
+      <div className={ `option option--ellipsis ${optionsShown ? 'option--ellipsis--shown' : ''}` } onClick={ toggleOptions }>
         <div className='option__icon'><FontAwesomeIcon icon={ faEllipsisVertical }/></div>
       </div>
     </>

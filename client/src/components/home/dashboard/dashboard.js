@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { ProjectsContext, ReducerContext } from "../../../app";
 import axios from 'axios';
 
@@ -8,10 +8,23 @@ import Searchbar from './searchbar/searchbar';
 import Taskbar from './taskbar/taskbar';
 import Tasks from './tasks/tasks';
 
+export const ScrollContext = React.createContext();
+
 export default function Dashboard()
 {
   const { projects, setProjects, activeProject, setActiveProject } = useContext(ProjectsContext);
   const { state } = useContext(ReducerContext);
+
+  const [scrollTo, setScrollTo] = useState(0);
+
+  useEffect(() => 
+  {
+    const tasksContainer = document.querySelector('.tasks__container');
+
+    if (scrollTo > 64)
+      tasksContainer?.scrollBy(scrollTo, 0);
+
+  }, [scrollTo, projects, activeProject])
 
   useEffect(() => // create lastUpdate check
   {
@@ -43,9 +56,11 @@ export default function Dashboard()
   {
     return (
       <div className="tasks__container" id="tasks__container">
-        <Tasks taskType="todo"/>
-        <Tasks taskType="doing"/>
-        <Tasks taskType="done"/>
+        <ScrollContext.Provider value={{ scrollTo, setScrollTo }}>
+          <Tasks taskType="todo"/>
+          <Tasks taskType="doing"/>
+          <Tasks taskType="done"/>
+        </ScrollContext.Provider>
       </div>
     )
   }

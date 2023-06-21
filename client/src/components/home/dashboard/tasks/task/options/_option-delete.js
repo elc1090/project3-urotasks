@@ -2,19 +2,24 @@ import { useContext } from 'react';
 import { ProjectsContext } from '../../../../../../app';
 import { OptionsContext } from './options';
 import { TaskTypeContext } from '../../tasks';
+import { ScrollContext } from '../../../dashboard';
 import axios from 'axios';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMultiply } from '@fortawesome/free-solid-svg-icons';
 
-export default function OptionDelete({ task })
+export default function OptionDelete({ task, toggleOptions })
 {
   const { projects, setProjects, activeProject, setActiveProject } = useContext(ProjectsContext);
   const { optionsShown } = useContext(OptionsContext);
-  const { taskType } = useContext(TaskTypeContext);
+  const taskType = useContext(TaskTypeContext);
+  const { setScrollTo } = useContext(ScrollContext);
 
   function deleteTask()
   {
+    const scrollOffset = document.getElementById(taskType).offsetLeft;
+    setScrollTo(scrollOffset);
+
     const taskList = activeProject.tasks;
     const taskIndex = taskList.findIndex(taskItem => taskItem.id === task.id);
     const position = taskList[taskIndex].position;
@@ -34,6 +39,7 @@ export default function OptionDelete({ task })
         console.log(res);
         setActiveProject({ ...activeProject, tasks: taskList });
         setProjects(projectsCopy);
+        toggleOptions();
       })
       .catch( err => {console.log(err) })
   }

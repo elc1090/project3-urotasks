@@ -7,11 +7,12 @@
 *
 { margin: 0; padding: 0; border: 0; outline: 0; box-sizing: border-box; transition: all 0.15s ease-in-out; }
 
+
 html, input, button 
 { font-family: 'Montserrat', 'Oxygen', 'Ubuntu', sans-serif; }
 
 body 
-{ overflow-x: hidden; background-color: $bg-blue-dark; }
+{ background-color: $bg-blue-dark }
 
 a 
 { text-decoration: none; color: #fff; }
@@ -37,7 +38,7 @@ textarea
 
   height: 100dvh;
   width: 100dvw;
-  
+
   animation: ease-in-out 1s forwards fade_in;
 }
 

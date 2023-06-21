@@ -16,7 +16,7 @@ export default function TasksContainer({ taskType })
   const { projects, setProjects, activeProject, setActiveProject } = useContext(ProjectsContext);      
   const [editing, setEditing] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const taskTextRef = useRef();
+  const inputValueRef = useRef();
 
   let taskTypeName;
   switch(taskType)
@@ -83,7 +83,7 @@ export default function TasksContainer({ taskType })
   {
     setEditing(false);
 
-    if (taskTextRef.current.value !== '')
+    if (inputValueRef.current.value !== '')
       handleTextChange(inputValue);
   }
 
@@ -111,15 +111,15 @@ export default function TasksContainer({ taskType })
   }
 
   return (
-    <div className="tasks">
-      <h2 className="tasks__header">{taskTypeName}</h2>
+    <div className="tasks" id={ taskType }>
+      <h2 className="tasks__header">{ taskTypeName }</h2>
       <div className="tasks__options"><FontAwesomeIcon icon={ faEllipsisVertical }/></div>
       
       <TaskTypeContext.Provider value={ taskType }>
       {
         activeProject?.tasks
-          ? <List elements={ tasksFiltered.sort((a, b) => {return a.position - b.position}) } ListItem={ Task } classes='tasks__list'/> 
-          : null
+        ? <List elements={ tasksFiltered.sort((a, b) => {return a.position - b.position}) } ListItem={ Task } classes='tasks__list'/> 
+        : null
       }
       </TaskTypeContext.Provider>
       
@@ -129,7 +129,7 @@ export default function TasksContainer({ taskType })
         ? <textarea 
             style={{ width: '100%', overflow: 'hidden' }} 
             id='text-area' 
-            ref={ taskTextRef } 
+            ref={ inputValueRef } 
             value={ inputValue } 
             onChange={ e => {setInputValue(e.target.value)} } 
             onBlur={ handleSave } 

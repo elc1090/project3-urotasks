@@ -2,11 +2,13 @@
 
 .proj-creator__bg
 {
-  position: absolute;
   z-index: 98;
   opacity: 0;
 
-  height: 97vh;
+  position: absolute;
+  top: 0;
+
+  height: 100%;
   width: 100%;
 
   background-color: #16191dcb;
@@ -26,7 +28,6 @@
   display: grid;
   grid-template-columns: minmax(0px, 320px) minmax(0px, 80px) minmax(0px, 32px);
   grid-template-rows: repeat(3, auto);
-  place-items: top;
   column-gap: 8px;
 
   position: absolute;
@@ -113,5 +114,13 @@
 
     &:hover
     { background-color: $hl-green-light; }
+  }
+}
+
+@media screen and (max-width: 532px) 
+{
+  .proj-creator
+  {
+    width: 90%;
   }
 }

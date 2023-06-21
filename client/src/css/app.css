@@ -32,10 +32,11 @@
   }
 }
 .proj-creator__bg {
-  position: absolute;
   z-index: 98;
   opacity: 0;
-  height: 97vh;
+  position: absolute;
+  top: 0;
+  height: 100%;
   width: 100%;
   background-color: rgba(22, 25, 29, 0.7960784314);
 }
@@ -51,7 +52,6 @@
   display: grid;
   grid-template-columns: minmax(0px, 320px) minmax(0px, 80px) minmax(0px, 32px);
   grid-template-rows: repeat(3, auto);
-  place-items: top;
   -moz-column-gap: 8px;
        column-gap: 8px;
   position: absolute;
@@ -117,6 +117,11 @@
   background-color: #26ffa5;
 }
 
+@media screen and (max-width: 532px) {
+  .proj-creator {
+    width: 90%;
+  }
+}
 .screensaver {
   display: flex;
   flex-direction: column;
@@ -210,7 +215,7 @@
 }
 .taskbar {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
   position: relative;
   width: 1400px;
@@ -222,10 +227,9 @@
 }
 .taskbar .header {
   display: flex;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
   width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .taskbar .header__color {
   margin-right: 8px;
@@ -341,154 +345,10 @@
   .option--orient {
     display: none;
   }
-}
-@keyframes fade_in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
+  .header {
+    font-size: 1.5rem;
   }
 }
-@keyframes fade_out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-.options {
-  position: absolute;
-  right: 0px;
-  top: 8px;
-  text-align: center;
-  cursor: pointer;
-}
-.options .option {
-  opacity: 0;
-  z-index: 5;
-  position: relative;
-  width: 42px;
-  height: 42px;
-  font-size: 1.2rem;
-  cursor: default;
-  pointer-events: none;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
-}
-.options .option--shown {
-  opacity: 1;
-  z-index: 6;
-  cursor: pointer;
-  pointer-events: initial;
-}
-.options .option--ellipsis {
-  opacity: 1;
-  padding: 0;
-  margin-top: -8px;
-  border-radius: 4px;
-  cursor: pointer;
-  pointer-events: all;
-}
-.options .option--ellipsis:hover, .options .option--ellipsis--shown {
-  color: #2d3b4e;
-  background-color: #fff;
-}
-.options .option--ellipsis > * {
-  transition: all 0s ease-in-out;
-}
-.options .option--tags {
-  border-radius: 4px;
-  background-color: #22ca84;
-}
-.options .option--tags:hover {
-  background-color: #40df9d;
-}
-.options .option--type {
-  border-radius: 4px;
-  background-color: #4b99cc;
-}
-.options .option--type:hover {
-  background-color: #73b0d7;
-}
-.options .option--position {
-  background-color: #8f66da;
-}
-.options .option--position:hover {
-  background-color: #ad8fe4;
-}
-.options .option--position--up {
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
-}
-.options .option--position--down {
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
-}
-.options .option--remove {
-  border-radius: 4px;
-  background-color: #d33333;
-}
-.options .option--remove:hover {
-  background-color: #dc5d5d;
-}
-.options .option__icon {
-  display: grid;
-  place-items: center;
-  width: 42px;
-  height: 42px;
-}
-.options__select {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  position: absolute;
-  left: -120px;
-  top: 1px;
-  opacity: 0;
-  padding: 8px;
-  border: 2px solid #55ade8;
-  border-radius: 5px;
-  background-color: #212833;
-  font-size: 1.1rem;
-  pointer-events: none;
-  cursor: default;
-}
-.options__select--shown {
-  opacity: 1;
-  pointer-events: initial;
-  cursor: pointer;
-}
-.options__select > * {
-  width: 96px;
-  height: 40px;
-}
-.options__location {
-  display: grid;
-  place-items: center;
-  border-radius: 4px;
-  color: #000;
-  background-color: rgb(255, 255, 255);
-}
-.options__location--selected, .options__location:hover {
-  color: #fff;
-  background-color: #0e1218;
-}
-.options__submit {
-  left: 0px;
-  margin-top: 8px;
-  border-radius: 4px;
-  color: #fff;
-  background-color: #4b99cc;
-  font-size: inherit;
-  cursor: pointer;
-}
-.options__submit:hover {
-  background-color: #55ade8;
-}
-
 @keyframes fade_in {
   from {
     opacity: 0;
@@ -529,6 +389,138 @@
   font-size: inherit;
   cursor: text;
 }
+.task .options {
+  display: flex;
+  position: absolute;
+  right: 0px;
+  top: 8px;
+  cursor: default;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.task .options .option {
+  opacity: 0;
+  z-index: 5;
+  position: relative;
+  width: 42px;
+  height: 42px;
+  margin-top: -8px;
+  font-size: 1.2rem;
+  cursor: default;
+  pointer-events: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.task .options .option--shown {
+  opacity: 1;
+  z-index: 6;
+  cursor: pointer;
+  pointer-events: all;
+}
+.task .options .option--ellipsis {
+  opacity: 1;
+  padding: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  pointer-events: all;
+}
+.task .options .option--ellipsis:hover, .task .options .option--ellipsis--shown {
+  color: #2d3b4e;
+  background-color: #fff;
+}
+.task .options .option--ellipsis > * {
+  transition: all 0s ease-in-out;
+}
+.task .options .option--tags {
+  border-radius: 4px;
+  background-color: #22ca84;
+}
+.task .options .option--tags:hover {
+  background-color: #40df9d;
+}
+.task .options .option--type {
+  border-radius: 4px;
+  background-color: #4b99cc;
+}
+.task .options .option--type:hover {
+  background-color: #73b0d7;
+}
+.task .options .option--position {
+  background-color: #8f66da;
+}
+.task .options .option--position:hover {
+  background-color: #ad8fe4;
+}
+.task .options .option--position--up {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.task .options .option--position--down {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.task .options .option--remove {
+  border-radius: 4px;
+  background-color: #d33333;
+}
+.task .options .option--remove:hover {
+  background-color: #dc5d5d;
+}
+.task .options .option__icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+}
+.task .options__select {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  position: absolute;
+  top: 48px;
+  left: -90px;
+  opacity: 0;
+  padding: 8px;
+  border: 2px solid #55ade8;
+  border-radius: 5px;
+  background-color: #212833;
+  font-size: 1.1rem;
+  pointer-events: none;
+  cursor: default;
+}
+.task .options__select--shown {
+  opacity: 1;
+  pointer-events: initial;
+  cursor: pointer;
+}
+.task .options__select > * {
+  width: 96px;
+  height: 40px;
+}
+.task .options__location {
+  display: grid;
+  place-items: center;
+  border-radius: 4px;
+  color: #000;
+  background-color: rgb(255, 255, 255);
+}
+.task .options__location--selected, .task .options__location:hover {
+  color: #fff;
+  background-color: #0e1218;
+}
+.task .options__submit {
+  left: 0px;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #4b99cc;
+  font-size: inherit;
+  cursor: pointer;
+}
+.task .options__submit:hover {
+  background-color: #55ade8;
+}
 
 @keyframes fade_in {
   from {
@@ -548,10 +540,13 @@
 }
 .tasks__container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 16px;
+  grid-auto-flow: column;
+  grid-auto-columns: 32.66%;
+  gap: 1%;
   width: 1400px;
   max-width: 100%;
+  overflow: scroll;
+  scroll-snap-type: inline mandatory;
 }
 
 .tasks {
@@ -564,7 +559,7 @@
   padding: 16px;
   border-radius: 5px;
   background-color: #212833;
-  box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.0352941176);
+  scroll-snap-align: start;
 }
 .tasks__header {
   font-size: 1.2rem;
@@ -611,9 +606,10 @@
   transition: all 0s ease-in-out;
 }
 
-@media screen and (max-width: 820px) {
+@media screen and (max-width: 920px) {
   .tasks__container {
-    grid-template-columns: 1fr !important;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
   }
 }
 @keyframes fade_in {
@@ -794,7 +790,7 @@
   text-overflow: ellipsis;
 }
 .projects .project__total-tasks {
-  min-width: 16px;
+  min-width: 32px;
   min-height: 16px;
   margin-left: auto;
   padding: 2px 8px;
@@ -886,7 +882,7 @@
   opacity: 0;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 420px) {
   .menu {
     width: 100%;
   }
@@ -907,7 +903,6 @@ html, input, button {
 }
 
 body {
-  overflow-x: hidden;
   background-color: #0e1218;
 }
 

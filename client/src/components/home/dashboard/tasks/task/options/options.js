@@ -12,24 +12,13 @@ export default function TaskOptions({ task })
 {
   const [changeTypeOpen, setChangeTypeOpen] = useState(false);
   const [optionsShown, setOptionsShown] = useState(false);
-  const [newType, setNewType] = useState('');
-  const newTypeRef = useRef();
 
-  function toggleOptions(toggle)
-  {
-    if (toggle === 'toggle')
-    {
-      setOptionsShown(!optionsShown);
+  function toggleOptions()
+  { 
+    setOptionsShown(!optionsShown);
 
-      if (changeTypeOpen === true)
-      {
-        setChangeTypeOpen(false);
-        setNewType('');
-      }
-    }
-
-    else
-      setOptionsShown(false);
+    if (changeTypeOpen === true)
+      setChangeTypeOpen(false);
   }
 
   const options = 'options-col:' + task.id;
@@ -40,21 +29,18 @@ export default function TaskOptions({ task })
       const optionsElement = document.getElementById(options);
   
       if (e.target !== optionsElement && !optionsElement?.contains(e.target))
-      {
-        setOptionsShown(false);
-        setChangeTypeOpen(false);
-      }
+        toggleOptions();
     })
   }
 
   return (
-    <div className='options' id={ options } onMouseLeave={ !changeTypeOpen ? () => {toggleOptions('hide')} : null  } >
-      <OptionsContext.Provider value={{ optionsShown, setOptionsShown, changeTypeOpen, setChangeTypeOpen, newType, setNewType, newTypeRef }}>
-        <OptionEllipsis toggleOptions={ toggleOptions }/>
-        <OptionTags task={ task }/>
-        <OptionType task={ task }/>
+    <div className='options' id={ options }>
+      <OptionsContext.Provider value={{ optionsShown, setOptionsShown, changeTypeOpen, setChangeTypeOpen }}>
+        <OptionDelete task={ task } toggleOptions={ toggleOptions }/>
         <OptionLocation task={ task }/>
-        <OptionDelete task={ task }/>
+        <OptionType task={ task }/>
+        <OptionTags task={ task }/>
+        <OptionEllipsis toggleOptions={ toggleOptions }/>
       </OptionsContext.Provider>
     </div>
   )

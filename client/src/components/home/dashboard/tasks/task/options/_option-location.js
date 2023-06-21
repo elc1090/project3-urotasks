@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { ProjectsContext } from '../../../../../../app';
 import { OptionsContext } from './options';
 import { TaskTypeContext } from '../../tasks';
+import { ScrollContext } from '../../../dashboard';
 import axios from 'axios';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,12 +10,16 @@ import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 
 export default function OptionChangeType({ task })
 {
-  const taskType = useContext(TaskTypeContext);
   const { projects, setProjects, activeProject, setActiveProject } = useContext(ProjectsContext);
-  const { optionsShown, setOptionsShown, setChangeTypeOpen, setNewType } = useContext(OptionsContext);
+  const { optionsShown, setOptionsShown, setChangeTypeOpen } = useContext(OptionsContext);
+  const { setScrollTo } = useContext(ScrollContext);
+  const taskType = useContext(TaskTypeContext);
  
   function updateTaskPosition(direction)
   { 
+    const scrollOffset = document.getElementById(taskType).offsetLeft;
+    setScrollTo(scrollOffset);
+
     const tasksFiltered = activeProject.tasks.filter(taskObj => taskObj.type === taskType);
     const lastTaskPos = Math.max(...tasksFiltered.map(taskObj => taskObj.position));
     const updatedTask = tasksFiltered.find(taskObj => taskObj.id === task.id);
@@ -58,7 +63,6 @@ export default function OptionChangeType({ task })
         
         setOptionsShown(false);
         setChangeTypeOpen(false);
-        setNewType('');
       })
       .catch( err => {console.log(err)} );
   }
