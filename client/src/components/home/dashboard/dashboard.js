@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useLayoutEffect } from "react";
 import { ProjectsContext, ReducerContext } from "../../../app";
 import axios from 'axios';
 
@@ -17,7 +17,7 @@ export default function Dashboard()
 
   const [scrollTo, setScrollTo] = useState(0);
 
-  useEffect(() => 
+  useLayoutEffect(() => 
   {
     const tasksContainer = document.querySelector('.tasks__container');
 
@@ -26,7 +26,8 @@ export default function Dashboard()
 
   }, [scrollTo, projects, activeProject])
 
-  useEffect(() => // create lastUpdate check
+  // reimplement using web sockets, doing manual verification and cache revalidation are a fucking nightmare
+  useEffect(() => 
   {
     if (activeProject !== null && activeProject.tasks === undefined)
     {
