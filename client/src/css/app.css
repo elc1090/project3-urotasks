@@ -34,10 +34,11 @@
 .proj-creator__bg {
   z-index: 98;
   opacity: 0;
-  position: absolute;
+  position: fixed;
   top: 0;
-  height: 100%;
-  width: 100%;
+  left: 0;
+  bottom: 0;
+  right: 0;
   background-color: rgba(22, 25, 29, 0.7960784314);
 }
 .proj-creator__bg--shown {

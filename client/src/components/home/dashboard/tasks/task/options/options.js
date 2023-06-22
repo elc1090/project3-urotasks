@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 
 import OptionEllipsis from './_option-ellipsis';
 import OptionTags from './_option-tags';
@@ -19,28 +19,27 @@ export default function TaskOptions({ task })
 
   function toggleOptions()
   { 
-    console.log(document.getElementById(task.id).offsetLeft);
-    setOptionsShown(!optionsShown);
-
-    if (changeTypeOpen === true)
-      setChangeTypeOpen(false);
-
-    document.removeEventListener('click', e => 
+    if (!optionsShown)
     {
-      if (e.target !== optionsElement && !optionsElement?.contains(e.target))
-        toggleOptions();
-    })
+      setOptionsShown(true)
+      document.addEventListener('click', checkClickLocation);
+    }
+
+    else
+    {
+      if (changeTypeOpen === true)
+        setChangeTypeOpen(false);
+
+      setOptionsShown(false)
+      document.removeEventListener('click', checkClickLocation);
+    }
   }
 
   function checkClickLocation(e)
   {
+    console.log('e')
     if (e.target !== optionsElement && !optionsElement?.contains(e.target))
       toggleOptions();
-  }
-
-  if (optionsShown === true)
-  {
-    document.addEventListener('click', checkClickLocation);
   }
 
   return (
