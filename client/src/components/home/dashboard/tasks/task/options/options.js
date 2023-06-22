@@ -12,25 +12,35 @@ export default function TaskOptions({ task })
 {
   const [changeTypeOpen, setChangeTypeOpen] = useState(false);
   const [optionsShown, setOptionsShown] = useState(false);
+  
+  const options = 'options-col:' + task.id;
+  const optionsElement = document.getElementById(options);
+
 
   function toggleOptions()
   { 
+    console.log(document.getElementById(task.id).offsetLeft);
     setOptionsShown(!optionsShown);
 
     if (changeTypeOpen === true)
       setChangeTypeOpen(false);
-  }
 
-  const options = 'options-col:' + task.id;
-  if (optionsShown === true)
-  {
-    document.addEventListener('click', e => 
+    document.removeEventListener('click', e => 
     {
-      const optionsElement = document.getElementById(options);
-  
       if (e.target !== optionsElement && !optionsElement?.contains(e.target))
         toggleOptions();
     })
+  }
+
+  function checkClickLocation(e)
+  {
+    if (e.target !== optionsElement && !optionsElement?.contains(e.target))
+      toggleOptions();
+  }
+
+  if (optionsShown === true)
+  {
+    document.addEventListener('click', checkClickLocation);
   }
 
   return (
