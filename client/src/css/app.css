@@ -393,6 +393,14 @@
   font-size: inherit;
   cursor: text;
 }
+.task .optios__bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: aqua;
+}
 .task .options {
   display: flex;
   position: absolute;

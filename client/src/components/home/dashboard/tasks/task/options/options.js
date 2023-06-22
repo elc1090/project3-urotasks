@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import OptionEllipsis from './_option-ellipsis';
 import OptionTags from './_option-tags';
@@ -19,38 +19,41 @@ export default function TaskOptions({ task })
 
   function toggleOptions()
   { 
-    if (!optionsShown)
-    {
-      setOptionsShown(true)
-      document.addEventListener('click', checkClickLocation);
-    }
+    document.removeEventListener('click', checkClickLocation);
 
-    else
+    if (optionsShown)
     {
-      if (changeTypeOpen === true)
+      setOptionsShown(false);
+
+      if (changeTypeOpen)
         setChangeTypeOpen(false);
-
-      setOptionsShown(false)
-      document.removeEventListener('click', checkClickLocation);
     }
+
+    else if (!optionsShown)
+      setOptionsShown(true);
   }
 
   function checkClickLocation(e)
   {
-    console.log('e')
     if (e.target !== optionsElement && !optionsElement?.contains(e.target))
       toggleOptions();
   }
 
+  if (optionsShown === true)
+    document.addEventListener('click', checkClickLocation);
+
   return (
-    <div className='options' id={ options }>
-      <OptionsContext.Provider value={{ optionsShown, setOptionsShown, changeTypeOpen, setChangeTypeOpen }}>
-        <OptionDelete task={ task } toggleOptions={ toggleOptions }/>
-        <OptionLocation task={ task }/>
-        <OptionType task={ task }/>
-        <OptionTags task={ task }/>
-        <OptionEllipsis toggleOptions={ toggleOptions }/>
-      </OptionsContext.Provider>
-    </div>
+    <>
+      <div className='options__bg'/>
+      <div className='options' id={ options }>
+        <OptionsContext.Provider value={{ optionsShown, setOptionsShown, changeTypeOpen, setChangeTypeOpen }}>
+          <OptionDelete task={ task } toggleOptions={ toggleOptions }/>
+          <OptionLocation task={ task }/>
+          <OptionType task={ task }/>
+          <OptionTags task={ task }/>
+          <OptionEllipsis toggleOptions={ toggleOptions }/>
+        </OptionsContext.Provider>
+      </div>
+    </>
   )
 }
