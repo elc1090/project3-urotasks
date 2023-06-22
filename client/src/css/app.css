@@ -373,7 +373,6 @@
   padding: 12px;
   border-radius: 4px;
   background-color: #2d3b4e;
-  cursor: text;
 }
 .task__position {
   position: absolute;
@@ -381,6 +380,10 @@
   top: 2px;
   color: #aaaaaa;
   font-size: 0.6rem;
+}
+.task__text {
+  height: 100%;
+  width: 100%;
 }
 .task__text textarea {
   color: inherit;

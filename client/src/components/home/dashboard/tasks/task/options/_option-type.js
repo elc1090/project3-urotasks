@@ -70,7 +70,15 @@ export default function OptionChangeType({ task })
     const projectsCopy = projects.map(project => 
     {
       if (project.id === activeProject.id)
+      {
+        if (types.new === 'done')
+          project.activeTasks = project.activeTasks - 1;
+
+        else if (types.old === 'done')
+          project.activeTasks = project.activeTasks + 1;
+
         project.tasks = taskList;
+      }
 
       return project;
     })

@@ -12,8 +12,6 @@
 
   background-color: $bg-blue-light;
 
-  cursor: text;
-
   &__position
   {
     position: absolute;
@@ -25,15 +23,21 @@
     font-size: 0.6rem;
   }
 
-  &__text textarea
+  &__text
   {
-    color: inherit;
-    background-color: inherit;
-  
-    font-family: inherit;
-    font-size: inherit;
-  
-    cursor: text;
+    height: 100%;
+    width: 100%;
+
+    textarea
+    {
+      color: inherit;
+      background-color: inherit;
+    
+      font-family: inherit;
+      font-size: inherit;
+    
+      cursor: text;
+    }
   }
 
   .options

@@ -1,13 +1,14 @@
 import { useState, useContext, useRef } from 'react';
 import { ProjectsContext } from '../../../../../app';
+import { EditingContext } from './task';
 import axios from 'axios';
 
 export default function ItemText({ value, taskID }) 
 {
-  const [editing, setEditing] = useState(false);
   const [inputValue, setInputValue] = useState(value);
 
   const { projects, setProjects, activeProject, setActiveProject } = useContext(ProjectsContext);
+  const { isEditing, setIsEditing } = useContext(EditingContext);
 
   const taskTextRef = useRef();
 
@@ -60,7 +61,7 @@ export default function ItemText({ value, taskID })
 
   async function handleEdit() 
   {
-    await setEditing(true);
+    await setIsEditing(true);
 
     const textArea = document.getElementById('text-area');
     const end = textArea.value.length;
@@ -74,7 +75,7 @@ export default function ItemText({ value, taskID })
 
   function handleSave() 
   {
-    setEditing(false);
+    setIsEditing(false);
 
     if (taskTextRef.current.value !== '')
       handleContentChange(inputValue);
@@ -99,21 +100,21 @@ export default function ItemText({ value, taskID })
 
   return (
     <div className='task__text'>
-      {
-        editing 
-        ? <textarea 
-            style={{ width: '100%', overflow: 'hidden' }} 
-            id='text-area' 
-            ref={ taskTextRef } 
-            value={ inputValue } 
-            onChange={ e => {setInputValue(e.target.value);} } 
-            onBlur={ handleSave } 
-            onKeyDown={ handleKeyDown }
-            onInput={ handleInputGrowth }
-          />
-   
-        : (<div style={{width: '100%'}} onClick={handleEdit}>{value}</div>)
-      }
+    {
+      isEditing 
+      ? <textarea 
+          style={{ width: '100%', overflow: 'hidden' }} 
+          id='text-area' 
+          ref={ taskTextRef } 
+          value={ inputValue } 
+          onChange={ e => {setInputValue(e.target.value);} } 
+          onBlur={ handleSave } 
+          onKeyDown={ handleKeyDown }
+          onInput={ handleInputGrowth }
+        />
+  
+      : <div style={{ width: '100%' }} onClick={ handleEdit }>{ value }</div>
+    }
     </div>
   );
 }

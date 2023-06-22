@@ -13,7 +13,6 @@ export default function ItemText({ value })
   { 
     // not setting the activeProject directly makes the name flicker when changing
     const oldName = activeProject.name;
-    setActiveProject({ ...activeProject, name: newName });
 
     const projectsCopy = projects.map(project => 
     {
@@ -22,6 +21,8 @@ export default function ItemText({ value })
 
       return project;
     });
+
+    setActiveProject({ ...activeProject, name: newName });
 
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-update?type=name`, [activeProject.id, newName])
     .then(res => 
@@ -50,20 +51,20 @@ export default function ItemText({ value })
 
   return (
     <div className='header__text'>
-      {
-        editing 
-        ? <input 
-            autoFocus 
-            type="text" 
-            value={ inputValue } 
-            style={ {width: '100%'} } 
-            onChange={ (e) => {setInputValue(e.target.value)} } 
-            onBlur={ handleSave } 
-            onKeyDown={ handleKeyDown }
-          />
+    {
+      editing 
+      ? <input 
+          autoFocus 
+          type="text" 
+          value={ inputValue } 
+          style={ {width: '100%'} } 
+          onChange={ e => {setInputValue(e.target.value)} } 
+          onBlur={ handleSave } 
+          onKeyDown={ handleKeyDown }
+        />
 
-        : <div style={{width: '100%'}} onClick={ () => {setEditing(true)} }>{ value }</div>
-      }
+      : <div style={{ width: '100%' }} onClick={ () => {setEditing(true)} }>{ value }</div>
+    }
     </div>
   );
 }
