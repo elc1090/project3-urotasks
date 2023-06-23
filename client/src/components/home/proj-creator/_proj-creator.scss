@@ -1,4 +1,4 @@
-@import '../../../../css/_variables.scss';
+@import '../../../css/_variables.scss';
 
 .proj-creator__bg
 {
@@ -11,7 +11,7 @@
   bottom: 0;
   right: 0;
 
-  background-color: #16191dcb;
+  background-color: $bg-overlay;
 
   &--shown
   { animation: fade_in 0.15s 0.15s forwards; }
@@ -31,7 +31,9 @@
   column-gap: 8px;
 
   position: absolute;
-  top: 40%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 
   padding: 16px;
   border-radius: $border-rad-big;
@@ -41,14 +43,12 @@
   
   &--shown
   { 
-    transform: scale(1); 
     opacity: 1;
     z-index: 99;
   }
   
   &--hidden
   { 
-    transform: scale(0.85); 
     opacity: 0;
     z-index: -1;
     pointer-events: none;

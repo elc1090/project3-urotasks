@@ -1,0 +1,46 @@
+@import '../../../css/variables';
+
+.editable__bg
+{
+  z-index: -100;
+  opacity: 0;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  background-color: $bg-overlay;
+
+  transition: opacity 0.15s 0.05s ease-in-out;
+
+  &--shown
+  { 
+    opacity: 1; 
+    z-index: 100;
+  }
+}
+
+.editable
+{
+  z-index: -100;
+  opacity: 0;
+
+  position: absolute;
+
+  width: 427px;
+  height: fit-content;
+  border-radius: $border-rad-small;
+
+  color: black;
+  background-color: white;
+
+  transition: opacity 0.15s 0.05s ease-in-out;
+
+  &--shown
+  { 
+    opacity: 1; 
+    z-index: 101;
+  }
+}

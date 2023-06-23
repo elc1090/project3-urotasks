@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useContext } from 'react';
+import { TaskEditorContext } from '../../../../../../pages/home';
 
 import OptionEllipsis from './_option-ellipsis';
 import OptionTags from './_option-tags';
@@ -8,18 +9,20 @@ import OptionDelete from './_option-delete';
 
 export const OptionsContext = React.createContext();
 
-export default function TaskOptions({ task })
+export default function TaskOptions({ task, taskRef })
 {
   const [changeTypeOpen, setChangeTypeOpen] = useState(false);
   const [optionsShown, setOptionsShown] = useState(false);
   
+  const { setEditorShown, setEditorParams } = useContext(TaskEditorContext);
+
   const options = 'options-col:' + task.id;
   const optionsElement = document.getElementById(options);
 
 
   function toggleOptions()
   { 
-    document.removeEventListener('click', checkClickLocation);
+    /*document.removeEventListener('click', checkClickLocation);
 
     if (optionsShown)
     {
@@ -30,7 +33,14 @@ export default function TaskOptions({ task })
     }
 
     else if (!optionsShown)
-      setOptionsShown(true);
+      setOptionsShown(true);*/
+
+    const offsetX = taskRef.current.offsetLeft;
+    const offsetY = taskRef.current.offsetTop;
+    const width = taskRef.current.clientWidth
+
+    setEditorShown(true);
+    setEditorParams({ x: offsetX, y: offsetY, w: width, taskData: task })
   }
 
   function checkClickLocation(e)

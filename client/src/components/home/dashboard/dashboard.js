@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect, useLayoutEffect } from "react";
 import { ProjectsContext, ReducerContext } from "../../../app";
 import axios from 'axios';
 
-import ProjectCreator from './proj-creator/proj-creator';
 import Screensaver from './screensaver/screensaver';
 import Searchbar from './searchbar/searchbar';
 import Taskbar from './taskbar/taskbar';
@@ -88,7 +87,6 @@ export default function Dashboard()
 
   return (
     <div className={`dashboard ${state.isDashboardMoved ? 'dashboard--moved' : ''}`} id="dashboard">
-      <ProjectCreator/>
       <DashboardContent/>
     </div>
   )

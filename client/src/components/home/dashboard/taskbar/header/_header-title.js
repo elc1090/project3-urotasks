@@ -14,6 +14,9 @@ export default function ItemText({ value })
     // not setting the activeProject directly makes the name flicker when changing
     const oldName = activeProject.name;
 
+    if (newName === oldName)
+      return;
+
     const projectsCopy = projects.map(project => 
     {
       if (project.id === activeProject.id)

@@ -58,13 +58,19 @@ export default function TasksContainer({ taskType })
       if (project.id === activeProject.id)
       {
         project.tasks = [...tasksOld, newTask];
-        project.activeTasks = project.activeTasks + 1;
+        
+        if (taskType !== 'done')
+          project.activeTasks = project.activeTasks + 1;
       }
 
       return project;
     })
 
-    setActiveProject({ ...activeProject, tasks: tasksUpdated, activeTasks: activeProject.activeTasks + 1 });
+    if (taskType !== 'done')
+      setActiveProject({ ...activeProject, tasks: tasksUpdated, activeTasks: activeProject.activeTasks + 1 });
+
+    else
+      setActiveProject({ ...activeProject, tasks: tasksUpdated });
 
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-create`, [activeProject.id, newTask])
       .then(res => 

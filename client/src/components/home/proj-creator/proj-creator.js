@@ -1,11 +1,11 @@
-import { useContext, useRef, useState } from 'react';
-import { ProjectsContext, ReducerContext, UserContext } from "../../../../app";
-import { ToggleMenuContext } from '../../../../pages/home';
+import { useState, useContext, useRef  } from 'react';
+import { ProjectsContext, ReducerContext, UserContext } from "../../../app";
+import { ToggleMenuContext } from '../../../pages/home';
 import { v4 as uuid } from 'uuid';
 import axios from 'axios';
 
 
-import { ButtonGlow } from '../../../utils/buttons';
+import { ButtonGlow } from '../../utils/buttons';
 import { ChromePicker } from 'react-color';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,7 +20,7 @@ export default function ProjCreator()
   const { state, dispatch } = useContext(ReducerContext);
   const { projects, setProjects } = useContext(ProjectsContext);
 
-  const [color, setColor] = useState('#0FE19E');
+  const [color, setColor] = useState('#4b99cc');
   const [pickerActive, setPickerActive] = useState(false);
 
   async function createProject()
@@ -42,7 +42,7 @@ export default function ProjCreator()
         console.log(res);
         setProjects([...projects, newProject]);
 
-        axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update`, [user.id, newProject.id, 'activeProject'])
+        axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update?type=activeProject`, [user.id, newProject.id])
           .then(res => 
           {
             console.log(res);
@@ -51,9 +51,6 @@ export default function ProjCreator()
           .catch( err => {console.log(err)} )
       })
       .catch( err => {console.log(err)} )
-
-
-
 
     if (state.isMenuHidden === false)
       toggleMenu();
