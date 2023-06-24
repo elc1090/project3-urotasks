@@ -86,9 +86,9 @@ export default function ProjCreator()
 
   return (
     <>
-      <div className={`proj-creator__bg ${state.isProjCreatorShown ? 'proj-creator__bg--shown' : 'proj-creator__bg--hidden'}`} onClick={ toggleProjectCreator }/>
+      <div className={`proj-creator__bg ${state.isProjCreatorShown ? 'proj-creator__bg--shown' : ''}`} onClick={ toggleProjectCreator }/>
 
-      <div className={`proj-creator ${state.isProjCreatorShown ? 'proj-creator--shown' : 'proj-creator--hidden'}`}>
+      <div className={`proj-creator ${state.isProjCreatorShown ? 'proj-creator--shown' : ''}`}>
         <h2 className="proj-creator__title">CREATE PROJECT <FontAwesomeIcon icon={ faBarsProgress }/> </h2>
         <ButtonGlow onClick={ toggleProjectCreator } icon={ faXmark }/>
         

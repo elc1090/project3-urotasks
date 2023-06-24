@@ -15,7 +15,7 @@ $hl-red-light: #ff4e4e;
 $hl-green-dark: #22ca84;
 $hl-green-light: #26ffa5;
 
-$menu-width: 400px;
+$menu-width: 420px;
 $menu-width-translate: -420px;
 
 $border-rad-big: 5px;
@@ -29,6 +29,16 @@ $border-rad-small: 4px;
 
 @mixin gradient
 { background: linear-gradient(270deg, rgba(255, 255, 255, 0) 5%, rgba(52, 122, 170, 0.50) 100%); }
+
+@mixin transition-open
+{ 
+  transition-property: opacity, z-index;
+  transition-duration: 0.15s, 0s; 
+  transition-delay: 0s, 0.15s; 
+}
+
+@mixin transition-close
+{ transition: opacity 0.15s 0.05s ease-in-out; }
 
 @keyframes fade_in 
 {

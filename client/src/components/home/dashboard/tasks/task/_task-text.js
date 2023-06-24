@@ -99,22 +99,6 @@ export default function ItemText({ value, taskID })
   }
 
   return (
-    <div className='task__text'>
-    {
-      isEditing 
-      ? <textarea 
-          style={{ width: '100%', overflow: 'hidden' }} 
-          id='text-area' 
-          ref={ taskTextRef } 
-          value={ inputValue } 
-          onChange={ e => {setInputValue(e.target.value);} } 
-          onBlur={ handleSave } 
-          onKeyDown={ handleKeyDown }
-          onInput={ handleInputGrowth }
-        />
-  
-      : <div style={{ width: '100%' }} onClick={ handleEdit }>{ value }</div>
-    }
-    </div>
+    <div className='task__text'>{ value }</div>
   );
 }

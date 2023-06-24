@@ -56,11 +56,9 @@ export default function Dashboard()
   {
     return (
       <div className="tasks__container" id="tasks__container">
-        <ScrollContext.Provider value={{ scrollTo, setScrollTo }}>
-          <Tasks taskType="todo"/>
-          <Tasks taskType="doing"/>
-          <Tasks taskType="done"/>
-        </ScrollContext.Provider>
+        <Tasks taskType="todo"/>
+        <Tasks taskType="doing"/>
+        <Tasks taskType="done"/>
       </div>
     )
   }

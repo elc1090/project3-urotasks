@@ -164,17 +164,6 @@
      -moz-user-select: none;
           user-select: none;
 }
-.taskbar .options .option--orient:hover {
-  color: #0e1218;
-  background-color: #fff;
-}
-.taskbar .options .option--orient .fa-bars {
-  transform: rotate(90deg);
-  pointer-events: none;
-  font-size: 1.2rem;
-  transition: color 0s ease-in-out;
-  transition: transform 0.15s ease-in-out;
-}
 .taskbar .options .option--delete:hover, .taskbar .options .option--delete--active {
   color: #0e1218;
   background-color: #ff4e4e;
@@ -189,6 +178,8 @@
   flex-direction: column;
   align-items: center;
   gap: 12px;
+  opacity: 0;
+  z-index: -99;
   position: absolute;
   top: 49px;
   right: -2px;
@@ -197,17 +188,17 @@
   border-radius: 5px;
   border: 2px solid #55ade8;
   background-color: #212833;
+  transition-property: opacity, z-index;
+  transition-duration: 0.15s, 0s;
+  transition-delay: 0s, 0.15s;
   text-align: center;
+  pointer-events: none;
 }
 .taskbar .confirmation--shown {
   opacity: 1;
   z-index: 99;
+  transition: opacity 0.15s 0.05s ease-in-out;
   pointer-events: initial;
-}
-.taskbar .confirmation--hidden {
-  opacity: 0;
-  z-index: -99;
-  pointer-events: none;
 }
 .taskbar .confirmation__header {
   pointer-events: none;
@@ -266,6 +257,7 @@
   padding: 12px;
   border-radius: 4px;
   background-color: #2d3b4e;
+  cursor: pointer;
 }
 .task__position {
   position: absolute;
@@ -275,155 +267,38 @@
   font-size: 0.6rem;
 }
 .task__text {
-  height: 100%;
-  width: 100%;
+  word-break: break-all;
+  white-space: pre-wrap;
 }
-.task__text textarea {
-  color: inherit;
-  background-color: inherit;
-  font-family: inherit;
-  font-size: inherit;
-  cursor: text;
-}
-.task .optios__bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-color: aqua;
+.task:hover > .options {
+  opacity: 1;
 }
 .task .options {
-  display: flex;
-  position: absolute;
-  right: 0px;
-  top: 8px;
-  cursor: default;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
-}
-.task .options .option {
   opacity: 0;
   z-index: 5;
-  position: relative;
+  position: absolute;
+  right: 0px;
   width: 42px;
   height: 42px;
-  margin-top: -8px;
+  border-radius: 4px;
   font-size: 1.2rem;
-  cursor: default;
-  pointer-events: none;
+  cursor: pointer;
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
 }
-.task .options .option--shown {
-  opacity: 1;
-  z-index: 6;
-  cursor: pointer;
-  pointer-events: all;
-}
-.task .options .option--ellipsis {
-  opacity: 1;
-  padding: 0;
-  border-radius: 4px;
-  cursor: pointer;
-  pointer-events: all;
-}
-.task .options .option--ellipsis:hover, .task .options .option--ellipsis--shown {
+.task .options:hover {
   color: #2d3b4e;
   background-color: #fff;
 }
-.task .options .option--ellipsis > * {
-  transition: all 0s ease-in-out;
-}
-.task .options .option--tags {
-  border-radius: 4px;
-  background-color: #22ca84;
-}
-.task .options .option--tags:hover {
-  background-color: #40df9d;
-}
-.task .options .option--type {
-  border-radius: 4px;
-  background-color: #4b99cc;
-}
-.task .options .option--type:hover {
-  background-color: #73b0d7;
-}
-.task .options .option--position {
-  background-color: #8f66da;
-}
-.task .options .option--position:hover {
-  background-color: #ad8fe4;
-}
-.task .options .option--position--up {
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-}
-.task .options .option--position--down {
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-}
-.task .options .option--remove {
-  border-radius: 4px;
-  background-color: #d33333;
-}
-.task .options .option--remove:hover {
-  background-color: #dc5d5d;
-}
-.task .options .option__icon {
+.task .options__icon {
   display: grid;
   place-items: center;
   width: 42px;
   height: 42px;
 }
-.task .options__select {
-  display: flex;
-  flex-direction: row;
-  gap: 4px;
-  position: absolute;
-  top: 48px;
-  left: -90px;
-  opacity: 0;
-  padding: 8px;
-  border: 2px solid #55ade8;
-  border-radius: 5px;
-  background-color: #212833;
-  font-size: 1.1rem;
-  pointer-events: none;
-  cursor: default;
-}
-.task .options__select--shown {
-  opacity: 1;
-  pointer-events: initial;
-  cursor: pointer;
-}
-.task .options__select > * {
-  width: 96px;
-  height: 40px;
-}
-.task .options__location {
-  display: grid;
-  place-items: center;
-  border-radius: 4px;
-  color: #000;
-  background-color: rgb(255, 255, 255);
-}
-.task .options__location--selected, .task .options__location:hover {
-  color: #fff;
-  background-color: #0e1218;
-}
-.task .options__submit {
-  left: 0px;
-  border-radius: 4px;
-  color: #fff;
-  background-color: #4b99cc;
-  font-size: inherit;
-  cursor: pointer;
-}
-.task .options__submit:hover {
-  background-color: #55ade8;
+.task .options > * {
+  transition: all 0s 0s ease-in-out;
 }
 
 @keyframes fade_in {
@@ -538,9 +413,9 @@
   justify-content: flex-start;
   align-items: center;
   position: absolute;
-  left: 400px;
+  left: 420px;
   min-height: 100dvh;
-  width: calc(100% - 400px);
+  width: calc(100% - 420px);
   padding: 24px;
   color: #fff;
   background-color: #0e1218;
@@ -605,28 +480,156 @@
   bottom: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.5019607843);
-  transition: opacity 0.15s 0.05s ease-in-out;
+  transition-property: opacity, z-index;
+  transition-duration: 0.15s, 0s;
+  transition-delay: 0s, 0.15s;
 }
 .editable__bg--shown {
   opacity: 1;
-  z-index: 100;
+  z-index: 99;
+  transition: opacity 0.15s 0.05s ease-in-out;
 }
 
 .editable {
   z-index: -100;
   opacity: 0;
   position: absolute;
-  width: 427px;
   height: -moz-fit-content;
   height: fit-content;
   border-radius: 4px;
-  color: black;
-  background-color: white;
-  transition: opacity 0.15s 0.05s ease-in-out;
+  color: #fff;
+  background-color: #2d3b4e;
+  transition-property: opacity, z-index;
+  transition-duration: 0.15s, 0s;
+  transition-delay: 0s, 0.15s;
 }
 .editable--shown {
   opacity: 1;
-  z-index: 101;
+  z-index: 100;
+  transition: opacity 0.15s 0.05s ease-in-out;
+}
+.editable textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: -4px;
+  border-radius: 4px;
+  color: inherit;
+  background-color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+}
+.editable .options {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: absolute;
+  top: 0px;
+  right: -46px;
+  cursor: default;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.editable .options .option {
+  opacity: 1;
+  z-index: 5;
+  position: relative;
+  width: 42px;
+  height: 42px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  pointer-events: all;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.editable .options .option--tags {
+  border-radius: 4px;
+  background-color: #22ca84;
+}
+.editable .options .option--tags:hover {
+  background-color: #40df9d;
+}
+.editable .options .option--type {
+  border-radius: 4px;
+  background-color: #4b99cc;
+}
+.editable .options .option--type:hover {
+  background-color: #73b0d7;
+}
+.editable .options .option--position {
+  background-color: #8f66da;
+}
+.editable .options .option--position:hover {
+  background-color: #ad8fe4;
+}
+.editable .options .option--position--up {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+.editable .options .option--position--down {
+  margin-top: -4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.editable .options .option--remove {
+  border-radius: 4px;
+  background-color: #d33333;
+}
+.editable .options .option--remove:hover {
+  background-color: #dc5d5d;
+}
+.editable .options .option__icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+}
+.editable .options__select {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  opacity: 0;
+  position: absolute;
+  top: -46px;
+  left: -112px;
+  padding: 8px;
+  border: 2px solid #55ade8;
+  border-radius: 5px;
+  background-color: #212833;
+  pointer-events: none;
+  cursor: default;
+}
+.editable .options__select--shown {
+  opacity: 1;
+  pointer-events: initial;
+  cursor: pointer;
+}
+.editable .options__select > * {
+  width: 88px;
+  height: 40px;
+}
+.editable .options__location {
+  display: grid;
+  place-items: center;
+  border-radius: 4px;
+  color: #0e1218;
+  background-color: #fff;
+}
+.editable .options__location--selected, .editable .options__location:hover {
+  color: #fff;
+  background-color: #4b99cc;
+}
+.editable .options__submit {
+  left: 0px;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #4b99cc;
+  font-size: inherit;
+  cursor: pointer;
+}
+.editable .options__submit:hover {
+  background-color: #55ade8;
 }
 
 @keyframes fade_in {
@@ -822,7 +825,7 @@
   flex-direction: column;
   position: fixed;
   z-index: 10;
-  width: 400px;
+  width: 420px;
   height: 100dvh;
   padding: 32px;
   color: #fff;
@@ -857,7 +860,7 @@
   }
 }
 .proj-creator__bg {
-  z-index: 98;
+  z-index: -99;
   opacity: 0;
   position: fixed;
   top: 0;
@@ -865,13 +868,16 @@
   bottom: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.5019607843);
+  transition-property: opacity, z-index;
+  transition-duration: 0.15s, 0s;
+  transition-delay: 0s, 0.15s;
+  pointer-events: none;
 }
 .proj-creator__bg--shown {
-  animation: fade_in 0.15s 0.15s forwards;
-}
-.proj-creator__bg--hidden {
-  pointer-events: none;
-  animation: fade_out 0.15s forwards;
+  z-index: 99;
+  opacity: 1;
+  transition: opacity 0.15s 0.05s ease-in-out;
+  pointer-events: initial;
 }
 
 .proj-creator {
@@ -880,6 +886,8 @@
   grid-template-rows: repeat(3, auto);
   -moz-column-gap: 8px;
        column-gap: 8px;
+  z-index: -99;
+  opacity: 0;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -888,15 +896,16 @@
   border-radius: 5px;
   color: white;
   background-color: #2d3b4e;
+  transition-property: opacity, z-index;
+  transition-duration: 0.15s, 0s;
+  transition-delay: 0s, 0.15s;
+  pointer-events: none;
 }
 .proj-creator--shown {
   opacity: 1;
   z-index: 99;
-}
-.proj-creator--hidden {
-  opacity: 0;
-  z-index: -1;
-  pointer-events: none;
+  transition: opacity 0.15s 0.05s ease-in-out;
+  pointer-events: initial;
 }
 .proj-creator__title {
   grid-column: 1/3;

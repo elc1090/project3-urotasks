@@ -1,8 +1,7 @@
-import { useContext } from 'react';
-import { ProjectsContext } from '../../../../../../app';
-import { OptionsContext } from './options';
-import { TaskTypeContext } from '../../tasks';
-import { ScrollContext } from '../../../dashboard';
+import { useState, useContext } from 'react';
+import { ProjectsContext } from '../../../../app';
+import { ScrollContext } from '../../../../pages/home';
+import { ToggleEditorContext } from '../editor';
 import axios from 'axios';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,14 +9,14 @@ import { faArrowsLeftRight, faArrowLeft, faArrowRight } from '@fortawesome/free-
 
 export default function OptionChangeType({ task })
 {
-  const { projects, setProjects, activeProject, setActiveProject } = useContext(ProjectsContext);
-  const { optionsShown, changeTypeOpen, setChangeTypeOpen } = useContext(OptionsContext);
-  const { setScrollTo } = useContext(ScrollContext);
-  
-  const taskType = useContext(TaskTypeContext);
-  let taskTypeLeft, taskTypeRight, changeTypeIcon;
+  const [changeTypeOpen, setChangeTypeOpen] = useState(false)
 
-  switch (taskType)
+  const { projects, setProjects, activeProject, setActiveProject } = useContext(ProjectsContext);
+  const { setScrollTo } = useContext(ScrollContext);
+  const toggleEditor = useContext(ToggleEditorContext);
+  
+  let taskTypeLeft, taskTypeRight, changeTypeIcon;
+  switch (task?.type)
   {
     case 'todo' : taskTypeLeft = "doing"; taskTypeRight = "done" ; changeTypeIcon = faArrowRight;      break;
     case 'doing': taskTypeLeft = "todo" ; taskTypeRight = "done" ; changeTypeIcon = faArrowsLeftRight; break;
@@ -38,7 +37,7 @@ export default function OptionChangeType({ task })
 
   function updateTaskType(newType)
   { 
-    const scrollOffset = document.getElementById(taskType).offsetLeft;
+    const scrollOffset = document.getElementById(task.type).offsetLeft;
     setScrollTo(scrollOffset);
 
     const taskList = activeProject.tasks;
@@ -50,7 +49,7 @@ export default function OptionChangeType({ task })
     if (lastTaskPos === -Infinity)
       lastTaskPos = 0;
 
-    const types = { old: taskType, new: newType };
+    const types = { old: task.type, new: newType };
     const positions = { old: taskToMove.position, new: lastTaskPos + 1 };
     
     taskList.map(taskObj => 
@@ -61,7 +60,7 @@ export default function OptionChangeType({ task })
         taskObj.position = positions.new;
       }
 
-      else if (taskObj.type === taskType && taskObj.position > positions.old)
+      else if (taskObj.type === task.type && taskObj.position > positions.old)
         taskObj.position = taskObj.position - 1;
         
       return taskObj;
@@ -87,14 +86,16 @@ export default function OptionChangeType({ task })
       .then(res => 
       {
         console.log(res); 
+        setChangeTypeOpen(false);
         setActiveProject({ ...activeProject, tasks: taskList });
         setProjects(projectsCopy);
+        toggleEditor();
       })
       .catch( err => {console.log(err)} )
   }
 
   return (
-    <div className={ `option option--type ${optionsShown ? 'option--shown' : ''}` }>
+    <div className='option option--type'>
       <div className='option__icon' onClick={ () => {setChangeTypeOpen(!changeTypeOpen)} }><FontAwesomeIcon icon={ changeTypeIcon }/></div>
       
       <div className={ `options__select ${changeTypeOpen ? 'options__select--shown' : ''}` }>
