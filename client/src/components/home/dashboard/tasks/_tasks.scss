@@ -50,7 +50,10 @@
     grid-template-columns: 1fr;
     gap: 24px;
 
+    max-height: 560px;
     border-radius: $border-rad-small;
+
+    overflow-y: scroll;
   }
 
   &__add

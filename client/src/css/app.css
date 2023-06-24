@@ -354,7 +354,9 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
+  max-height: 560px;
   border-radius: 4px;
+  overflow-y: scroll;
 }
 .tasks__add {
   grid-column: span 2;
