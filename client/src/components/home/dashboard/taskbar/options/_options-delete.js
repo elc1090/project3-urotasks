@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { ProjectsContext, UserContext, FlagsContext } from "../../../../../app";
+import { ProjectsContext, UserContext } from "../../../../../app";
 import axios from 'axios';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -61,7 +61,7 @@ export default function TaskbarDelete()
         <FontAwesomeIcon icon={ faTrashCan }/>  
       </div>
 
-      <div className={`confirmation ${confirmationShown ? 'confirmation--shown' : 'confirmation--hidden'}`}>
+      <div className={`confirmation ${confirmationShown ? 'confirmation--shown' : ''}`}>
         <h3 className='confirmation__header'>Are you sure you want to delete this project?</h3>
         
         <div className='confirmation__btns'>

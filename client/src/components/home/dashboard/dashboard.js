@@ -1,19 +1,32 @@
-import React, { useContext, useEffect } from "react";
-import { ProjectsContext, ReducerContext, FlagsContext } from "../../../app";
+import React, { useState, useContext, useEffect, useLayoutEffect } from "react";
+import { ProjectsContext, ReducerContext } from "../../../app";
 import axios from 'axios';
 
-import ProjectCreator from './proj-creator/proj-creator';
 import Screensaver from './screensaver/screensaver';
 import Searchbar from './searchbar/searchbar';
 import Taskbar from './taskbar/taskbar';
 import Tasks from './tasks/tasks';
+
+export const ScrollContext = React.createContext();
 
 export default function Dashboard()
 {
   const { projects, setProjects, activeProject, setActiveProject } = useContext(ProjectsContext);
   const { state } = useContext(ReducerContext);
 
-  useEffect(() => // create lastUpdate check
+  const [scrollTo, setScrollTo] = useState(0);
+
+  useLayoutEffect(() => 
+  {
+    const tasksContainer = document.querySelector('.tasks__container');
+
+    if (scrollTo > 64)
+      tasksContainer?.scrollBy(scrollTo, 0);
+
+  }, [scrollTo, projects, activeProject])
+
+  // reimplement using web sockets, doing manual verification and cache revalidation are a fucking nightmare
+  useEffect(() => 
   {
     if (activeProject !== null && activeProject.tasks === undefined)
     {
@@ -72,7 +85,6 @@ export default function Dashboard()
 
   return (
     <div className={`dashboard ${state.isDashboardMoved ? 'dashboard--moved' : ''}`} id="dashboard">
-      <ProjectCreator/>
       <DashboardContent/>
     </div>
   )

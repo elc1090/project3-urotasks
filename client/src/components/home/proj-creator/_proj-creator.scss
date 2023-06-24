@@ -1,23 +1,30 @@
-@import '../../../../css/_variables.scss';
+@import '../../../css/_variables.scss';
 
 .proj-creator__bg
 {
-  position: absolute;
-  z-index: 98;
+  z-index: -99;
   opacity: 0;
 
-  height: 97vh;
-  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 
-  background-color: #16191dcb;
+  background-color: $bg-overlay;
+
+  @include transition-open;
+
+  pointer-events: none;
 
   &--shown
-  { animation: fade_in 0.15s 0.15s forwards; }
-
-  &--hidden
   { 
-    pointer-events: none; 
-    animation: fade_out 0.15s forwards;
+    z-index: 99;
+    opacity: 1;
+
+    @include transition-close;
+    pointer-events: initial;
+
   }
 }
 
@@ -26,31 +33,31 @@
   display: grid;
   grid-template-columns: minmax(0px, 320px) minmax(0px, 80px) minmax(0px, 32px);
   grid-template-rows: repeat(3, auto);
-  place-items: top;
   column-gap: 8px;
 
+  z-index: -99;
+  opacity: 0;
   position: absolute;
-  top: 40%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 
   padding: 16px;
   border-radius: $border-rad-big;
 
   color: white;
   background-color: $bg-blue-light;
+
+  @include transition-open;
+  pointer-events: none;
   
   &--shown
   { 
-    transform: scale(1); 
     opacity: 1;
     z-index: 99;
-  }
-  
-  &--hidden
-  { 
-    transform: scale(0.85); 
-    opacity: 0;
-    z-index: -1;
-    pointer-events: none;
+
+    @include transition-close;
+    pointer-events: initial;
   }
 
   &__title
@@ -113,5 +120,13 @@
 
     &:hover
     { background-color: $hl-green-light; }
+  }
+}
+
+@media screen and (max-width: 532px) 
+{
+  .proj-creator
+  {
+    width: 90%;
   }
 }

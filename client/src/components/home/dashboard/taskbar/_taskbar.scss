@@ -3,7 +3,7 @@
 .taskbar
 {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
 
   position: relative;
@@ -19,13 +19,11 @@
   .header
   { 
     display: flex; 
-
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-
     width: 100%;
 
+    overflow: hidden;
+    white-space: nowrap;
+    
     &__color
     {
       margin-right: 8px;
@@ -82,26 +80,6 @@
       cursor: pointer;
       user-select: none;
 
-      &--orient
-      {
-        &:hover
-        { 
-          color: $bg-blue-dark;
-          background-color: #fff;
-        }
-
-        .fa-bars
-        { 
-          transform: rotate(90deg);
-
-          pointer-events: none;
-          font-size: 1.2rem;
-
-          transition: color 0s ease-in-out; 
-          transition: transform 0.15s ease-in-out; 
-        }
-      }
-
       &--delete
       {
         &:hover, &--active
@@ -127,6 +105,9 @@
     align-items: center;
     gap: 12px;
 
+    opacity: 0;
+    z-index: -99;
+
     position: absolute;
     top: 49px;
     right: -2px;
@@ -137,20 +118,19 @@
     border: 2px solid $hl-blue-light;
     background-color: $bg-blue-mid;
     
+    @include transition-open;
+
     text-align: center;
+
+    pointer-events: none;
 
     &--shown
     {
       opacity: 1;
       z-index: 99;
-      pointer-events: initial;
-    }
 
-    &--hidden
-    {
-      opacity: 0;
-      z-index: -99;
-      pointer-events: none;
+      @include transition-close;
+      pointer-events: initial;
     }
 
     &__header
@@ -192,4 +172,7 @@
 {
   .option--orient
   { display: none; }  
+
+  .header
+  { font-size: 1.5rem; }
 }

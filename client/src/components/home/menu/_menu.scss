@@ -14,8 +14,8 @@
   color: #fff;
   background-color: $bg-blue-mid;
   
-  box-shadow: 0px 0px 15px #2a363d5b;
   transform-origin: left;
+  @include glow-bg;
 
   &--hidden
   {
@@ -24,7 +24,7 @@
   }
 }
 
-@media screen and (max-width: 400px) 
+@media screen and (max-width: 420px) 
 {
   .menu
   { width: 100%; }
