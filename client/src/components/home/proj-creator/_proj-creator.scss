@@ -6,10 +6,7 @@
   opacity: 0;
 
   position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+  inset: 0;
 
   background-color: $bg-overlay;
 
@@ -40,8 +37,8 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
 
+  min-width: 320px;
   padding: 16px;
   border-radius: $bd-rad-big;
 
@@ -50,6 +47,7 @@
 
   @include transition-open;
   pointer-events: none;
+  transform: translate(-50%, -50%);
   
   &--shown
   { 
@@ -86,17 +84,19 @@
 
   .chrome-picker__bg
   {
-    position: absolute;
     z-index: 1;
-  
-    width: 100dvw;
-    height: 80dvh;
+
+    position: absolute;
+    inset: 0;
+
+    width: 100vw;
+    height: 60vh;
   }
 
   .chrome-picker
   {
     position: absolute;
-    top: 96px;
+    top: 104px;
     right: 16px;
     z-index: 2;
   }
@@ -120,7 +120,7 @@
   }
 }
 
-@media screen and (max-width: 532px) 
+@media screen and (max-width: 480px) 
 {
   .proj-creator
   {

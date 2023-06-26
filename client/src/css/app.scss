@@ -33,11 +33,14 @@ textarea
 /* app */
 .app
 {
-  position: relative;
   opacity: 1;
+
+  position: relative;
 
   height: 100dvh;
   width: 100dvw;
+
+  overflow-x: hidden;
 
   animation: ease-in-out 1s forwards fade_in;
 }

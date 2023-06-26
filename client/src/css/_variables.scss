@@ -1,7 +1,7 @@
 $bg-blue-dark: #0e1218;
 $bg-blue-mid: #212833;
 $bg-blue-light: #2d3b4e;
-$bg-overlay: #00000080;
+$bg-overlay: #000000a1;
 
 $white-dark: #e1e1e1;
 $white-light: #fff;
@@ -28,7 +28,7 @@ $bd-rad-small: 3px;
 { filter: drop-shadow(0px 0px 1px $white-light); }
 
 @mixin glow-bg
-{ box-shadow: 0px 0px 20px #ffffff09; }
+{ box-shadow: 0px 0px 20px #ffffff0a; }
 
 @mixin gradient
 { background: linear-gradient(270deg, rgba(255, 255, 255, 0) 5%, rgba(52, 122, 170, 0.50) 100%); }
