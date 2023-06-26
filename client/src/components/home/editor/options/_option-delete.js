@@ -31,13 +31,14 @@ export default function OptionDelete({ task })
       return project;
     })
 
+    toggleEditor();
+
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-delete`, [activeProject.id, task.id, task.type, position])
       .then(res => 
       {
         console.log(res);
         setActiveProject({ ...activeProject, tasks: taskList });
         setProjects(projectsCopy);
-        toggleEditor();
       })
       .catch( err => {console.log(err) })
   }

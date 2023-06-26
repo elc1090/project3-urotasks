@@ -40,7 +40,7 @@ export default function App()
     else
       setActiveProject(null);
       
-  }, [user]);
+  }, [user, projects]);
 
   useEffect(() => 
   {
@@ -55,10 +55,7 @@ export default function App()
     isDashboardMoved: true,
     isSearchbarSpaced: true,
     isProjCreatorShown: false,
-    isOptionOnFocus: false,
-    
-    isTaskUpdated: false,
-    isTaskFetched: false
+    isConfirmationShown: false
   });
       
   function reducer(state, action)
@@ -70,9 +67,7 @@ export default function App()
       case 'dashboardMoved': return { ...state, isDashboardMoved: !state.isDashboardMoved };
       case 'searchbarSpaced': return { ...state, isSearchbarSpaced: !state.isSearchbarSpaced };
       case 'projCreatorShown': return { ...state, isProjCreatorShown: !state.isProjCreatorShown };
-      case 'optionOnFocus': return { ...state,  isOptionOnFocus: !state.isOptionOnFocus };
-      
-      case 'taskUpdated': return { ...state, isTaskUpdated: !state.isTaskUpdated };
+      case 'confirmationShown': return { ...state, isConfirmationShown: !state.isConfirmationShown };
 
       default: return state;
     }

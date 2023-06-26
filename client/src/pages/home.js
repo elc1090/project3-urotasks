@@ -5,6 +5,7 @@ import Menu from '../components/home/menu/menu';
 import Dashboard from '../components/home/dashboard/dashboard';
 import ProjCreator from '../components/home/proj-creator/proj-creator';
 import Editor from '../components/home/editor/editor';
+import Confirmation from '../components/home/confirmation/confirmation';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
@@ -40,7 +41,9 @@ export default function HomePage()
         <div className='dashboard__burger' id="dashboard__burger" onClick={ toggleMenu }>
           <FontAwesomeIcon icon={ faBars }/>
         </div>
-  
+
+        <Confirmation/>
+
         <ToggleMenuContext.Provider value={{ toggleMenu }}>
           <ProjCreator/>
           <Menu/>

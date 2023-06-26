@@ -7,7 +7,7 @@
   
   position: fixed;  
   z-index: 10;
-  width: $menu-width; 
+  width: $menu-w; 
   height: 100dvh;
   padding: 32px;
   
@@ -19,7 +19,7 @@
 
   &--hidden
   {
-    transform: translateX($menu-width-translate);
+    transform: translateX($menu-w-inv);
     opacity: 0;
   }
 }

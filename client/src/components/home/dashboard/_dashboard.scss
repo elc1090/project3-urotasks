@@ -8,10 +8,10 @@
   align-items: center;
   
   position: absolute;
-  left: $menu-width;
+  left: $menu-w;
 
   min-height: 100dvh;
-  width: calc(100% - $menu-width);  
+  width: calc(100% - $menu-w);  
   padding: 24px;
 
   color: #fff;

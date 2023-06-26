@@ -23,7 +23,7 @@
   
   height: fit-content;
   padding: 16px;
-  border-radius: $border-rad-big;
+  border-radius: $bd-rad-big;
 
   background-color: $bg-blue-mid;
 
@@ -51,7 +51,7 @@
     gap: 24px;
 
     max-height: 560px;
-    border-radius: $border-rad-small;
+    border-radius: $bd-rad-small;
 
     overflow-y: scroll;
   }
@@ -63,7 +63,7 @@
     textarea
     {
       padding: 12px;
-      border-radius: $border-rad-small;
+      border-radius: $bd-rad-small;
     
       color: inherit;
       background-color: $bg-blue-light;
@@ -78,7 +78,7 @@
 
       padding: 10px;
       border: 2px solid #00000000;
-      border-radius: $border-rad-small;
+      border-radius: $bd-rad-small;
 
       color: #c0c0c0;
       background-color: inherit;
@@ -88,8 +88,8 @@
 
       &:hover
       {
-        border: 2px solid $hl-green-light;
-        color: $hl-green-light;
+        border: 2px solid $green-light;
+        color: $green-light;
       }
 
       .fa-plus

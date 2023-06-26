@@ -12,7 +12,7 @@
 
   margin-bottom: 16px;
   padding-bottom: 8px;
-  border-bottom: 2px solid $hl-blue-light;
+  border-bottom: 2px solid $white-dark;
 
   font-weight: 500;
 
@@ -73,7 +73,7 @@
     {
       position: relative;
       padding: 10px 14px;
-      border-radius: $border-rad-small;
+      border-radius: $bd-rad-small;
 
       color: #fff;
 
@@ -85,7 +85,7 @@
         &:hover, &--active
         { 
           color: $bg-blue-dark;
-          background-color: $hl-red-light;
+          background-color: $red-light;
         }
         
         .fa-trash-can
@@ -98,7 +98,7 @@
     }
   }
 
-  .confirmation
+  /*.confirmation
   {
     display: flex;
     flex-direction: column;
@@ -110,12 +110,12 @@
 
     position: absolute;
     top: 49px;
-    right: -2px;
+    right: -1px;
     width: 320px;
     padding: 12px;
 
-    border-radius: $border-rad-big;
-    border: 2px solid $hl-blue-light;
+    border-radius: $bd-rad-small;
+    border: 2px solid $white-dark;
     background-color: $bg-blue-mid;
     
     @include transition-open;
@@ -144,28 +144,28 @@
       .btn--confirmation
       {
         padding: 8px;
-        border-radius: $border-rad-small;
+        border-radius: $bd-rad-small;
 
         cursor: pointer;
       }
 
       #confirmation--confirm
       {
-        border: 2px solid $hl-red-dark;
+        border: 2px solid $red-dark;
 
         &:hover
-        { background-color: $hl-red-dark; }
+        { background-color: $red-dark; }
       }
 
       #confirmation--cancel
       {
-        border: 2px solid $hl-blue-light;
+        border: 2px solid $blue-light;
 
         &:hover
-        { background-color: $hl-blue-light; }
+        { background-color: $blue-light; }
       }
     }
-  }
+  }*/
 }
 
 @media screen and (max-width: 820px) 
