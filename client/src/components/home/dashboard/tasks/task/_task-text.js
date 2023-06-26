@@ -1,52 +1,71 @@
 import { useState, useContext, useRef } from 'react';
-import { ProjectsContext, ReducerContext } from '../../../../../app';
+import { ProjectsContext } from '../../../../../app';
+import { EditingContext } from './task';
 import axios from 'axios';
 
 export default function ItemText({ value, taskID }) 
 {
-  const [editing, setEditing] = useState(false);
   const [inputValue, setInputValue] = useState(value);
 
-  const { dispatch } = useContext(ReducerContext);
-  const { activeProject, setActiveProject } = useContext(ProjectsContext);
+  const { projects, setProjects, activeProject, setActiveProject } = useContext(ProjectsContext);
+  const { isEditing, setIsEditing } = useContext(EditingContext);
 
   const taskTextRef = useRef();
 
   function handleContentChange(newContent)
   {
+    let isNewContent = false;
+    
     if (newContent === "")
       return;
+  
+    // has to be this way because whent it copies the current tasks, they're already altered
+    const tasksOld = JSON.parse(JSON.stringify(activeProject.tasks));
 
-    const oldTaskList = JSON.parse(JSON.stringify(activeProject.tasks));
-    
     const taskList = activeProject.tasks.map(taskObj => 
     {
       if (taskObj.id === taskID && taskObj.content !== newContent)
       {
         taskObj.content = newContent;
-
-        axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update?type=content`, [taskID, newContent])
-          .then( res => {console.log(res)} )
-          .catch(err => 
-          {
-            console.log(err);
-            setActiveProject({ ...activeProject, tasks: oldTaskList });
-          })
+        isNewContent = true;
       }
 
       return taskObj;
     });
 
+    const projectsCopy = projects.map(project => 
+    {
+      if (project.id === activeProject.id)
+        project.tasks = taskList;
+
+      return project;
+    });
+
     setActiveProject({ ...activeProject, tasks: taskList });
+
+    if (isNewContent)
+    {
+      axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update?type=content`, [taskID, newContent])
+      .then(res => 
+      {
+        console.log(res);
+        setProjects(projectsCopy);
+      })
+      .catch(err => 
+      {
+        console.log(err);
+        setActiveProject({ ...activeProject, tasks: tasksOld });
+      })
+    }
   }
 
   async function handleEdit() 
   {
-    await setEditing(true);
+    await setIsEditing(true);
 
     const textArea = document.getElementById('text-area');
     const end = textArea.value.length;
-    
+  
     textArea.style.height = 'auto';
     textArea.style.height = `${textArea.scrollHeight}px`;
     
@@ -56,7 +75,7 @@ export default function ItemText({ value, taskID })
 
   function handleSave() 
   {
-    setEditing(false);
+    setIsEditing(false);
 
     if (taskTextRef.current.value !== '')
       handleContentChange(inputValue);
@@ -80,22 +99,6 @@ export default function ItemText({ value, taskID })
   }
 
   return (
-    <div className='task__text'>
-      {
-        editing 
-        ? <textarea 
-            style={{ width: '100%', overflow: 'hidden' }} 
-            id='text-area' 
-            ref={ taskTextRef } 
-            value={ inputValue } 
-            onChange={ e => {setInputValue(e.target.value);} } 
-            onBlur={ handleSave } 
-            onKeyDown={ handleKeyDown }
-            onInput={ handleInputGrowth }
-          />
-   
-        : (<div style={{width: '100%'}} onClick={handleEdit}>{value}</div>)
-      }
-    </div>
+    <div className='task__text'>{ value }</div>
   );
 }

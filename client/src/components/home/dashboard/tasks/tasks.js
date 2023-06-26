@@ -13,15 +13,10 @@ export const TaskTypeContext = React.createContext();
 
 export default function TasksContainer({ taskType })
 {
-  const { setProjects, activeProject, setActiveProject } = useContext(ProjectsContext);  
-  
-  const taskList = Array.isArray(activeProject.tasks) 
-    ? activeProject.tasks.filter(task => task.type === taskType)
-    : [];
-    
+  const { projects, setProjects, activeProject, setActiveProject } = useContext(ProjectsContext);      
   const [editing, setEditing] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const taskTextRef = useRef();
+  const inputValueRef = useRef();
 
   let taskTypeName;
   switch(taskType)
@@ -32,10 +27,16 @@ export default function TasksContainer({ taskType })
     default: break;
   }
 
+  const tasksFiltered = Array.isArray(activeProject.tasks) 
+    ? activeProject.tasks.filter(task => task.type === taskType)
+    : [];
+
   function handleTextChange(content) 
   {     
-    const newPosition = taskList.length > 0 
-      ? Math.max(...taskList.map(taskObj => taskObj.position)) + 1 
+    const tasksOld = activeProject.tasks ?? [];
+    
+    const newPosition = tasksFiltered.length > 0 
+      ? Math.max(...tasksFiltered.map(taskObj => taskObj.position)) + 1 
       : 1;
 
     const newTask = 
@@ -49,17 +50,38 @@ export default function TasksContainer({ taskType })
       updated_at: new Date() 
     }
 
-    const oldTasks = activeProject.tasks ?? [];
-    setActiveProject({ ...activeProject, tasks: [...oldTasks, newTask], activeTasks: activeProject.activeTasks + 1 });
-  
-    // data cache
+    tasksFiltered.push(newTask);
+    const tasksUpdated = [...tasksOld, newTask];
+
+    const projectsCopy = projects.map(project => 
+    {
+      if (project.id === activeProject.id)
+      {
+        project.tasks = [...tasksOld, newTask];
+        
+        if (taskType !== 'done')
+          project.activeTasks = project.activeTasks + 1;
+      }
+
+      return project;
+    })
+
+    if (taskType !== 'done')
+      setActiveProject({ ...activeProject, tasks: tasksUpdated, activeTasks: activeProject.activeTasks + 1 });
+
+    else
+      setActiveProject({ ...activeProject, tasks: tasksUpdated });
 
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-create`, [activeProject.id, newTask])
-      .then( res => {console.log(res)} )
+      .then(res => 
+      {
+        console.log(res);
+        setProjects(projectsCopy);
+      })
       .catch(err => 
       {
         console.log(err);
-        setActiveProject({ ...activeProject, tasks: oldTasks });
+        setActiveProject({ ...activeProject, tasks: tasksOld });
       })
   }
 
@@ -67,7 +89,7 @@ export default function TasksContainer({ taskType })
   {
     setEditing(false);
 
-    if (taskTextRef.current.value !== '')
+    if (inputValueRef.current.value !== '')
       handleTextChange(inputValue);
   }
 
@@ -95,34 +117,34 @@ export default function TasksContainer({ taskType })
   }
 
   return (
-    <div className="tasks">
-      <h2 className="tasks__header">{taskTypeName}</h2>
+    <div className="tasks" id={ taskType }>
+      <h2 className="tasks__header">{ taskTypeName }</h2>
       <div className="tasks__options"><FontAwesomeIcon icon={ faEllipsisVertical }/></div>
       
       <TaskTypeContext.Provider value={ taskType }>
       {
         activeProject?.tasks
-          ? <List elements={ taskList.sort((a, b) => {return a.position - b.position}) } ListItem={ Task } classes='tasks__list'/> 
-          : null
+        ? <List elements={ tasksFiltered.sort((a, b) => {return a.position - b.position}) } ListItem={ Task } classes='tasks__list'/> 
+        : null
       }
       </TaskTypeContext.Provider>
       
       <div className="tasks__add">
       {
         editing 
-          ? <textarea 
-              style={{ width: '100%', overflow: 'hidden' }} 
-              id='text-area' 
-              ref={ taskTextRef } 
-              value={ inputValue } 
-              onChange={ e => {setInputValue(e.target.value)} } 
-              onBlur={ handleSave } 
-              onKeyDown={ handleKeyDown }
-              onInput={ handleInputGrowth }
-              autoFocus
-            />
-          
-          : (<button onClick={ () => {setEditing(true)} }><FontAwesomeIcon icon={faPlus}/><span> Add task</span></button>)
+        ? <textarea 
+            style={{ width: '100%', overflow: 'hidden' }} 
+            id='text-area' 
+            ref={ inputValueRef } 
+            value={ inputValue } 
+            onChange={ e => {setInputValue(e.target.value)} } 
+            onBlur={ handleSave } 
+            onKeyDown={ handleKeyDown }
+            onInput={ handleInputGrowth }
+            autoFocus
+          />
+        
+        : (<button onClick={ () => {setEditing(true)} }><FontAwesomeIcon icon={faPlus}/><span> Add task</span></button>)
       }
       </div>
     </div>

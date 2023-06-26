@@ -16,34 +16,33 @@ export default function TaskbarProjectColor()
 
   function toggleColorPicker()
   {
-    if (pickerActive && newColor !== activeProject.color)
-    {
-      // not setting the activeProject directly makes the color flicker when changing
-      const oldColor = activeProject.color;
-      setActiveProject({ ...activeProject, color: newColor });
-
-      const projectsCopy = projects.map(project => 
-      {
-        if (project.id === activeProject.id)
-          project.color = newColor;
-
-        return project;
-      });
-
-      axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-update?type=color`, [activeProject.id, newColor])
-        .then(res => 
-        {
-          console.log(res);
-          setProjects(projectsCopy);
-        })
-        .catch(err => 
-        {
-          console.log(err);
-          setActiveProject({ ...activeProject, color: oldColor })
-        })
-    }
-
     setPickerActive(!pickerActive);
+    const oldColor = activeProject.color;
+    
+    if (!pickerActive || newColor === oldColor)
+      return;
+    
+    const projectsCopy = projects.map(project => 
+    {
+      if (project.id === activeProject.id)
+        project.color = newColor;
+
+      return project;
+    });
+
+    setActiveProject({ ...activeProject, color: newColor });
+
+    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-update?type=color`, [activeProject.id, newColor])
+      .then(res => 
+      {
+        console.log(res);
+        setProjects(projectsCopy);
+      })
+      .catch(err => 
+      {
+        console.log(err);
+        setActiveProject({ ...activeProject, color: oldColor })
+      })
   }
 
   function ColorPicker()

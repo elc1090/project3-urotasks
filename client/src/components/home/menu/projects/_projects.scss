@@ -47,7 +47,7 @@
   
     position: relative;
     padding-block: 12px;
-    border-radius: $border-rad-big;
+    border-radius: $bd-rad-big;
 
     cursor: pointer; 
 
@@ -60,7 +60,7 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      border-radius: $border-rad-big;
+      border-radius: $bd-rad-big;
 
       @include gradient;
 
@@ -90,11 +90,11 @@
 
     &__total-tasks
     {
-      min-width: 16px;
+      min-width: 32px;
       min-height: 16px;
       margin-left: auto;
       padding: 2px 8px;
-      border-radius: $border-rad-small;
+      border-radius: $bd-rad-small;
     
       background-color: $bg-blue-dark;
     

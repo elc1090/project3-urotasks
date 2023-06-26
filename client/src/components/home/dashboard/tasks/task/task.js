@@ -1,13 +1,17 @@
-import TaskText from './_task-text';
-import TaskOptions from './_task-options';
+import { useRef } from 'react';
+
+import TaskOptions from './_options';
 
 export default function TasksItem({ itemData })
 {
+  const taskRef = useRef();
+
   return (
-    <li className="task" id={ itemData?.id }>
-      <div className='task__position'>{itemData?.position}</div>
-      <TaskText value={ itemData?.content } taskID={ itemData?.id }/>
-      <TaskOptions task={ itemData }/>
+    <li className="task" id={ itemData?.id } ref={ taskRef }>
+      {/*<div className='task__position'>{ itemData?.position }</div> */}
+
+      <div className='task__text'>{ itemData?.content }</div>
+      <TaskOptions task={ itemData } taskRef={ taskRef }/>
     </li>
   )
 }

@@ -7,24 +7,24 @@
   
   position: fixed;  
   z-index: 10;
-  width: $menu-width; 
+  width: $menu-w; 
   height: 100dvh;
   padding: 32px;
   
   color: #fff;
   background-color: $bg-blue-mid;
   
-  box-shadow: 0px 0px 15px #2a363d5b;
   transform-origin: left;
+  @include glow-bg;
 
   &--hidden
   {
-    transform: translateX($menu-width-translate);
+    transform: translateX($menu-w-inv);
     opacity: 0;
   }
 }
 
-@media screen and (max-width: 400px) 
+@media screen and (max-width: 420px) 
 {
   .menu
   { width: 100%; }

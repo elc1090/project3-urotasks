@@ -28,20 +28,13 @@ export default function App()
 
   useEffect(() => 
   {
-    if (user !== null && projects.length > 0)
+    if (user !== null && user.activeProject !== '0' && projects.length > 0)
     {
-      if (user.activeProject !== '0')
-      {
-        let activeProjectIndex = -1;
+      const activeProjectIndex = projects.findIndex(project => project.id === user.activeProject);
 
-        for (let i = 0; i < projects.length; i++)
-          if (projects[i].id === user.activeProject)
-            activeProjectIndex = i;
-  
-        activeProjectIndex === -1 
-          ? setActiveProject(null) 
-          : setActiveProject(projects[activeProjectIndex]);   
-      }
+      activeProjectIndex !== -1 
+      ? setActiveProject(projects[activeProjectIndex]) 
+      : setActiveProject(null);
     }
 
     else
@@ -62,10 +55,7 @@ export default function App()
     isDashboardMoved: true,
     isSearchbarSpaced: true,
     isProjCreatorShown: false,
-    isOptionOnFocus: false,
-    
-    isTaskUpdated: false,
-    isTaskFetched: false
+    isConfirmationShown: false
   });
       
   function reducer(state, action)
@@ -77,9 +67,7 @@ export default function App()
       case 'dashboardMoved': return { ...state, isDashboardMoved: !state.isDashboardMoved };
       case 'searchbarSpaced': return { ...state, isSearchbarSpaced: !state.isSearchbarSpaced };
       case 'projCreatorShown': return { ...state, isProjCreatorShown: !state.isProjCreatorShown };
-      case 'optionOnFocus': return { ...state,  isOptionOnFocus: !state.isOptionOnFocus };
-      
-      case 'taskUpdated': return { ...state, isTaskUpdated: !state.isTaskUpdated };
+      case 'confirmationShown': return { ...state, isConfirmationShown: !state.isConfirmationShown };
 
       default: return state;
     }

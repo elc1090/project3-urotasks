@@ -1,11 +1,11 @@
-import { useContext, useRef, useState } from 'react';
-import { ProjectsContext, ReducerContext, UserContext } from "../../../../app";
-import { ToggleMenuContext } from '../../../../pages/home';
+import { useState, useContext, useRef  } from 'react';
+import { ProjectsContext, ReducerContext, UserContext } from "../../../app";
+import { ToggleMenuContext } from '../../../pages/home';
 import { v4 as uuid } from 'uuid';
 import axios from 'axios';
 
 
-import { ButtonGlow } from '../../../utils/buttons';
+import { ButtonGlow } from '../../utils/buttons';
 import { ChromePicker } from 'react-color';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,7 +20,7 @@ export default function ProjCreator()
   const { state, dispatch } = useContext(ReducerContext);
   const { projects, setProjects } = useContext(ProjectsContext);
 
-  const [color, setColor] = useState('#0FE19E');
+  const [color, setColor] = useState('#4b99cc');
   const [pickerActive, setPickerActive] = useState(false);
 
   async function createProject()
@@ -32,20 +32,26 @@ export default function ProjCreator()
     { 
       id: uuid(), 
       name: name,
-      color: color
+      color: color,
+      activeTasks: 0
     };
 
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/project-create`, newProject)
-      .then(res => {console.log(res);})
-      .catch(err => {console.log(err)})
+      .then(res => 
+      {
+        console.log(res);
+        setProjects([...projects, newProject]);
 
-    axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update`, [user.id, newProject.id, 'activeProject'])
-      .then(res => {console.log(res)})
-      .catch(err => {console.log(err)})
-    
-    setUser({ ...user, activeProject: newProject.id });
-    setProjects([...projects, newProject]);
-    
+        axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/user-update?type=activeProject`, [user.id, newProject.id])
+          .then(res => 
+          {
+            console.log(res);
+            setUser({ ...user, activeProject: newProject.id });
+          })
+          .catch( err => {console.log(err)} )
+      })
+      .catch( err => {console.log(err)} )
+
     if (state.isMenuHidden === false)
       toggleMenu();
 
@@ -80,9 +86,9 @@ export default function ProjCreator()
 
   return (
     <>
-      <div className={`proj-creator__bg ${state.isProjCreatorShown ? 'proj-creator__bg--shown' : 'proj-creator__bg--hidden'}`} onClick={ toggleProjectCreator }/>
+      <div className={`proj-creator__bg ${state.isProjCreatorShown ? 'proj-creator__bg--shown' : ''}`} onClick={ toggleProjectCreator }/>
 
-      <div className={`proj-creator ${state.isProjCreatorShown ? 'proj-creator--shown' : 'proj-creator--hidden'}`}>
+      <div className={`proj-creator ${state.isProjCreatorShown ? 'proj-creator--shown' : ''}`}>
         <h2 className="proj-creator__title">CREATE PROJECT <FontAwesomeIcon icon={ faBarsProgress }/> </h2>
         <ButtonGlow onClick={ toggleProjectCreator } icon={ faXmark }/>
         

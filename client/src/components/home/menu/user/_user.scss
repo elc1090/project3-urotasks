@@ -8,7 +8,7 @@
   margin-top: auto;
   padding-top: 16px;
   border-top: 3px solid #334150;
-  border-radius: $border-rad-small;
+  border-radius: $bd-rad-small;
 
   .user__data
   {
@@ -19,7 +19,7 @@
     .user__img
     {
       width: 48px;
-      border-radius: $border-rad-big;
+      border-radius: $bd-rad-big;
     }
       
     .user__name

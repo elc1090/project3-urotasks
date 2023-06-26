@@ -1,30 +1,47 @@
 $bg-blue-dark: #0e1218;
 $bg-blue-mid: #212833;
 $bg-blue-light: #2d3b4e;
+$bg-overlay: #000000a1;
 
-$hl-blue-dark:  #4b99cc;
-$hl-blue-light: #55ade8;
+$white-dark: #e1e1e1;
+$white-light: #fff;
 
-$hl-purple-dark: #8f66da;
-$hl-purple-light: #a77cf8;
+$blue-dark:  #4b99cc;
+$blue-light: #55ade8;
 
-$hl-red-dark: #d33333;
-$hl-red-light: #ff4e4e;
+$purple-dark: #8f66da;
+$purple-light: #a77cf8;
 
-$hl-green-dark: #22ca84;
-$hl-green-light: #26ffa5;
+$red-dark: #d33333;
+$red-light: #ff4e4e;
 
-$menu-width: 400px;
-$menu-width-translate: -420px;
+$green-dark: #22ca84;
+$green-light: #26ffa5;
 
-$border-rad-big: 5px;
-$border-rad-small: 4px;
+$menu-w: 420px;
+$menu-w-inv: $menu-w * -1;
+
+$bd-rad-big: 6px;
+$bd-rad-small: 3px;
 
 @mixin glow-content
-{ filter: drop-shadow(0px 0px 1px #fff); }
+{ filter: drop-shadow(0px 0px 1px $white-light); }
+
+@mixin glow-bg
+{ box-shadow: 0px 0px 20px #ffffff0a; }
 
 @mixin gradient
 { background: linear-gradient(270deg, rgba(255, 255, 255, 0) 5%, rgba(52, 122, 170, 0.50) 100%); }
+
+@mixin transition-open
+{ 
+  transition-property: opacity, z-index;
+  transition-duration: 0.15s, 0s; 
+  transition-delay: 0s, 0.15s; 
+}
+
+@mixin transition-close
+{ transition: opacity 0.15s 0.05s ease-in-out; }
 
 @keyframes fade_in 
 {
@@ -36,4 +53,10 @@ $border-rad-small: 4px;
 {
   from { opacity: 1; }
   to   { opacity: 0; }  
+}
+
+@keyframes rotate_cw
+{
+  from { transform: rotate(0deg);   }
+  to   { transform: rotate(360deg); }
 }
