@@ -82,26 +82,28 @@ export default function OptionChangeType({ task })
       return project;
     })
 
+    toggleEditor();
+
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update?type=type`, [activeProject.id, task.id, types, positions])
       .then(res => 
       {
         console.log(res); 
-        setChangeTypeOpen(false);
         setActiveProject({ ...activeProject, tasks: taskList });
         setProjects(projectsCopy);
-        toggleEditor();
       })
       .catch( err => {console.log(err)} )
   }
 
   return (
-    <div className='option option--type'>
-      <div className='option__icon' onClick={ () => {setChangeTypeOpen(!changeTypeOpen)} }><FontAwesomeIcon icon={ changeTypeIcon }/></div>
-      
+    <>
+      <div className='option option--type'>
+        <div className='option__icon' onClick={ () => {setChangeTypeOpen(!changeTypeOpen)} }><FontAwesomeIcon icon={ changeTypeIcon }/></div>
+      </div>
+
       <div className={ `options__select ${changeTypeOpen ? 'options__select--shown' : ''}` }>
         <div className='options__location' onClick={ () => {updateTaskType(taskTypeLeft)} }>{ formatTaskType(taskTypeLeft) }</div>
         <div className='options__location' onClick={ () => {updateTaskType(taskTypeRight)} }>{ formatTaskType(taskTypeRight) }</div>
       </div>
-    </div>
+    </>
   )
 }

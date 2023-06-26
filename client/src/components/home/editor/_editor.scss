@@ -33,7 +33,7 @@
 
   position: absolute;
   height: fit-content;
-  border-radius: $border-rad-small;
+  border-radius: $bd-rad-small;
 
   color: #fff;
   background-color: $bg-blue-light;
@@ -52,7 +52,7 @@
     width: 100%;
     padding: 12px;
     margin-bottom: -4px;
-    border-radius: $border-rad-small;
+    border-radius: $bd-rad-small;
 
     color: inherit;
     background-color: inherit;
@@ -82,6 +82,10 @@
       position: relative;
       width: 42px;
       height: 42px;
+      border-radius: $bd-rad-small; 
+
+      color: $bg-blue-dark;
+      background-color: $white-dark;
 
       font-size: 1.2rem;
 
@@ -89,52 +93,28 @@
       pointer-events: all;
       user-select: none;
 
-      &--tags
-      { 
-        border-radius: $border-rad-small;
-        background-color: $hl-green-dark; 
-
-        &:hover 
-        { background-color: lighten($hl-green-dark, 10%); }
-      }
-
-      &--type
-      {  
-        border-radius: $border-rad-small; 
-        background-color: $hl-blue-dark;
-        
-        &:hover 
-        { background-color: lighten($hl-blue-dark, 10%); }
-      }
+      &:hover
+      { background-color: #fff; }
 
       &--position
       { 
-        background-color: $hl-purple-dark;
-        
-        &:hover 
-        { background-color: lighten($hl-purple-dark, 10%); }
-
         &--up
-        {
-          border-top-left-radius: $border-rad-small;
-          border-top-right-radius: $border-rad-small;
-        }
+        { border-radius: $bd-rad-small $bd-rad-small 0 0; }
 
         &--down
         {
           margin-top: -4px;
-          border-bottom-left-radius: $border-rad-small;
-          border-bottom-right-radius: $border-rad-small;
+          border-radius: 0 0 $bd-rad-small $bd-rad-small;
         }
       }
 
       &--remove
       { 
-        border-radius: $border-rad-small;
-        background-color: $hl-red-dark; 
+        color: #fff;
+        background-color: $red-dark; 
 
         &:hover 
-        { background-color: lighten($hl-red-dark, 10%); }
+        { background-color: lighten($red-dark, 5%); }
       }
 
       &__icon
@@ -156,14 +136,17 @@
       opacity: 0;
 
       position: absolute;
-      top: -46px;
+      top: 92px;
       left: -112px;
       
       padding: 8px;
-      border: 2px solid $hl-blue-light;
-      border-radius: $border-rad-big;
+      border: 2px solid $white-dark;
+      border-radius: $bd-rad-big;
 
       background-color: $bg-blue-mid;
+
+      font-size: 1.2rem;
+      font-weight: 500;
 
       pointer-events: none;
       cursor: default;
@@ -187,31 +170,28 @@
       display: grid;
       place-items: center;
 
-      border-radius: $border-rad-small;
+      border-radius: $bd-rad-small;
 
       color: $bg-blue-dark;
-      background-color: #fff;
+      background-color: $white-dark;
 
       &--selected, &:hover
-      {
-        color: #fff;
-        background-color: $hl-blue-dark;
-      }
+      { background-color: #fff; }
     }
 
     &__submit
     {
       left: 0px;
-      border-radius: $border-rad-small;
+      border-radius: $bd-rad-small;
 
       color: #fff;
-      background-color: $hl-blue-dark;
+      background-color: $blue-dark;
 
       font-size: inherit;
       cursor: pointer;
 
       &:hover
-      { background-color: $hl-blue-light; }
+      { background-color: $blue-light; }
     }
   }
 }

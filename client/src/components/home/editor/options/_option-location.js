@@ -52,13 +52,14 @@ export default function OptionChangeType({ task })
       return project;
     })
 
+    toggleEditor();
+
     axios.post(`${process.env.REACT_APP_SERVER_ROUTE}/task-update?type=position`, [updatedTask.id, otherTask.id, direction])
       .then(res => 
       {
         console.log(res);
         setActiveProject({ ...activeProject, tasks: taskList });
         setProjects(projectsCopy);
-        toggleEditor();
       })
       .catch( err => {console.log(err)} );
   }

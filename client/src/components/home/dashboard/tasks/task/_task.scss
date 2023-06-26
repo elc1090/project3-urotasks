@@ -1,14 +1,11 @@
 @import '../../../../../css/_variables.scss';
 
 .task
-{
-  display: grid;
-  grid-template-columns: 13fr 1fr;
-  
+{  
   position: relative;
   width: 100%;
   padding: 12px;
-  border-radius: $border-rad-small;
+  border-radius: $bd-rad-small;
 
   background-color: $bg-blue-light;
 
@@ -31,19 +28,22 @@
     white-space: pre-wrap
   }
 
-  &:hover > .options
+  &:hover > &__options
   { opacity: 1; }
 
-  .options
+  &__options
   {
     opacity: 0; 
     z-index: 5;
 
     position: absolute;
+    top: 0px;
     right: 0px;
     width: 42px;
     height: 42px;
-    border-radius: $border-rad-small;
+    border-radius: $bd-rad-small;
+
+    background-color: $bg-blue-light;
 
     font-size: 1.2rem;
 

@@ -26,8 +26,8 @@ export default function TaskOptions({ task, taskRef })
   }
 
   return (
-    <div className='options' onClick={ toggleOptions }>
-      <div className='options__icon'><FontAwesomeIcon icon={ faEllipsisVertical }/></div>
+    <div className='task__options' onClick={ toggleOptions }>
+      <div className='task__options__icon'><FontAwesomeIcon icon={ faEllipsisVertical }/></div>
     </div>
   )
 }
