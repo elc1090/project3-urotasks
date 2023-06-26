@@ -32,7 +32,13 @@ export default function HomePage()
   }
 
   if (loading)
-    return <div className='loading'>loading...</div>
+  {
+    return (
+      <div className="loading">
+        <img src="img/loading.svg" alt=""/>
+      </div>
+    )
+  }
 
   else
   {

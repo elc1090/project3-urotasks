@@ -59,6 +59,11 @@ textarea
   color: #fff;
   
   font-size: 3rem;
+
+  img
+  {
+    animation: rotate_cw 2s infinite;
+  }
 }
 
 .btn--glow

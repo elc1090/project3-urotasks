@@ -15,6 +15,14 @@
     opacity: 0;
   }
 }
+@keyframes rotate_cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 @keyframes fade_in {
   from {
     opacity: 0;
@@ -29,6 +37,14 @@
   }
   to {
     opacity: 0;
+  }
+}
+@keyframes rotate_cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 .confirmation__bg {
@@ -130,6 +146,14 @@
     opacity: 0;
   }
 }
+@keyframes rotate_cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 .searchbar {
   position: relative;
   width: 1400px;
@@ -188,6 +212,14 @@
   }
   to {
     opacity: 0;
+  }
+}
+@keyframes rotate_cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 .taskbar {
@@ -350,6 +382,14 @@
     opacity: 0;
   }
 }
+@keyframes rotate_cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 .task {
   position: relative;
   width: 100%;
@@ -416,6 +456,14 @@
   }
   to {
     opacity: 0;
+  }
+}
+@keyframes rotate_cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 .tasks__container {
@@ -510,6 +558,14 @@
     opacity: 0;
   }
 }
+@keyframes rotate_cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 .dashboard {
   display: flex;
   flex-direction: column;
@@ -572,6 +628,14 @@
   }
   to {
     opacity: 0;
+  }
+}
+@keyframes rotate_cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 .editable__bg {
@@ -733,6 +797,14 @@
     opacity: 0;
   }
 }
+@keyframes rotate_cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 .menu__header {
   display: flex;
   justify-content: space-between;
@@ -762,6 +834,14 @@
   }
   to {
     opacity: 0;
+  }
+}
+@keyframes rotate_cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 .projects {
@@ -856,6 +936,14 @@
     opacity: 0;
   }
 }
+@keyframes rotate_cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 .user {
   display: grid;
   grid-template-columns: 12fr 2fr;
@@ -905,6 +993,14 @@
     opacity: 0;
   }
 }
+@keyframes rotate_cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 .menu {
   display: flex;
   flex-direction: column;
@@ -942,6 +1038,14 @@
   }
   to {
     opacity: 0;
+  }
+}
+@keyframes rotate_cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 .proj-creator__bg {
@@ -1100,6 +1204,9 @@ textarea {
   height: 100vh;
   color: #fff;
   font-size: 3rem;
+}
+.loading img {
+  animation: rotate_cw 2s infinite;
 }
 
 .btn--glow {
