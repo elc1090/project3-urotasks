@@ -1,22 +1,22 @@
-$bg-blue-dark: #0e1218;
-$bg-blue-mid: #212833;
-$bg-blue-light: #2d3b4e;
-$bg-overlay: #000000a1;
+$bg-blue-dark: hsl(215, 29%, 7%);
+$bg-blue-mid: hsl(215, 29%, 15%);
+$bg-blue-light: hsl(215, 29%, 23%);
+$bg-overlay: #000000aa;
 
-$white-dark: #e1e1e1;
-$white-light: #fff;
+$white-dark: hsl(0, 0%, 86%);
+$white-light: hsl(0, 0%, 100%);
 
-$blue-dark:  #4b99cc;
-$blue-light: #55ade8;
+$blue-dark:  hsl(204, 56%, 55%);
+$blue-light: hsl(204, 76%, 62%);
 
-$purple-dark: #8f66da;
-$purple-light: #a77cf8;
+$purple-dark: hsl(261, 61%, 63%);
+$purple-light: hsl(261, 90%, 73%);
 
-$red-dark: #d33333;
-$red-light: #ff4e4e;
+$red-dark: hsl(0, 65%, 51%);
+$red-light: hsl(0, 100%, 65%);
 
-$green-dark: #22ca84;
-$green-light: #26ffa5;
+$green-dark: hsl(155, 71%, 46%);
+$green-light: hsl(155, 100%, 57%);
 
 $menu-w: 420px;
 $menu-w-inv: $menu-w * -1;
@@ -33,15 +33,6 @@ $bd-rad-small: 3px;
 @mixin gradient
 { background: linear-gradient(270deg, rgba(255, 255, 255, 0) 5%, rgba(52, 122, 170, 0.50) 100%); }
 
-@mixin transition-open
-{ 
-  transition-property: opacity, z-index;
-  transition-duration: 0.15s, 0s; 
-  transition-delay: 0s, 0.15s; 
-}
-
-@mixin transition-close
-{ transition: opacity 0.15s 0.05s ease-in-out; }
 
 @keyframes fade_in 
 {
@@ -60,3 +51,31 @@ $bd-rad-small: 3px;
   from { transform: rotate(0deg);   }
   to   { transform: rotate(360deg); }
 }
+
+@keyframes rotate_ccw
+{
+  from { transform: rotate(360deg); }
+  to   { transform: rotate(0deg);   }
+}
+
+@mixin anim_fade_in
+{ animation: fade_in 0.15s forwards ease-in-out; }
+
+@mixin anim_fade_out
+{ animation: fade_out 0.15s forwards ease-in-out; }
+
+@mixin anim_rotate_cw
+{ animation: rotate_cw 2s infinite; }
+
+@mixin anim_rotate_ccw
+{ animation: rotate_ccw 2s infinite; }
+
+@mixin transition-open
+{ 
+  transition-property: opacity, z-index;
+  transition-duration: 0.15s, 0s; 
+  transition-delay: 0s, 0.15s; 
+}
+
+@mixin transition-close
+{ transition: opacity 0.15s 0.05s ease-in-out; }

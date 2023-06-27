@@ -57,12 +57,11 @@ textarea
   height: 100vh;
 
   color: #fff;
-  
-  font-size: 3rem;
 
   img
-  {
-    animation: rotate_cw 2s infinite;
+  { 
+    width: 240px;
+    @include anim_rotate_cw; 
   }
 }
 

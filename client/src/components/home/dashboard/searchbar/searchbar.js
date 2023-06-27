@@ -12,7 +12,7 @@ export default function Searchbar()
     <>
       <div className={`searchbar ${state.isSearchbarSpaced ? '' : 'searchbar--menu-shown'}`} id="searchbar"> 
         <FontAwesomeIcon icon={ faMagnifyingGlass }/> 
-        <input type="text" placeholder="Seach for tasks or tags"/>
+        <input type="text" placeholder="Looking for something?"/>
       </div> 
     </>
   )
